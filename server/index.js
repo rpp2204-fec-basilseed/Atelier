@@ -10,6 +10,10 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 let port = process.env.PORT;
 
+app.get('/', (req, res) => {
+  res.send();
+})
+
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
 });

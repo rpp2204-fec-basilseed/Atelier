@@ -1,6 +1,6 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import Overview from './component/Overview.jsx';
+import Reviews from './component/Reviews.jsx';
 
 class Index extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class Index extends React.Component {
 
   render() {
     return (
-      <Overview />
+      <Reviews />
     )
   }
 }
