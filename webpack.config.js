@@ -1,12 +1,17 @@
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: "development",
   entry: path.join(__dirname, "/client/src/index.jsx"),
   output: {
-    filename: ("bundle.js"),
+    filename: "bundle.js",
     path: path.join(__dirname, "/client/dist/"),
   },
+  // plugins: [
+  //   new Dotenv()，
+  // ],
   module: {
     rules: [
       {
@@ -28,4 +33,10 @@ module.exports = {
       }
     ],
   },
+  // resolve: {
+  //   fallback: {
+  //     "os": false,
+  //     "path": false,
+  //   },
+  // },
 };

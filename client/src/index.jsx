@@ -1,12 +1,14 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import QandA from './components/Q&A.jsx';
+import QandA from './components/QandA.jsx';
 
 class Index extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {}
+    this.state = {
+      currentProduct: '',
+    }
   }
 
   render() {
