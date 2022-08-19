@@ -6,12 +6,14 @@ class Index extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {}
+    this.state = {
+      curr_product_id: 71697
+    }
   }
 
   render() {
     return (
-      <Overview />
+      <Overview curr_product_id={this.state.curr_product_id} />
     )
   }
 }
