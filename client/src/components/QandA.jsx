@@ -1,49 +1,43 @@
-//require('dotenv').config();
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 const axios = require('axios');
+import Header from './Header.jsx';
+import Search from './Search.jsx';
+import Question from './Question.jsx';
+import DisplayMoreQuestions from './DisplayMoreQuestions.jsx';
+import AddAQuestion from './AddAQuestion.jsx';
 
 function QandA () {
-  // function componentDidMount() {
-  //   let config = { 'Authorization' : process.env.REACT_APP_API_KEY };
-  //   // Working on it! just testing with /products.
-  //   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products', { headers: config })
-  //     then((result) => console.log(result));
-  //   // console.log('this is your api key', process.env.REACT_API_KEY);
-  // }
-  const [votes, setVotes] = useState(0);
-  function handleHelpful() {
-    setVotes(votes + 1);
-  }
+  const [product_id, setProduct_id] = useState('');
 
-  return (<div className="container">
-    <div>QUESTIONS & ANSWERS</div>
-    <div className="search-box">
-      <input type="text" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS... 🔍" style={{width: "370px"}}/>
-    </div>
-    <div className="q&a">
-      <div className="feeds">
-        <div>Q: just for testing. load two questions only</div>
-        <div className="helpful">
-          <span>Helpful?</span>
-          <div>placeholder:
-            <div onClick={handleHelpful}>Yes</div>
-            <div>({votes})</div>
-          </div>
-        </div>
-        <div className="add-answer">
-          <div>placeholder: add answer</div>
-        </div>
-        <br></br>
-        <div>A: sample answer. Load two answers at most at a time.</div>
-      </div>
-      <a href="true">LOAD MORE ANSWERS</a>
-    </div>
-    <div className="button-more-answered-questions">
-      <button>MORE ANSWERED QUESTIONS</button>
-    </div>
-    <div className="button-add-a-question">
-      <button>ADD A QUESTION</button>
-    </div>
+  const [allQuestions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    axios.get('/testing')
+      .then((result) => {
+        console.log('log all answers here__', result.data.results[0].answers);
+        setQuestions((prev) => {
+          return [...prev, ...result.data.results];
+        });
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  return (<div className="container" style={{ margin: "0 20rem", padding: "50px 0", lineHeight: "2"}}>
+    <Header />
+    <Search />
+
+    {allQuestions.map((elem) => {
+      return <Question
+      key={elem.question_id}
+      questionBody={elem.question_body}
+      questionHelpfulness={elem.question_helpfulness}
+      answers={elem.answers}
+      />;
+    })}
+
+    <DisplayMoreQuestions />
+    <AddAQuestion />
+
   </div>);
 }
 
