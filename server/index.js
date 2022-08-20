@@ -15,7 +15,7 @@ app.get('/testing', (req, res) => {
   let config = {
     headers: { 'Authorization' : process.env.REACT_APP_API_KEY },
     params: {
-      product_id: 71701
+      product_id: req.query.product_id
     },
   };
 

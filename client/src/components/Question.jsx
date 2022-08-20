@@ -19,9 +19,6 @@ function Question(props) {
     setClicked((prevVal) => {
       return !prevVal;
     });
-    if (clicked) {
-
-    }
   }
 
   return (<div>

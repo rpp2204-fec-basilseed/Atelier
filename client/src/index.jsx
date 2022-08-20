@@ -7,13 +7,13 @@ class Index extends React.Component {
     super(props);
 
     this.state = {
-      currentProduct: '',
+      curr_product_id: 71701
     }
   }
 
   render() {
     return (
-      <QandA />
+      <QandA curr_product_id={ this.state.curr_product_id }/>
     )
   }
 }
