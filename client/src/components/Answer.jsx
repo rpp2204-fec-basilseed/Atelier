@@ -19,7 +19,8 @@ function Answer(props) {
 
     <br />
     <div className="answerer" style={{
-      color: "#404040", fontSize: "0.8rem", marginLeft: "15px", display: "inline-flex"
+      color: "#404040", fontSize: "0.8rem", marginLeft: "15px", display: "inline-flex",
+      fontWeight: props.answerer === 'Seller' ? "bold" : "none"
       }}>by {props.answerer},
     </div>
 

@@ -15,10 +15,10 @@ app.get('/testing', (req, res) => {
   let config = {
     headers: { 'Authorization' : process.env.REACT_APP_API_KEY },
     params: {
-      product_id: 71699
+      product_id: 71701
     },
   };
-  // Working on it! just testing
+
   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions', config)
     .then((result) => {
       console.log(result.data);
