@@ -1,5 +1,6 @@
 import React from 'react';
 const axios = require('axios');
+import Style from './Style.jsx';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -42,20 +43,26 @@ class Overview extends React.Component {
       currProdPrice = <div>${this.state.currProdData[this.state.selectedStyle].original_price}</div>
     }
     return (
-      <div className="overview-container">
-        {currProdImage}
-        {currProdName}
-        {currProdPrice}
-        <div>
-          Style selection component
+      <div className="overview container">
+        <div id="overviewImg" className="container">
+          {currProdImage}
         </div>
-        <div>
-          Size selection component
+        <div className="productInfoCart container">
+          <div className="container">
+            {currProdName}
+            {currProdPrice}
+          </div>
+          <div>
+            <Style />
+          </div>
+          <div>
+            Size selection component
+          </div>
+          <div>
+            Cart/Favorite component
+          </div>
         </div>
-        <div>
-          Cart/Favorite component
-        </div>
-        <div>
+        <div className="details container">
           Product info
         </div>
       </div>
