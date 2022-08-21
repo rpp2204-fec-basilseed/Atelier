@@ -30,14 +30,13 @@ function QandA (props) {
 
   function displayTwoMoreQuestions() {
     setCounter(counter + 1);
-    setAllQuestions(allQuestions.slice(0, 4));
   }
 
   return (<div className="container" style={{ margin: "0 20rem", padding: "50px 0", lineHeight: "2"}}>
     <Header />
     <Search />
 
-    {counter < 1 && firstTwoQuestions.map((elem) => {
+    {allQuestions.slice(0, counter * 2 + 2).map((elem) => {
       return <Question
       key={elem.question_id}
       questionBody={elem.question_body}
@@ -46,16 +45,7 @@ function QandA (props) {
       />;
     })}
 
-    {counter === 1 && allQuestions.map((elem) => {
-      return <Question
-      key={elem.question_id}
-      questionBody={elem.question_body}
-      questionHelpfulness={elem.question_helpfulness}
-      answers={elem.answers}
-      />;
-    })}
-
-    { allQuestions.length > 2 &&
+    { allQuestions.length > 2 && (counter * 2 + 2 < allQuestions.length) &&
     <button onClick={displayTwoMoreQuestions} style={{
       display: "inline-block",
       lineHeight: "3.5",
@@ -65,7 +55,7 @@ function QandA (props) {
       marginTop: "20px",
       marginRight: "10px",
       border: "1px solid grey"
-      }}>MORE ANSWERED QUESTIONS {counter}
+      }}>MORE ANSWERED QUESTIONS
     </button>}
 
     <AddAQuestion />
