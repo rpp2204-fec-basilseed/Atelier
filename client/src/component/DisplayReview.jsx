@@ -2,10 +2,10 @@ import React from 'react';
 import Helpful from './Helpful.jsx';
 
 export default function DisplayReview ({reviewsList}) {
-  console.log(reviewsList)
+
     return reviewsList.slice(0,4).map((review) => {
       return (
-        <div style={{paddingTop: '10px', paddingBottom: '10px'}}>
+        <div key={review.review_id} style={{paddingTop: '10px', paddingBottom: '10px'}}>
           <div style={{display: 'flex'}}>
             <div>{review.rating} stars</div>
             <div style={{'paddingLeft': '200px'}}>{review.reviewer_name}, {review.date}</div>
