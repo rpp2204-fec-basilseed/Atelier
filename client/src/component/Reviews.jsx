@@ -3,7 +3,7 @@ import DisplayReview from './DisplayReview.jsx';
 const Axios = require('axios');
 
 
-export default function Reviews ({currProduct, currReviews, metaData}) {
+export default function Reviews ({currProduct, currReviews, metaData, renderStarRating, totalScore}) {
 
   const starRating = (rating) => {
     let totalStars = 0;
@@ -13,16 +13,6 @@ export default function Reviews ({currProduct, currReviews, metaData}) {
     return Math.floor(rating / totalStars * 100) + '%';
   };
 
-  const totalScore = (reviews) => {
-    let totalScore = 0;
-    let totalReviews = 0;
-    for (let currentScore in metaData.ratings) {
-      totalScore += parseInt(currentScore * metaData.ratings[currentScore]);
-      totalReviews += parseInt(metaData.ratings[currentScore]);
-    }
-    return (totalScore / totalReviews).toFixed(2) + ' Stars';
-  }
-
 
   return (
   <div>
@@ -30,6 +20,7 @@ export default function Reviews ({currProduct, currReviews, metaData}) {
     <div className='main' style={{display: 'flex'}}>
       <div className='ratings'>
         <div className='stars'>{metaData.ratings ? totalScore(metaData.ratings) : null}</div>
+        <div>{metaData.ratings ? renderStarRating(totalScore(metaData.ratings)) : null}</div>
         <div>5 star reviews: {metaData.ratings ? starRating(metaData.ratings[5]) : null}</div>
         <div>4 star reviews: {metaData.ratings ? starRating(metaData.ratings[4]) : null}</div>
         <div>3 star reviews: {metaData.ratings ? starRating(metaData.ratings[3]) : null}</div>
