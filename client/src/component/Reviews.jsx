@@ -22,26 +22,25 @@ export default function Reviews ({currProduct, renderStarRating, totalScore}) {
 
 
   useEffect(() => {
-    Axios({
-      method: 'get',
-      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=' + currProduct + '&count=300',
-      headers: {
-        'Authorization': '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'
-      }
-    })
+    Axios.get('/review', {
+      params: {
+      productId: currProduct
+    }
+  })
     .then((reviewData) => {
-      setCurrReviews(priorReviews => reviewData.data.results)
+      setCurrReviews(priorReviews => reviewData.data);
     })
     .then(() => {
-      Axios({
-        method: 'get',
-        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=' + currProduct,
-        headers: {
-          'Authorization': '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'
+      Axios.get('/meta', {
+        params: {
+        productId: currProduct
         }
       })
       .then((metaData) => {
-        setMetaData(previousMetaData => metaData.data)
+        if(metaData) {
+          console.log(metaData)
+          setMetaData(priorMetaData => metaData.data);
+        }
       })
     })
     .catch((error) => {
