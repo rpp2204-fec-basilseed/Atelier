@@ -22,12 +22,13 @@ function Question(props) {
   }
 
   return (<div>
-    <div className="question-body" style={{ fontWeight: "bold", display: "inline-flex" }}>Q: {props.questionBody}</div>
-    <Sidebar helpful={props.questionHelpfulness} />
+    <div className="question-body" style={{ fontWeight: "bold", display: "inline-flex", opacity: props.questionAdded ? "0.2" : "1", zIndex: "1" }}>Q: {props.questionBody}</div>
+    <Sidebar questionAdded={props.questionAdded} helpful={props.questionHelpfulness} />
 
     { !clicked && shortAnswers.map((elem) => {
       return (
         <Answer
+          questionAdded={props.questionAdded}
           key={elem.id}
           answerBody={elem.body}
           answerer={elem.answerer_name}
@@ -41,6 +42,7 @@ function Question(props) {
     { clicked && answersModified.map((elem) => {
       return (
         <Answer
+          questionAdded={props.questionAdded}
           key={elem.id}
           answerBody={elem.body}
           answerer={elem.answerer_name}
@@ -53,7 +55,7 @@ function Question(props) {
 
     { answersModified.length > 2 &&
       <button onClick={ toggleAnswers } className="see-more-answers"
-      style={{ border: "none", backgroundColor: "white", color: "#671ddf", marginLeft:"9px", fontWeight: "bold", fontSize: "0.7rem" }}
+      style={{ opacity: props.questionAdded ? "0.2" : "1", zIndex: "1", border: "none", backgroundColor: "white", color: "#671ddf", marginLeft:"9px", fontWeight: "bold", fontSize: "0.7rem" }}
       >{ clicked? "COLLAPSE ANSWERS" : "SEE MORE ANSWERS" }</button>
     }
 

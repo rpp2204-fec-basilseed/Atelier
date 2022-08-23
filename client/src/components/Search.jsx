@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Search() {
+function Search(props) {
   // user types in the search box
   // once there are three characters typed, it will trigger the search function
   const [input, setInput] = useState('');
@@ -19,7 +19,7 @@ function Search() {
   }
 
   return (
-    <div className="search-box">
+    <div className="search-box" style={{opacity: props.questionAdded ? "0.2" : "1", zIndex: "1"}}>
       <input onChange={handleInput} type="text" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS... 🔍"
       value={input}
       style={{ width: "100%", height: "3rem", margin: "15px 0" }}/>

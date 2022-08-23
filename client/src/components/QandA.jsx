@@ -6,6 +6,14 @@ import Question from './Question.jsx';
 import AddAQuestion from './AddAQuestion.jsx';
 
 function QandA (props) {
+  // Working on it: "ADD A QUESTION" button
+  const [ questionAdded, setQuestionAdded ] = useState(false);
+
+  function handleAddAQuestionButton () {
+    setQuestionAdded((prevVal) => {
+      return !prevVal
+    });
+  }
 
   const [allQuestions, setAllQuestions] = useState([]);
 
@@ -32,9 +40,10 @@ function QandA (props) {
     setCounter(counter + 1);
   }
 
-  return (<div className="container" style={{ margin: "0 20rem", padding: "50px 0", lineHeight: "2"}}>
-    <Header />
-    <Search />
+  return (<div className="container" style={{
+    margin: "0 20rem", padding: "50px 0", lineHeight: "2"}}>
+    <Header questionAdded={questionAdded}/>
+    <Search questionAdded={questionAdded}/>
 
     {allQuestions.slice(0, counter * 2 + 2).map((elem) => {
       return <Question
@@ -42,23 +51,26 @@ function QandA (props) {
       questionBody={elem.question_body}
       questionHelpfulness={elem.question_helpfulness}
       answers={elem.answers}
+      questionAdded={questionAdded}
       />;
     })}
 
     { allQuestions.length > 2 && (counter * 2 + 2 < allQuestions.length) &&
     <button onClick={displayTwoMoreQuestions} style={{
-      display: "inline-block",
       lineHeight: "3.5",
       fontWeight: "bold",
       height: "3rem",
       backgroundColor: "white",
       marginTop: "20px",
       marginRight: "10px",
-      border: "1px solid grey"
+      border: "1px solid grey",
+      display: "inline-flex",
+      opacity: questionAdded ? "0.2" : "1",
+      zIndex: "1"
       }}>MORE ANSWERED QUESTIONS
     </button>}
 
-    <AddAQuestion />
+    <AddAQuestion currentProduct={props.curr_product_id} questionAdded={questionAdded} addAQuestion={handleAddAQuestionButton}/>
 
   </div>);
 }
