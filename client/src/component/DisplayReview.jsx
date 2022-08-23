@@ -1,17 +1,22 @@
 import React from 'react';
 import Helpful from './Helpful.jsx';
 
-export default function DisplayReview ({reviewsList}) {
+export default function DisplayReview ({reviewsList, displayedReviews}) {
 
-    return reviewsList.slice(0,4).map((review) => {
+  const renderDate = (dateISOString) => {
+    let dateObject = new Date(dateISOString);
+    return dateObject.toDateString();
+  }
+
+    return reviewsList.slice(0,displayedReviews).map((review) => {
       return (
         <div key={review.review_id} style={{paddingTop: '10px', paddingBottom: '10px'}}>
           <div style={{display: 'flex'}}>
             <div>{review.rating} stars</div>
-            <div style={{'paddingLeft': '200px'}}>{review.reviewer_name}, {review.date}</div>
+            <div style={{'paddingLeft': '200px'}}>{review.reviewer_name}, {renderDate(review.date)}</div>
           </div>
           <div style={{fontWeight: 'bold'}}>{review.summary}</div>
-          <div>{review.body}</div>
+          <div style={{width: '500px', whiteSpace: 'pre-wrap', overflowWrap: 'break-word'}}>{review.body}</div>
           <div className='helpful' style={{paddingTop: '10px', display: 'flex'}}>
           <div style={{paddingRight: '20px'}}>Was this review helpful?</div>
           <Helpful helpfulness={review.helpfulness}/>

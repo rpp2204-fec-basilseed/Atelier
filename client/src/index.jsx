@@ -57,14 +57,12 @@ class Index extends React.Component {
   renderStarRating(reviewScore) {
 
     var starsInHtml = [];
-    var fullStar = '&#9733;';
-    var emptyStar = '&#9734;';
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 1; i <= 5; i++) {
       if (i < reviewScore) {
-        starsInHtml.push(<div>&#9733;</div>)
+        starsInHtml.push(<div key={`${i}-star`}>&#9733;</div>)
       } else {
-        starsInHtml.push(<div>&#9734;</div>)
+        starsInHtml.push(<div key={`${i}-star`}>&#9734;</div>)
       }
     }
     return (
