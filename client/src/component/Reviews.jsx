@@ -3,7 +3,7 @@ import DisplayReview from './DisplayReview.jsx';
 const Axios = require('axios');
 
 
-export default function Reviews ({currProduct, currReviews, metaData, renderStarRating, totalScore}) {
+export default function Reviews ({currProduct, renderStarRating, totalScore}) {
 
   const starPercentage = (rating) => {
     let totalStars = 0;
@@ -14,6 +14,40 @@ export default function Reviews ({currProduct, currReviews, metaData, renderStar
   };
 
   const [displayedReviews, setDisplayedReviews] = useState(4);
+
+  const [metaData, setMetaData] = useState({});
+
+  const [currReviews, setCurrReviews] = useState([]);
+
+
+
+  useEffect(() => {
+    Axios({
+      method: 'get',
+      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=' + currProduct + '&count=300',
+      headers: {
+        'Authorization': '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'
+      }
+    })
+    .then((reviewData) => {
+      setCurrReviews(priorReviews => reviewData.data.results)
+    })
+    .then(() => {
+      Axios({
+        method: 'get',
+        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=' + currProduct,
+        headers: {
+          'Authorization': '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'
+        }
+      })
+      .then((metaData) => {
+        setMetaData(previousMetaData => metaData.data)
+      })
+    })
+    .catch((error) => {
+      throw error;
+    })
+  })
 
   function increaseDisplayedReviews() {
     setDisplayedReviews(previousDisplayed => previousDisplayed + 4);
@@ -37,7 +71,7 @@ export default function Reviews ({currProduct, currReviews, metaData, renderStar
       </div>
       <div className='reviews' style={{paddingLeft: '20px'}}>
         <div className='total-reviews'>{currReviews.length} reviews with 'sort by' function goes here</div>
-        <DisplayReview reviewsList={currReviews} displayedReviews={displayedReviews}/>
+        <DisplayReview reviewsList={currReviews} displayedReviews={displayedReviews} renderStarRating={renderStarRating}/>
       <div className="more-and-add-review" style={{display: 'flex'}}>
         <div style={{border: 'solid black 3px', padding: '20px'}} onClick={increaseDisplayedReviews}>More Reviews</div>
         <div onClick={() => console.log('yeah')} style={{border: 'solid black 3px', padding: '20px', marginLeft: '40px'}}>Add Review</div>

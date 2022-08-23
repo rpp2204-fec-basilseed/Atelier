@@ -16,34 +16,6 @@ class Index extends React.Component {
     this.totalScore = this.totalScore.bind(this);
   }
 
-  componentDidMount(){
-    Axios({
-      method: 'get',
-      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=' + this.state.curr_product_id + '&count=300',
-      headers: {
-        'Authorization': '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'
-      }
-    })
-    .then((reviewData) => {
-      this.setState({curr_product_reviews: reviewData.data.results})
-    })
-    .then(() => {
-      Axios({
-        method: 'get',
-        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=' + this.state.curr_product_id,
-        headers: {
-          'Authorization': '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'
-        }
-      })
-      .then((metaData) => {
-        this.setState({curr_product_meta: metaData.data})
-      })
-    })
-    .catch((error) => {
-      throw error;
-    })
-  }
-
   totalScore(reviews) {
     let totalScore = 0;
     let totalReviews = 0;
@@ -59,7 +31,7 @@ class Index extends React.Component {
     var starsInHtml = [];
 
     for (let i = 1; i <= 5; i++) {
-      if (i < reviewScore) {
+      if (i <= reviewScore) {
         starsInHtml.push(<div key={`${i}-star`}>&#9733;</div>)
       } else {
         starsInHtml.push(<div key={`${i}-star`}>&#9734;</div>)

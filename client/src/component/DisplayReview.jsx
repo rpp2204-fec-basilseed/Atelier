@@ -1,7 +1,7 @@
 import React from 'react';
 import Helpful from './Helpful.jsx';
 
-export default function DisplayReview ({reviewsList, displayedReviews}) {
+export default function DisplayReview ({reviewsList, displayedReviews, renderStarRating}) {
 
   const renderDate = (dateISOString) => {
     let dateObject = new Date(dateISOString);
@@ -12,7 +12,7 @@ export default function DisplayReview ({reviewsList, displayedReviews}) {
       return (
         <div key={review.review_id} style={{paddingTop: '10px', paddingBottom: '10px'}}>
           <div style={{display: 'flex'}}>
-            <div>{review.rating} stars</div>
+            <div>{renderStarRating(review.rating)}</div>
             <div style={{'paddingLeft': '200px'}}>{review.reviewer_name}, {renderDate(review.date)}</div>
           </div>
           <div style={{fontWeight: 'bold'}}>{review.summary}</div>
