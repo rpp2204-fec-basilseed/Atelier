@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 
 function AddAQuestion(props) {
-  // TODO: once the button is clicked, there will pop up a form for user to fill out.
-  // use Modal. MORE TO THINK ABOUT.
-  // const [ clicked, setClick ] = useState(false);
-  // function addAQuestionButton () {
-  //   setClick((prevVal) => !prevVal);
-  // }
 
   const [ inputQuestion, setInputQuestion ] = useState({
     content: '',
@@ -23,6 +17,12 @@ function AddAQuestion(props) {
       };
     });
   }
+
+  // TODO: handleSubmit
+  // once the user clicks submit, it will check the input for validation.
+    // If input is invalid, send a warning message and prevent submitting.
+    // If input is valid, form will be submitted and saved to the database?, the Modal window will disappear
+       // and Modal container's opacity will go back to "1".
 
   return (<div className="modal-add-a-question">
       <button className="toggle-button" id="add-a-question-toggle-button" onClick={props.addAQuestion} style={{
@@ -42,7 +42,7 @@ function AddAQuestion(props) {
         backgroundColor: "ivory",
         marginLeft: "5rem", padding: "5px 20px"}} >
         <h3 style={{ marginBottom: "0" }}>Ask Your Question</h3>
-        <span>About the {props.currentProduct}</span>
+        <span>About the {props.currentProductName}</span>
 
         <div className="your-question-content">
             <span>Your Question *</span>

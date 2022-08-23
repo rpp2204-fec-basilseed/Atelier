@@ -6,7 +6,6 @@ import Question from './Question.jsx';
 import AddAQuestion from './AddAQuestion.jsx';
 
 function QandA (props) {
-  // Working on it: "ADD A QUESTION" button
   const [ questionAdded, setQuestionAdded ] = useState(false);
 
   function handleAddAQuestionButton () {
@@ -25,14 +24,14 @@ function QandA (props) {
     }).then((result) => {
         console.log('log all answers here__', result.data.results[0].answers);
         setAllQuestions((prev) => {
-          const questionsSorted = [...prev, ...result.data.results].sort((a, b) => b.question_helpfulness - a.question_helpfulness);
+          const questionsSorted =
+          [...prev, ...result.data.results].filter((elem) => Object.keys(elem.answers).length !== 0)
+          .sort((a, b) => b.question_helpfulness - a.question_helpfulness);
           return questionsSorted;
         });
       })
       .catch((err) => console.log(err))
   }, []);
-
-  const firstTwoQuestions = allQuestions.slice(0, 2);
 
   const [ counter, setCounter] = useState(0);
 
@@ -52,6 +51,8 @@ function QandA (props) {
       questionHelpfulness={elem.question_helpfulness}
       answers={elem.answers}
       questionAdded={questionAdded}
+      questionBody={elem.question_body}
+      currentProductName={props.curr_product_name}
       />;
     })}
 
@@ -70,7 +71,7 @@ function QandA (props) {
       }}>MORE ANSWERED QUESTIONS
     </button>}
 
-    <AddAQuestion currentProduct={props.curr_product_id} questionAdded={questionAdded} addAQuestion={handleAddAQuestionButton}/>
+    <AddAQuestion currentProductName={props.curr_product_name} questionAdded={questionAdded} addAQuestion={handleAddAQuestionButton}/>
 
   </div>);
 }

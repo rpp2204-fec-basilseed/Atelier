@@ -23,7 +23,8 @@ function Question(props) {
 
   return (<div>
     <div className="question-body" style={{ fontWeight: "bold", display: "inline-flex", opacity: props.questionAdded ? "0.2" : "1", zIndex: "1" }}>Q: {props.questionBody}</div>
-    <Sidebar questionAdded={props.questionAdded} helpful={props.questionHelpfulness} />
+    <Sidebar questionAdded={props.questionAdded} helpful={props.questionHelpfulness}
+    questionBody={props.questionBody} currentProductName={props.currentProductName}/>
 
     { !clicked && shortAnswers.map((elem) => {
       return (
