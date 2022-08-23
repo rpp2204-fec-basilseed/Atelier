@@ -19,7 +19,7 @@ export default function DisplayReview ({reviewsList, displayedReviews, renderSta
           <div style={{width: '500px', whiteSpace: 'pre-wrap', overflowWrap: 'break-word'}}>{review.body}</div>
           <div className='helpful' style={{paddingTop: '10px', display: 'flex'}}>
           <div style={{paddingRight: '20px'}}>Was this review helpful?</div>
-          <Helpful helpfulness={review.helpfulness}/>
+          <Helpful helpfulness={review.helpfulness} reviewId={review.review_id}/>
           </div>
         </div>
       )

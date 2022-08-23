@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DisplayReview from './DisplayReview.jsx';
+import AddReview from './AddReview.jsx';
 const Axios = require('axios');
 
 
@@ -18,6 +19,8 @@ export default function Reviews ({currProduct, renderStarRating, totalScore}) {
   const [metaData, setMetaData] = useState({});
 
   const [currReviews, setCurrReviews] = useState([]);
+
+  const [showReview, setShowReview] = useState(false);
 
 
 
@@ -38,20 +41,26 @@ export default function Reviews ({currProduct, renderStarRating, totalScore}) {
       })
       .then((metaData) => {
         if(metaData) {
-          console.log(metaData)
           setMetaData(priorMetaData => metaData.data);
         }
+        return;
+      })
+      .catch((err) => {
+        throw err;
       })
     })
     .catch((error) => {
       throw error;
     })
-  })
+  }, [])
 
   function increaseDisplayedReviews() {
     setDisplayedReviews(previousDisplayed => previousDisplayed + 4);
   }
 
+  function toggleShowReview() {
+    setShowReview(showForm => !showForm);
+  }
 
   return (
   <div style={{marginLeft: '10px'}}>
@@ -73,8 +82,9 @@ export default function Reviews ({currProduct, renderStarRating, totalScore}) {
         <DisplayReview reviewsList={currReviews} displayedReviews={displayedReviews} renderStarRating={renderStarRating}/>
       <div className="more-and-add-review" style={{display: 'flex'}}>
         <div style={{border: 'solid black 3px', padding: '20px'}} onClick={increaseDisplayedReviews}>More Reviews</div>
-        <div onClick={() => console.log('yeah')} style={{border: 'solid black 3px', padding: '20px', marginLeft: '40px'}}>Add Review</div>
+        <div onClick={toggleShowReview} style={{border: 'solid black 3px', padding: '20px', marginLeft: '40px'}}>Add Review</div>
       </div>
+        <div>{showReview ? <AddReview productId={currProduct}/> : null}</div>
       </div>
     </div>
   </div>

@@ -57,6 +57,27 @@ app.get('/review', (req, res) => {
     }
   });
 
+  app.put('/helpful', (req, res) => {
+    if (req.query.productId) {
+
+      let config = {
+        method: 'put',
+        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/' + req.query.productId + '/helpful',
+        headers: {
+          Authorization : apiKey
+        }
+      }
+
+      Axios(config)
+      .then((response) => {
+        res.send();
+      })
+      .catch((error) => {
+        throw error;
+      })
+    }
+  });
+
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
 });
