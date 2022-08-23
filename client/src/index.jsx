@@ -7,7 +7,8 @@ class Index extends React.Component {
     super(props);
 
     this.state = {
-      curr_product_id: 71697
+      curr_product_id: 71697,
+      curr_product_name: 'Camo Onesie'
     }
   }
 
@@ -20,5 +21,3 @@ class Index extends React.Component {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Index/>);
-
-// ReactDOM.render(<Index />, document.getElementById('root'));
