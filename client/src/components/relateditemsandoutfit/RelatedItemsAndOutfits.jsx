@@ -11,12 +11,7 @@ class RelatedItemsAndOutfits extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      relatedItems: [
-        71698,
-        71699,
-        71704,
-        71703
-      ],
+      relatedItems: [],
       outfits: [
         71697,
         71698,
@@ -30,14 +25,24 @@ class RelatedItemsAndOutfits extends React.Component {
   };
 
   getRelatedItems () {
-    axios.get('/products', {params: { p_id: 71697, endpoint: 'related' }})
+    axios.get('/products', {params: { p_id: this.props.p_id, endpoint: 'related' }})
       .then((res) => {
         this.setState({relatedItems: res.data})
       })
       .catch((err) => {
       console.log(err);
       });
-    };
+  };
+
+  getOutfitItems () {
+    axios.get('/products', {params: { p_id: 71697, endpoint: 'outfit' }})
+      .then((res) => {
+        this.setState({relatedItems: res.data})
+      })
+      .catch((err) => {
+      console.log(err);
+      });
+  };
 
   componentDidMount () {
     this.getRelatedItems();

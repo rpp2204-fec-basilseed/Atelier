@@ -3,6 +3,6 @@ import ReactDOM from 'react-dom';
 import RelatedItemsAndOutfits from './components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx';
 
 ReactDOM.render(
-  <RelatedItemsAndOutfits />,
+  <RelatedItemsAndOutfits p_id={71697}/>,
   document.getElementById('root')
 );
