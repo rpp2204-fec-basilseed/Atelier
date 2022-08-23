@@ -1,4 +1,5 @@
 const path = require('path');
+const dotEnv = require('dotenv-webpack');
 
 module.exports = {
   mode: "development",
@@ -24,4 +25,9 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new dotEnv({
+      ignoreStub: true,
+    })
+  ],
 };
