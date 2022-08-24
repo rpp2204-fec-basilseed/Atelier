@@ -14,6 +14,7 @@ export default function Reviews ({currProduct, renderStarRating, totalScore}) {
     return Math.floor(rating / totalStars * 100) + '%';
   };
 
+
   const [displayedReviews, setDisplayedReviews] = useState(4);
 
   const [metaData, setMetaData] = useState({});

@@ -58,11 +58,11 @@ app.get('/review', (req, res) => {
   });
 
   app.put('/helpful', (req, res) => {
-    if (req.query.productId) {
+    if (req.query.reviewId) {
 
       let config = {
         method: 'put',
-        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/' + req.query.productId + '/helpful',
+        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/' + req.query.reviewId + '/helpful',
         headers: {
           Authorization : apiKey
         }
@@ -72,6 +72,7 @@ app.get('/review', (req, res) => {
       .then((response) => {
         res.send();
       })
+
       .catch((error) => {
         throw error;
       })
