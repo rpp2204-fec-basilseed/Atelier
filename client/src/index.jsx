@@ -20,5 +20,3 @@ class Index extends React.Component {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Index/>);
-
-// ReactDOM.render(<Index />, document.getElementById('root'));
