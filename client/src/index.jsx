@@ -19,7 +19,21 @@ class Index extends React.Component {
     this.setState({curr_product_id: e.event.product_id});
   };
 
-  renderStarRating(product_id) {
+  renderStarRating(rating) {
+
+    const stars = [];
+
+    for(let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(<FaStar key={i}/>);
+      } else {
+        stars.push(<AiOutlineStar key={i}/>)
+      }
+    }
+
+    return stars.map((star) => {
+      return star
+    })
 
   }
 
