@@ -10,7 +10,7 @@ class Style extends React.Component {
 
   render (){
     var listProducts = this.props.prodData.map((product) =>
-      <div key={product.style_id} className="thumbnail container"><img src={product.photos[0].thumbnail_url} /></div>
+      <div key={product.style_id} className="thumbnail container"><img className="style" src={product.photos[0].thumbnail_url} /></div>
     )
 
     return (
