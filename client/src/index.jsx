@@ -19,6 +19,11 @@ class Index extends React.Component {
     this.setState({curr_product_id: e.event.product_id});
   };
 
+  /*
+  Render Star Rating takes in the rating (a number) and returns a div with up to 5 stars
+  usage example =>  <div>{renderStarRating(product.score)}</div>
+  */
+
   renderStarRating(rating) {
 
     const stars = [];
