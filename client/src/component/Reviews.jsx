@@ -4,7 +4,7 @@ import AddReview from './AddReview.jsx';
 const Axios = require('axios');
 
 
-export default function Reviews ({currProduct, renderStarRating, totalScore}) {
+export default function Reviews ({currProduct, renderStarRating}) {
 
   const starPercentage = (rating) => {
     let totalStars = 0;
@@ -13,7 +13,6 @@ export default function Reviews ({currProduct, renderStarRating, totalScore}) {
     }
     return Math.floor(rating / totalStars * 100) + '%';
   };
-
 
   const [displayedReviews, setDisplayedReviews] = useState(4);
 
@@ -68,8 +67,8 @@ export default function Reviews ({currProduct, renderStarRating, totalScore}) {
     <h2>Ratings and Reviews</h2>
     <div className='main' style={{display: 'flex'}}>
       <div className='ratings'>
-        <div className='review-score' style={{fontSize: '36px'}}>{metaData.ratings ? totalScore(metaData.ratings) : null}</div>
-        <div className='stars'>{metaData.ratings ? renderStarRating(totalScore(metaData.ratings)) : null}</div>
+        {/* <div className='review-score' style={{fontSize: '36px'}}>{metaData.ratings ? totalScore(metaData.ratings) : null}</div> */}
+        {/* <div className='stars'>{metaData.ratings ? renderStarRating(totalScore(metaData.ratings)) : null}</div> */}
         <div>5 star reviews: {metaData.ratings ? starPercentage(metaData.ratings[5]) : null}</div>
         <div>4 star reviews: {metaData.ratings ? starPercentage(metaData.ratings[4]) : null}</div>
         <div>3 star reviews: {metaData.ratings ? starPercentage(metaData.ratings[3]) : null}</div>

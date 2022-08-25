@@ -1,64 +1,51 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import Reviews from './component/Reviews.jsx';
-import Axios from 'axios';
+const Axios = require('axios');
+import { FaStar } from 'react-icons/fa';
+import { AiOutlineStar } from 'react-icons/ai';
 
 class Index extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+
     this.state = {
       curr_product_id: 71697,
-      curr_product_reviews: [],
-      curr_product_meta: []
-
+      curr_product_name: 'Camo Onesie'
     }
+    this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
-    this.totalScore = this.totalScore.bind(this);
   }
 
-  totalScore(reviews) {
-    let totalScore = 0;
-    let totalReviews = 0;
-    for (let currentScore in reviews) {
-      totalScore += parseInt(currentScore * reviews[currentScore]);
-      totalReviews += parseInt(reviews[currentScore]);
-    }
-    return (totalScore / totalReviews).toFixed(2);
-  }
+  updateCurrentProduct(e) {
+    this.setState({curr_product_id: e.event.product_id});
+  };
 
-  renderStarRating(reviewScore) {
+  renderStarRating(rating) {
 
-    var starsInHtml = [];
+    const stars = [];
 
-    for (let i = 1; i <= 5; i++) {
-      if (i <= reviewScore) {
-        starsInHtml.push(<div key={`${i}-star`}>&#9733;</div>)
+    for(let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(<FaStar key={i}/>);
       } else {
-        starsInHtml.push(<div key={`${i}-star`}>&#9734;</div>)
+        stars.push(<AiOutlineStar key={i}/>)
       }
     }
-    return (
-      <>
-      <div style={{display: 'flex'}}>
-      {starsInHtml.map((star) => {
-        return star
-      })}
-      </div>
-      </>
-    )
+
+    return stars.map((star) => {
+      return star
+    })
+
   }
 
   render() {
     return (
-      <>
-      <Reviews currReviews={this.state.curr_product_reviews} currProduct={this.state.curr_product_id} metaData={this.state.curr_product_meta} renderStarRating={this.renderStarRating} totalScore={this.totalScore}/>
-      {/* <Overview curr_product_id={this.state.curr_product_id} /> */}
-      </>
+      <Reviews renderStarRating={this.renderStarRating} currProduct={this.state.curr_product_id}/>
+      // <Overview curr_product_id={this.state.curr_product_id} />
     )
   }
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Index/>);
-
-// ReactDOM.render(<Index />, document.getElementById('root'));
