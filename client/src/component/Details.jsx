@@ -17,14 +17,16 @@ class Details extends React.Component {
       );
     }
     return (
-      <div className="details container">
-        <div>
+      <div className="details-container">
+        <div className="text-container">
           <h3>{this.props.prodData.slogan}</h3>
-          <div>{this.props.prodData.description}</div>
+          <span>{this.props.prodData.description}</span>
         </div>
-        <ul>
-          {featureList}
-        </ul>
+        <div className="featureList-container">
+          <ul>
+            {featureList}
+          </ul>
+        </div>
       </div>
     )
   }

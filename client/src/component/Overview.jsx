@@ -1,8 +1,8 @@
 import React from 'react';
-const axios = require('axios');
 import Style from './Style.jsx';
 import Details from './Details.jsx';
 import CartFavorite from './CartFavorite.jsx';
+const axios = require('axios');
 
 class Overview extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class Overview extends React.Component {
 
   componentDidMount() {
 
-    axios.get('http://localhost:8080/products', {
+    axios.get('/products', {
       params: {
         curr_product_id: this.props.curr_product_id
       }
@@ -43,13 +43,12 @@ class Overview extends React.Component {
       console.log(error);
     });
 
-    axios.get('http://localhost:8080/styles', {
+    axios.get('/styles', {
       params: {
         curr_product_id: this.props.curr_product_id
       }
     })
     .then((response) => {
-      // console.log(JSON.stringify(response.data));
       this.setState({
         styleData: response.data.results,
         selectedStyle: 0
@@ -72,6 +71,7 @@ class Overview extends React.Component {
   }
 
   render() {
+    console.log('rendering');
     var currProdImage = <div>Product Image</div>;
     var currProdCategory = <div>Product Category</div>;
     var currProdName = <div>Product Name</div>;
@@ -108,13 +108,11 @@ class Overview extends React.Component {
             {currProdSizes}
           </div>
           <div>
-            <CartFavorite curr_product_id={this.state.curr_product_id}/>
+            <CartFavorite curr_product_id={this.props.curr_product_id} curr_sku_id={this.state.selectedSKU}/>
           </div>
         </div>
         <br></br>
-        <div className="details container">
-          <Details prodData={this.state.prodData}/>
-        </div>
+        <Details prodData={this.state.prodData}/>
       </div>
     )
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+const axios = require('axios');
 
 class CartFavorite extends React.Component {
   constructor(props) {
@@ -10,6 +11,27 @@ class CartFavorite extends React.Component {
   }
 
   handleAddToBag(e) {
+
+    var data = JSON.stringify({
+      "sku_id": this.props.curr_sku_id
+    });
+
+    var config = {
+      method: 'post',
+      url: '/cart',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+
+    axios(config)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
   }
 
