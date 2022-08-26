@@ -1,4 +1,8 @@
-import renderer from 'react-test-renderer';
+//import renderer from 'react-test-renderer';
+import React from 'react'
+import {render, screen} from '@testing-library/react'
+
+
 import QandA from '../QandA.jsx';
 // import ShallowRenderer from 'react-test-renderer/shallow';
 import { configure, shallow } from 'enzyme';

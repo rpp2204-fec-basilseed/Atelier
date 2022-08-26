@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { parseJSON } from 'date-fns';
+import moment from 'moment';
 
 function Answer(props) {
   const [ answers_votes, setAnswersVotes ] = useState(props.answerHelpfulness);
@@ -26,7 +27,7 @@ function Answer(props) {
 
     <div className="date" style={{
       color: "#404040", fontSize: "0.8rem", display: "inline-flex", marginLeft: "3px"
-      }}> {props.answered_date}
+      }}> {moment(props.answered_date).format('LL')}
     </div>
 
     <span className="pipe-symbol" style={{  margin: "0 5px" }}>|</span>

@@ -1,22 +1,39 @@
 import React, { useState } from 'react';
 
 function Search(props) {
-  // user types in the search box
-  // once there are three characters typed, it will trigger the search function
+
   const [input, setInput] = useState('');
 
   function handleInput(event) {
     const value = event.target.value;
     setInput(value);
     if (value.length > 2) {
-      search(value);
+      props.onSearch(event);
     }
   }
 
-  // TODO: use database??
+  // TODO:
   function search (input) {
     console.log(`you searched for in ${input}`);
+  // can get ahold of {props.allQuestions}
+  // loop througth every question and every answer
+  // every question --- {props.allQuestions.map((ele) => elem.question_body)}
+  // every answer --- ???
   }
+
+
+  // {allQuestions.slice(0, counter * 2 + 2).map((elem) => {
+  //   return <Question
+  //   key={elem.question_id}
+  //   questionBody={elem.question_body}
+  //   questionHelpfulness={elem.question_helpfulness}
+  //   answers={elem.answers}
+  //   questionAdded={questionAdded}
+  //   questionBody={elem.question_body}
+  //   currentProductName={props.curr_product_name}
+  //   />;
+  // })}
+
 
   return (
     <div className="search-box" style={{opacity: props.questionAdded ? "0.2" : "1", zIndex: "1"}}>

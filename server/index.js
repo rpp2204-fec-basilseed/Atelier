@@ -11,7 +11,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 let port = process.env.REACT_APP_PORT;
 
-app.get('/testing', (req, res) => {
+app.get('/questions', (req, res) => {
   let config = {
     headers: { 'Authorization' : process.env.REACT_APP_API_KEY },
     params: {

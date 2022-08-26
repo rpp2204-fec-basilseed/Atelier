@@ -6,18 +6,11 @@ import Question from './Question.jsx';
 import AddAQuestion from './AddAQuestion.jsx';
 
 function QandA (props) {
-  const [ questionAdded, setQuestionAdded ] = useState(false);
-
-  function handleAddAQuestionButton () {
-    setQuestionAdded((prevVal) => {
-      return !prevVal
-    });
-  }
 
   const [allQuestions, setAllQuestions] = useState([]);
 
-  useEffect(() => {
-    axios.get('/testing', {
+  function update() {
+    axios.get('/questions', {
       params: {
         product_id: props.curr_product_id
       }
@@ -31,7 +24,32 @@ function QandA (props) {
         });
       })
       .catch((err) => console.log(err))
+  }
+
+  useEffect(() => {
+    update();
   }, []);
+
+  // Working on it: search function. Maybe combine search function with update?
+  // delete the search input will make the page back to default page and erase the original searched result
+  // || includes, include everything
+  function handleSearch(event) {
+    let searchText = event.target.value;
+    axios.get('/questions', {
+      params: {
+        product_id: props.curr_product_id
+      }
+    })
+    .then((result) => {
+      setAllQuestions((prev) => {
+        const searchedResults =
+        [...prev, ...result.data.results].filter((elem) => elem.question_body.includes(searchText));
+        return searchedResults;
+      });
+      console.log('log searchedResults here', searchedResults);
+      })
+      .catch((err) => console.log(err));
+  }
 
   const [ counter, setCounter] = useState(0);
 
@@ -39,12 +57,22 @@ function QandA (props) {
     setCounter(counter + 1);
   }
 
+  const [ questionAdded, setQuestionAdded ] = useState(false);
+
+  function handleAddAQuestionButton () {
+    setQuestionAdded((prevVal) => {
+      return !prevVal
+    });
+  }
+
   return (<div className="container" style={{
     margin: "0 20rem", padding: "50px 0", lineHeight: "2"}}>
     <Header questionAdded={questionAdded}/>
-    <Search questionAdded={questionAdded}/>
+    <Search onSearch={handleSearch} allQuestions={allQuestions} questionAdded={questionAdded}/>
 
-    {allQuestions.slice(0, counter * 2 + 2).map((elem) => {
+
+    {/* allQuestions.slice(0, counter * 2 + 2).map((elem) */}
+    { allQuestions.map((elem)=> {
       return <Question
       key={elem.question_id}
       questionBody={elem.question_body}
