@@ -25,6 +25,7 @@ app.get('/products', (req, res) => {
   if (req.query.endpoint) {
     url += `/${req.query.endpoint}`;
   }
+
   console.log(req.query)
   axios({
     method: 'get',

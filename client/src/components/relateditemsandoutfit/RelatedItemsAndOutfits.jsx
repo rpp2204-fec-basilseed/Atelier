@@ -1,33 +1,27 @@
-// import { API_KEY } from '@env';
 import React from 'react';
-import Carousel from './Carousel.jsx';
 import axios from 'axios';
-// import { fetchProducts  } from '../../../server/api.js';
-
-// grab current product from props
-// pass related Items
+import RelatedCarousel from './RelatedItemCarousel.jsx';
+import OutfitCarousel from './OutfitCarousel.jsx';
 
 class RelatedItemsAndOutfits extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       relatedItems: [],
-      outfits: [
-        71697,
-        71698,
-        71699,
-        71701
-      ]
+      outfitItems: []
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.getRelatedItems = this.getRelatedItems.bind(this);
+    this.getOutfitItems = this.getOutfitItems.bind(this);
+    this.addToOutfit = this.addToOutfit.bind(this);
   };
 
   getRelatedItems () {
     axios.get('/products', {params: { p_id: this.props.p_id, endpoint: 'related' }})
       .then((res) => {
         this.setState({relatedItems: res.data})
+        console.log('state', this.state)
       })
       .catch((err) => {
       console.log(err);
@@ -35,17 +29,27 @@ class RelatedItemsAndOutfits extends React.Component {
   };
 
   getOutfitItems () {
-    axios.get('/products', {params: { p_id: 71697, endpoint: 'outfit' }})
-      .then((res) => {
-        this.setState({relatedItems: res.data})
-      })
-      .catch((err) => {
-      console.log(err);
-      });
+    if (!localStorage.getItem('outfit')) {
+      localStorage.setItem('outfit', JSON.stringify([]));
+    }
+    this.setState({outfitItems: JSON.parse(localStorage.getItem('outfit'))});
   };
+
+  addToOutfit (product_id) {
+    let current = this.state.outfitItems;
+    let toAdd = product_id;
+    if (!current.includes(toAdd)) {
+      current.push(toAdd);
+      localStorage.setItem('outfit', JSON.stringify(current));
+      this.parseOutfit;
+    }
+    this.getOutfitItems();
+    return;
+  }
 
   componentDidMount () {
     this.getRelatedItems();
+    this.getOutfitItems();
   };
 
 
@@ -59,7 +63,8 @@ class RelatedItemsAndOutfits extends React.Component {
     return (
     <div className="related-items-and-outfit-container">
       <div className="related-items-container">
-        <Carousel />
+        <RelatedCarousel relatedItems={this.state.relatedItems} addToOutfit={this.addToOutfit} />
+        <OutfitCarousel outfitItems={this.state.outfitItems} updateOutfit={this.getOutfitItems} />
         {/* <h1>Related</h1>
         <div className ="related-card-container">
           {this.state.relatedItems.map(item => (

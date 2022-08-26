@@ -1,0 +1,64 @@
+import React from 'react';
+import { FaAngleLeft } from 'react-icons/fa';
+import { FaAngleRight } from 'react-icons/fa';
+import OutfitCard from './OutfitCard.jsx';
+
+class OutfitCarousel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      displayLeftBtn: true,
+      displayRightBtn: true
+      }
+      this.clickPrev = this.clickPrev.bind(this);
+      this.clickNext = this.clickNext.bind(this);
+      this.removeFromOutfit = this.removeFromOutfit.bind(this);
+  }
+
+  parseOutfit () {
+    this.setState({outfits: localStorage.setItem('outfit', JSON.parse([]))});
+  }
+
+  removeFromOutfit (product_id) {
+    let current = this.props.outfitItems;
+    let toRemove = product_id;
+    let index = current.indexOf(toRemove);
+    if(index > -1) {
+      current.splice(index, 1);
+    }
+    localStorage.setItem('outfit', JSON.stringify(current));
+    this.props.updateOutfit();
+    return;
+  }
+
+  clickPrev () {
+    const carouselSelector = document.querySelector('.outfit.carousel-cards');
+    let carouselWidth = carouselSelector.clientWidth;
+    carouselSelector.scrollLeft -= 350;
+    console.log(carouselSelector.scrollLeft)
+  }
+
+  clickNext () {
+    const carouselSelector = document.querySelector('.outfit.carousel-cards');
+    let carouselWidth = carouselSelector.clientWidth;
+    carouselSelector.scrollLeft += 350;
+    console.log(carouselSelector.scrollLeft)
+  }
+
+  render () {
+    return (
+      <div className='outfit carousel-container'>
+        {console.log(this.props)}
+        {this.state.displayLeftBtn ? <button aria-labelledby="previous" className='prev-btn' onClick={this.clickPrev}><FaAngleLeft size={32} /></button> : <div></div>}
+        {this.state.displayRightBtn ? <button aria-labelledby="next" className='next-btn' onClick={this.clickNext}><FaAngleRight size={32} /></button> : <div></div>}
+        <div className='outfit carousel-cards'>
+        {this.props.outfitItems.map(item => (
+            <OutfitCard key={item} p_id={item} removeFromOutfit={this.removeFromOutfit} />
+          ))}
+        </div>
+      </div>
+    )
+  }
+};
+
+export default OutfitCarousel;
