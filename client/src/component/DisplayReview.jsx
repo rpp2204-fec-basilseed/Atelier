@@ -6,6 +6,7 @@ const moment = require('moment');
 export default function DisplayReview ({reviewsList, displayedReviews, renderStarRating, reviewWasHelpful}) {
 
     return reviewsList.slice(0,displayedReviews).map((review) => {
+      console.log(review)
       return (
         <div key={review.review_id} style={{paddingTop: '10px', paddingBottom: '10px'}}>
           <div style={{display: 'flex'}}>

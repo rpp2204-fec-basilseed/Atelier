@@ -22,12 +22,15 @@ export default function Reviews ({currProduct, renderStarRating, sendReview }) {
 
   const [showReview, setShowReview] = useState(false);
 
-  const [filter, updateFilter] = useState('helpful');
+  const [filter, updateFilter] = useState('newest');
 
   const getReviews = () => {
+
+    updateFilter('helpful');
+
     Axios.get('/review', {
       params: {
-      productId: `${currProduct}&sort=${filter}`
+      productId: `${currProduct}&sort=${'helpful'}`
     }
   })
     .then((reviewData) => {
@@ -41,6 +44,7 @@ export default function Reviews ({currProduct, renderStarRating, sendReview }) {
       })
       .then((metaData) => {
         if(metaData) {
+          console.log(metaData)
           setMetaData(priorMetaData => metaData.data);
         }
         return;
@@ -63,7 +67,7 @@ export default function Reviews ({currProduct, renderStarRating, sendReview }) {
     }
   })
     .then((reviewData) => {
-      setCurrReviews(priorReviews => reviewData.data);
+      setCurrReviews(reviewData.data);
     })
     .then(() => {
       Axios.get('/meta', {
@@ -73,7 +77,7 @@ export default function Reviews ({currProduct, renderStarRating, sendReview }) {
       })
       .then((metaData) => {
         if(metaData) {
-          setMetaData(priorMetaData => metaData.data);
+          setMetaData(metaData.data);
         }
         return;
       })
@@ -91,8 +95,7 @@ export default function Reviews ({currProduct, renderStarRating, sendReview }) {
   }
 
   function changeFilter() {
-    updateFilter(previousFilter => 'newest');
-    getReviews();
+    console.log('changed filter')
   }
 
   function toggleShowReview() {
@@ -104,7 +107,7 @@ export default function Reviews ({currProduct, renderStarRating, sendReview }) {
     <h2>Ratings and Reviews</h2>
     <div className='main' style={{display: 'flex'}}>
       <div className='ratings'>
-        {/* <div className='review-score' style={{fontSize: '36px'}}>{metaData.ratings ? totalScore(metaData.ratings) : null}</div> */}
+        <div className='review-score' style={{fontSize: '36px'}}>{metaData.ratings ? renderStarRating(metaData.characteristics.Quality.value) : null}</div>
         {/* <div className='stars'>{metaData.ratings ? renderStarRating(totalScore(metaData.ratings)) : null}</div> */}
         <div>5 star reviews: {metaData.ratings ? starPercentage(metaData.ratings[5]) : null}</div>
         <div>4 star reviews: {metaData.ratings ? starPercentage(metaData.ratings[4]) : null}</div>
@@ -116,11 +119,11 @@ export default function Reviews ({currProduct, renderStarRating, sendReview }) {
       </div>
       <div className='reviews' style={{paddingLeft: '20px'}}>
         <div className='total-reviews'>{currReviews.length} Show reviews by:</div>
-        <span onClick={() => changeFilter()}>Helpful</span>
+        <span onClick={() => {getReviews()}}>Helpful</span>
         <DisplayReview reviewsList={currReviews} displayedReviews={displayedReviews} renderStarRating={renderStarRating}/>
       <div className="more-and-add-review" style={{display: 'flex'}}>
         <div style={{border: 'solid black 3px', padding: '20px'}} onClick={increaseDisplayedReviews}>More Reviews</div>
-        <div onClick={sendReview} style={{border: 'solid black 3px', padding: '20px', marginLeft: '40px'}}>Add Review</div>
+        <div onClick={toggleShowReview} style={{border: 'solid black 3px', padding: '20px', marginLeft: '40px'}}>Add Review</div>
       </div>
         <div>{showReview ? <AddReview productId={currProduct}/> : null}</div>
       </div>

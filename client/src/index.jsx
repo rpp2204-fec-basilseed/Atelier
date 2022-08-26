@@ -2,7 +2,7 @@ import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import Reviews from './component/Reviews.jsx';
 const Axios = require('axios');
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { AiOutlineStar } from 'react-icons/ai';
 
 class Index extends React.Component {
@@ -10,7 +10,7 @@ class Index extends React.Component {
     super(props);
 
     this.state = {
-      curr_product_id: 71697,
+      curr_product_id: 71698,
       curr_product_name: 'Camo Onesie'
     }
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
@@ -26,11 +26,16 @@ class Index extends React.Component {
 
     const stars = [];
 
+    let halfStarPushed = false;
+
     for(let i = 1; i <= 5; i++) {
       if (i <= rating) {
         stars.push(<FaStar key={i}/>);
-      } else {
-        stars.push(<AiOutlineStar key={i}/>)
+       } else if (rating < i && rating > i - 1) {
+        stars.push(<FaStarHalfAlt key='half' />)
+        halfStarPushed = true
+       } else {
+        stars.push(<AiOutlineStar key={i} />)
       }
     }
 
