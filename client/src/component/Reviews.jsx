@@ -4,7 +4,7 @@ import AddReview from './AddReview.jsx';
 const Axios = require('axios');
 
 
-export default function Reviews ({currProduct, renderStarRating}) {
+export default function Reviews ({currProduct, renderStarRating, sendReview }) {
 
   const starPercentage = (rating) => {
     let totalStars = 0;
@@ -22,12 +22,44 @@ export default function Reviews ({currProduct, renderStarRating}) {
 
   const [showReview, setShowReview] = useState(false);
 
+  const [filter, updateFilter] = useState('helpful');
+
+  const getReviews = () => {
+    Axios.get('/review', {
+      params: {
+      productId: `${currProduct}&sort=${filter}`
+    }
+  })
+    .then((reviewData) => {
+      setCurrReviews(priorReviews => reviewData.data);
+    })
+    .then(() => {
+      Axios.get('/meta', {
+        params: {
+        productId: currProduct
+        }
+      })
+      .then((metaData) => {
+        if(metaData) {
+          setMetaData(priorMetaData => metaData.data);
+        }
+        return;
+      })
+      .catch((err) => {
+        throw err;
+      })
+    })
+    .catch((error) => {
+      throw error;
+    })
+  }
+
 
 
   useEffect(() => {
     Axios.get('/review', {
       params: {
-      productId: currProduct
+      productId: `${currProduct}&sort=${filter}`
     }
   })
     .then((reviewData) => {
@@ -58,6 +90,11 @@ export default function Reviews ({currProduct, renderStarRating}) {
     setDisplayedReviews(previousDisplayed => previousDisplayed + 4);
   }
 
+  function changeFilter() {
+    updateFilter(previousFilter => 'newest');
+    getReviews();
+  }
+
   function toggleShowReview() {
     setShowReview(showForm => !showForm);
   }
@@ -78,11 +115,12 @@ export default function Reviews ({currProduct, renderStarRating}) {
         <div className='comfort-rating-slide'>Comfort rating goes here</div>
       </div>
       <div className='reviews' style={{paddingLeft: '20px'}}>
-        <div className='total-reviews'>{currReviews.length} reviews with 'sort by' function goes here</div>
+        <div className='total-reviews'>{currReviews.length} Show reviews by:</div>
+        <span onClick={() => changeFilter()}>Helpful</span>
         <DisplayReview reviewsList={currReviews} displayedReviews={displayedReviews} renderStarRating={renderStarRating}/>
       <div className="more-and-add-review" style={{display: 'flex'}}>
         <div style={{border: 'solid black 3px', padding: '20px'}} onClick={increaseDisplayedReviews}>More Reviews</div>
-        <div onClick={toggleShowReview} style={{border: 'solid black 3px', padding: '20px', marginLeft: '40px'}}>Add Review</div>
+        <div onClick={sendReview} style={{border: 'solid black 3px', padding: '20px', marginLeft: '40px'}}>Add Review</div>
       </div>
         <div>{showReview ? <AddReview productId={currProduct}/> : null}</div>
       </div>

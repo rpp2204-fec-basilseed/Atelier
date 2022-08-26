@@ -79,6 +79,59 @@ app.get('/review', (req, res) => {
     }
   });
 
+  app.put('/report', (req, res) => {
+    if (req.query.reviewId) {
+
+      let config = {
+        method: 'put',
+        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/' + req.query.reviewId + '/report',
+        headers: {
+          Authorization : apiKey
+        }
+      }
+
+      Axios(config)
+      .then((response) => {
+        console.log(response)
+        res.send();
+      })
+
+      .catch((error) => {
+        throw error;
+      })
+    }
+  });
+
+  app.post('/addReview', (req, res) => {
+    var data = {
+      product_id:71697,
+      rating:5,
+      summary:"It can't get better than this! Buy this one now!!",
+      body:"Seriously. This is life changing. I have already ordered 73 more for all my family and friends.",
+      recommend:true,
+      name:"marysmith74",
+      email:"mzmarys74@aol.com",
+      photos:[]
+    }
+var config = {
+  method: 'post',
+  url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
+  headers: {
+    'Authorization': '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',
+    'Content-Type': 'text/plain'
+  },
+  data : data
+};
+
+Axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+  })
+
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
 });

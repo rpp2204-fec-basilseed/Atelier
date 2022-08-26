@@ -1,5 +1,6 @@
 import React from 'react';
 import Helpful from './Helpful.jsx';
+import Report from './Report.jsx';
 const moment = require('moment');
 
 export default function DisplayReview ({reviewsList, displayedReviews, renderStarRating, reviewWasHelpful}) {
@@ -17,6 +18,8 @@ export default function DisplayReview ({reviewsList, displayedReviews, renderSta
           <div className='helpful' style={{paddingTop: '10px', display: 'flex'}}>
             <div style={{paddingRight: '20px'}}>Was this review helpful?</div>
             <Helpful helpfulness={review.helpfulness} reviewId={review.review_id}/>
+            <div className="helpful-report-spacing" style={{paddingLeft: "20px", paddingRight: "20px"}}>||</div>
+            <Report review_id={review.review_id}/>
           </div>
         </div>
       )

@@ -15,6 +15,7 @@ class Index extends React.Component {
     }
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
+    this.sendReview = this.sendReview.bind(this);
   }
 
   updateCurrentProduct(e) {
@@ -39,9 +40,24 @@ class Index extends React.Component {
 
   }
 
+  sendReview() {
+    Axios.post('/addReview', {
+      body: {
+        product_id:71697,
+        rating:5,
+        summary:"It can't get better than this! Buy this one now!!",
+        body:"Seriously. This is life changing. I have already ordered 73 more for all my family and friends.",
+        recommend:true,
+        name:"marysmith74",
+        email:"mzmarys74@aol.com",
+        photos:[]
+      }
+    })
+  }
+
   render() {
     return (
-      <Reviews renderStarRating={this.renderStarRating} currProduct={this.state.curr_product_id}/>
+      <Reviews renderStarRating={this.renderStarRating} currProduct={this.state.curr_product_id} sendReview={this.sendReview}/>
       // <Overview curr_product_id={this.state.curr_product_id} />
     )
   }
