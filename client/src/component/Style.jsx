@@ -1,22 +1,16 @@
 import React from 'react';
 
-class Style extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
 
-    }
+function Style(props){
+
+  function handleStyleChange() {
+    props.handleStyleChange(props.styleNum);
   }
 
-  render (){
-    var listProducts = this.props.prodData.map((product) =>
-      <div key={product.style_id} className="thumbnail container"><img className="style" src={product.photos[0].thumbnail_url} alt={product.name} /></div>
-    )
+  return (
+    <img className="style" src={props.thumbURL} alt={props.name} onClick={handleStyleChange} />
+  );
 
-    return (
-      <div>{listProducts}</div>
-    )
-  }
 }
 
 export default Style;

@@ -27,7 +27,6 @@ class ImgCarousel extends React.Component {
         <div className="slideshow">
           {images}
         </div>
-        <button onClick={this.handleNext}>Next</button>
       </div>
     )
   }
