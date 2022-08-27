@@ -61,6 +61,7 @@ class Index extends React.Component {
           }
       ]}/>
       <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
+      <Reviews currProduct={this.state.curr_product_id} />
     </div>
     )
   }
