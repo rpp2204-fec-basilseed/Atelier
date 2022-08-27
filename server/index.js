@@ -9,7 +9,6 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 // more to come
 
-<<<<<<< HEAD
 let port = process.env.REACT_APP_PORT;
 
 app.get('/questions', (req, res) => {
@@ -27,23 +26,23 @@ app.get('/questions', (req, res) => {
     .catch((err) => console.log(err));
 });
 
-app.post('/questions', (req, res) => {
-  // TODO: body parameters: body, name, email, product_id(INT)
-  let config = {
-    headers: { 'Authorization' : process.env.REACT_APP_API_KEY },
-    params: {
-      product_id: req.query.product_id
-    },
-  };
-  axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions', config)
-    .then((result) => {
-      console.log('server side POST request result', result);
-      console.log('server side POST req.body', req.body);
-      res.status(201).send('success');
-    })
-    .catch(err => console.log(err));
-});
-=======
+// app.post('/questions', (req, res) => {
+//   // TODO: body parameters: body, name, email, product_id(INT)
+//   let config = {
+//     headers: { 'Authorization' : process.env.REACT_APP_API_KEY },
+//     params: {
+//       product_id: req.query.product_id
+//     },
+//   };
+//   axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions', config)
+//     .then((result) => {
+//       console.log('server side POST request result', result);
+//       console.log('server side POST req.body', req.body);
+//       res.status(201).send('success');
+//     })
+//     .catch(err => console.log(err));
+// });
+
 app.get('/products', (req, res) => {
 
   var config = {
@@ -109,9 +108,6 @@ app.post('/cart', (req, res) => {
     res.status(500);
   });
 });
-
-let port = process.env.PORT;
->>>>>>> e97e9c54afab98282d3772211328f23cb9e457de
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
