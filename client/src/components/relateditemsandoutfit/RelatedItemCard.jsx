@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import ComparisonModal from './ComparisonModal.jsx';
 import { FaRegStar } from 'react-icons/fa'
 
 class RelatedItemCard extends React.Component {
@@ -13,10 +14,13 @@ class RelatedItemCard extends React.Component {
       features: '',
       price: '',
       salePrice: '',
-      img: ''
+      img: '',
+      isOpen: false
     }
     this.getItemDetails = this.getItemDetails.bind(this);
     this.getItemStyles = this.getItemStyles.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   getItemDetails () {
@@ -55,27 +59,32 @@ class RelatedItemCard extends React.Component {
     this.getItemStyles()
   }
 
-  // componentDidMount () {
-  //   this.setState({
-  //     relatedItems: 'results from api call'
-  //   })
-  // }
+  openModal () {
+    this.setState({isOpen: true})
+  }
+
+  closeModal () {
+    this.setState({isOpen: false})
+  }
+
   render() {
     return (
-    <div className="related-items card">
-      <div className="card-img-container">
-        <span onClick={() => this.props.addToOutfit(this.props.p_id)} className='related-products-tracker card-icon'><FaRegStar size={32}/></span>
-        <img className="related-img" src={this.state.img}  alt="picture of item" />
-      </div>
-      <div className="card-body-container">
-        <h4 className="card-category">{this.state.category}</h4>
-        <h3 className="card-title">{this.state.name}</h3>
-        <h4 className="card-price">${this.state.salePrice ? this.state.salePrice : this.state.price}</h4>
-        <div className="rating-container">
-          {/* insert star component */}
+      <>
+        <div className="related-items card">
+          <div className="card-img-container">
+            <span onClick={this.openModal} className='related-products-tracker card-icon'><FaRegStar size={32}/></span>
+            <img className="related-img" src={this.state.img}  alt="picture of item" />
+          </div>
+          <div className="card-body-container">
+            <h4 className="card-category">{this.state.category}</h4>
+            <h3 className="card-title">{this.state.name}</h3>
+            <h4 className="card-price">${this.state.salePrice ? this.state.salePrice : this.state.price}</h4>
+            <div className="rating-container">
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+        {this.state.isOpen ? <ComparisonModal currentProduct={this.props.currentProduct} currentFeatures={this.props.currentFeatures} comparisonProduct={this.state.name} comparisonFeatures={this.state.features} closeModal={this.closeModal}/> : ''}
+      </>
     );
   }
 };

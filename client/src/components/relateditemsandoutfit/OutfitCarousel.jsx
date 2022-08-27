@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaAngleLeft } from 'react-icons/fa';
 import { FaAngleRight } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 import OutfitCard from './OutfitCard.jsx';
 
 class OutfitCarousel extends React.Component {
@@ -51,10 +52,16 @@ class OutfitCarousel extends React.Component {
         {console.log(this.props)}
         {this.state.displayLeftBtn ? <button aria-labelledby="previous" className='prev-btn' onClick={this.clickPrev}><FaAngleLeft size={32} /></button> : <div></div>}
         {this.state.displayRightBtn ? <button aria-labelledby="next" className='next-btn' onClick={this.clickNext}><FaAngleRight size={32} /></button> : <div></div>}
-        <div className='outfit carousel-cards'>
-        {this.props.outfitItems.map(item => (
-            <OutfitCard key={item} p_id={item} removeFromOutfit={this.removeFromOutfit} />
-          ))}
+          <div className='outfit carousel-cards'>
+            <div className="outfit-items card" onClick={() => this.props.addToOutfit(this.props.p_id)}>
+              <div className="add-to-outfit-card">
+                <span><FaPlus size={32} /></span>
+                <h3>Add Current Item to Outfit</h3>
+              </div>
+            </div>
+            {this.props.outfitItems.map(item => (
+              <OutfitCard key={item} p_id={item} removeFromOutfit={this.removeFromOutfit} />
+            ))}
         </div>
       </div>
     )

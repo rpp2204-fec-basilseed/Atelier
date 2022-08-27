@@ -21,7 +21,6 @@ class RelatedItemsAndOutfits extends React.Component {
     axios.get('/products', {params: { p_id: this.props.p_id, endpoint: 'related' }})
       .then((res) => {
         this.setState({relatedItems: res.data})
-        console.log('state', this.state)
       })
       .catch((err) => {
       console.log(err);
@@ -63,24 +62,8 @@ class RelatedItemsAndOutfits extends React.Component {
     return (
     <div className="related-items-and-outfit-container">
       <div className="related-items-container">
-        <RelatedCarousel relatedItems={this.state.relatedItems} addToOutfit={this.addToOutfit} />
-        <OutfitCarousel outfitItems={this.state.outfitItems} updateOutfit={this.getOutfitItems} />
-        {/* <h1>Related</h1>
-        <div className ="related-card-container">
-          {this.state.relatedItems.map(item => (
-            <RelatedItem key={item.id} product={item.id} />
-          ))}
-          <button className="test-btn" onClick={this.handleClick}>Click Me!</button>
-        </div>
-      </div>
-      <div className="outfit-container">
-        <h1>Outfits</h1>
-        {this.state.outfits.map(item => (
-            <Outfit key={item.id} product={item.id} />
-          ))}
-        <div className="outfit-card-container">
-
-        </div> */}
+        <RelatedCarousel relatedItems={this.state.relatedItems} currentProduct={this.props.currentProduct} currentFeatures={this.props.currentFeatures} />
+        <OutfitCarousel outfitItems={this.state.outfitItems} updateOutfit={this.getOutfitItems} addToOutfit={this.addToOutfit} p_id={this.props.p_id}/>
       </div>
     </div>
     );

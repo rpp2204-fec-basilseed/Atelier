@@ -18,7 +18,6 @@ class RelatedCarousel extends React.Component {
     const carouselSelector = document.querySelector('.carousel-cards');
     let carouselWidth = carouselSelector.clientWidth;
     carouselSelector.scrollLeft -= 350;
-    console.log(carouselSelector.scrollLeft)
     this.setState({carouselPosition: carouselSelector.scrollLeft})
   }
 
@@ -26,19 +25,17 @@ class RelatedCarousel extends React.Component {
     const carouselSelector = document.querySelector('.carousel-cards');
     let carouselWidth = carouselSelector.clientWidth;
     carouselSelector.scrollLeft += 356;
-    console.log(carouselSelector.scrollLeft)
     this.setState({carouselPosition: carouselSelector.scrollLeft})
   }
 
   render () {
     return (
       <div className='carousel-container'>
-        {console.log(this.props)}
         {this.state.displayLeftBtn ? <button aria-labelledby="previous" className='prev-btn' onClick={this.clickPrev}><FaAngleLeft size={32} /></button> : <div></div>}
         {this.state.displayRightBtn ? <button aria-labelledby="next" className='next-btn' onClick={this.clickNext}><FaAngleRight size={32} /></button> : <div></div>}
         <div className='carousel-cards'>
         {this.props.relatedItems.map(item => (
-            <RelatedItemCard key={item} p_id={item} addToOutfit={this.props.addToOutfit}/>
+            <RelatedItemCard key={item} p_id={item} addToOutfit={this.props.addToOutfit} currentProduct={this.props.currentProduct} currentFeatures={this.props.currentFeatures}/>
           ))}
         </div>
       </div>
