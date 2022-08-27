@@ -1,6 +1,6 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import Overview from './component/Overview.jsx';
+import Overview from './components/Overview.jsx';
 
 class Index extends React.Component {
   constructor(props) {
