@@ -39,7 +39,8 @@ class Overview extends React.Component {
 
     axios.get('/products', {
       params: {
-        curr_product_id: this.props.curr_product_id
+        // curr_product_id: this.props.curr_product_id
+        p_id: this.props.curr_product_id
       }
     })
     .then((response) => {
@@ -51,9 +52,11 @@ class Overview extends React.Component {
       console.log(error);
     });
 
-    axios.get('/styles', {
+    axios.get('/products', {
       params: {
-        curr_product_id: this.props.curr_product_id
+        // curr_product_id: this.props.curr_product_id,
+        p_id: this.props.curr_product_id,
+        endpoint: 'styles'
       }
     })
     .then((response) => {

@@ -26,16 +26,19 @@ app.get('/products', (req, res) => {
     url += `/${req.query.endpoint}`;
   }
 
+  console.log('/products url: ' + url);
+
   console.log(req.query)
   axios({
     method: 'get',
     url: url,
     data: null,
     headers: {
-      Authorization: process.env.API_KEY
+      Authorization: process.env.REACT_APP_API_KEY
     }
   })
     .then((products) => {
+      console.log('PRODUCTS: ' + products);
       return res.status(200).send(products.data);
     })
     .catch((err) => {
@@ -77,44 +80,6 @@ app.get('/questions', (req, res) => {
 //     })
 //     .catch(err => console.log(err));
 // });
-
-app.get('/products', (req, res) => {
-
-  var config = {
-    method: 'get',
-    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/'+req.query.curr_product_id,
-    headers: {
-      'Authorization': process.env.API_KEY
-    }
-  };
-
-  axios(config)
-  .then(function (response) {
-    res.json(response.data)
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-
-});
-
-app.get('/styles', (req, res) => {
-  var config = {
-    method: 'get',
-    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/'+req.query.curr_product_id+'/styles',
-    headers: {
-      'Authorization': process.env.API_KEY
-    }
-  };
-
-  axios(config)
-  .then((response) => {
-    res.json(response.data);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-});
 
 app.post('/cart', (req, res) => {
   console.log('req body: ' + JSON.stringify(req.body));
