@@ -4,8 +4,8 @@ import Reviews from './components/RatingsAndReviews/Reviews.jsx';
 const Axios = require ('axios');
 import Overview from './components/Overview.jsx';
 import QandA from './components/QandA.jsx';
-import { FaStar } from 'react-icons/fa';
-import { AiOutLineStar } from 'react-icons/ai'
+import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
+import { AiOutlineStar } from 'react-icons/ai';
 
 class Index extends React.Component {
   constructor(props) {
@@ -44,7 +44,7 @@ class Index extends React.Component {
   render() {
     return (
       <div>
-      <Reviews />
+      <Reviews currProduct={this.state.curr_product_id}/>
       <Overview curr_product_id={this.state.curr_product_id} />
       <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
     </div>
