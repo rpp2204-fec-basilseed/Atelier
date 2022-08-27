@@ -19,3 +19,10 @@ ReactDOM.render(
 ]}/>,
   document.getElementById('root')
 );
+
+
+// Update Curr Prod
+
+// updateCurrProduct (product_id) {
+//   this.setState({currProd: product_id})
+// }
