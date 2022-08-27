@@ -4,6 +4,9 @@ import Reviews from './components/RatingsAndReviews/Reviews.jsx';
 const Axios = require('axios');
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { AiOutlineStar } from 'react-icons/ai';
+import Overview from './components/Overview.jsx';
+import QandA from './components/QandA.jsx';
+import RelatedItemsAndOutfits from './components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx'
 
 class Index extends React.Component {
   constructor(props) {
@@ -16,6 +19,7 @@ class Index extends React.Component {
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
     this.sendReview = this.sendReview.bind(this);
+    }
   }
 
   updateCurrentProduct(e) {
@@ -36,13 +40,19 @@ class Index extends React.Component {
         halfStarPushed = true
        } else {
         stars.push(<AiOutlineStar key={i} />)
+
+    for(let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(<FaStar key={i}/>);
+      } else {
+        stars.push(<AiOutlineStar key={i}/>)
       }
     }
 
     return stars.map((star) => {
       return star
     })
-
+  }
   }
 
   sendReview() {
@@ -62,8 +72,25 @@ class Index extends React.Component {
 
   render() {
     return (
+      <div>
+      <Overview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
+      <RelatedItemsAndOutfits p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
+        {
+          "feature": "Sole",
+          "value": "Rubber"
+        },
+        {
+          "feature": "Material",
+          "value": "FullControlSkin"
+        },
+        {
+          "feature": "Stitching",
+          "value": "Double Stitch"
+        }
+      ]}/>
+      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
       <Reviews renderStarRating={this.renderStarRating} currProduct={this.state.curr_product_id} sendReview={this.sendReview}/>
-      // <Overview curr_product_id={this.state.curr_product_id} />
+    </div>
     )
   }
 }
