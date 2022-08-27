@@ -5,9 +5,6 @@ const bodyParser = require('body-parser')
 const cors = require('cors');
 const axios = require('axios');
 
-// axios.defaults.baseURL = process.env.URL;
-// const baseURL = process.env.URL;
-// axios.default.headers.common['Authorization'] = process.env.API_KEY;
 
 const app = express();
 app.use(cors());
