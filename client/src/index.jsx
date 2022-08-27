@@ -2,6 +2,7 @@ import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import Overview from './components/Overview.jsx';
 import QandA from './components/QandA.jsx';
+import RelatedItemsAndOutfits from './components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx'
 
 class Index extends React.Component {
   constructor(props) {
@@ -42,6 +43,20 @@ class Index extends React.Component {
     <div>
       <Overview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
       <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
+      <RelatedItemsAndOutfits p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
+          {
+              "feature": "Sole",
+              "value": "Rubber"
+          },
+          {
+              "feature": "Material",
+              "value": "FullControlSkin"
+          },
+          {
+              "feature": "Stitching",
+              "value": "Double Stitch"
+          }
+      ]}/>
     </div>
     )
   }
