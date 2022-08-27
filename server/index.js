@@ -9,7 +9,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 // more to come
 
-let port = process.env.REACT_APP_PORT;
+let port = process.env.PORT;
 
 app.get('/questions', (req, res) => {
   let config = {
