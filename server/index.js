@@ -1,19 +1,54 @@
 require('dotenv').config();
 const express = require ('express');
+const path = require ('path');
+const bodyParser = require('body-parser')
+const cors = require('cors');
 const axios = require('axios');
 
-let app = express();
+// axios.defaults.baseURL = process.env.URL;
+// const baseURL = process.env.URL;
+// axios.default.headers.common['Authorization'] = process.env.API_KEY;
 
+const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname + '/../client/dist'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// more to come
+app.get('/products', (req, res) => {
+  let url = `${process.env.URL}/products`;
+
+  if (req.query.p_id) {
+    url += `/${req.query.p_id}`;
+  }
+
+  if (req.query.endpoint) {
+    url += `/${req.query.endpoint}`;
+  }
+
+  console.log(req.query)
+  axios({
+    method: 'get',
+    url: url,
+    data: null,
+    headers: {
+      Authorization: process.env.API_KEY
+    }
+  })
+    .then((products) => {
+      return res.status(200).send(products.data);
+    })
+    .catch((err) => {
+      throw new Error(err);
+      return res.status(500);
+    })
+})
 
 let port = process.env.PORT;
 
 app.get('/questions', (req, res) => {
   let config = {
-    headers: { 'Authorization' : process.env.REACT_APP_API_KEY },
+    headers: { 'Authorization' : process.env.API_KEY },
     params: {
       product_id: req.query.product_id
     },
@@ -49,7 +84,7 @@ app.get('/products', (req, res) => {
     method: 'get',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/'+req.query.curr_product_id,
     headers: {
-      'Authorization': process.env.REACT_APP_API_KEY
+      'Authorization': process.env.API_KEY
     }
   };
 
@@ -68,7 +103,7 @@ app.get('/styles', (req, res) => {
     method: 'get',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/'+req.query.curr_product_id+'/styles',
     headers: {
-      'Authorization': process.env.REACT_APP_API_KEY
+      'Authorization': process.env.API_KEY
     }
   };
 
@@ -92,7 +127,7 @@ app.post('/cart', (req, res) => {
     method: 'post',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/cart',
     headers: {
-      'Authorization': process.env.REACT_APP_API_KEY,
+      'Authorization': process.env.API_KEY,
       'Content-Type': 'application/json'
     },
     data : data
