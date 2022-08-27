@@ -32,7 +32,7 @@ app.get('/products', (req, res) => {
     url: url,
     data: null,
     headers: {
-      Authorization: process.env.API_KEY
+      Authorization: process.env.REACT_APP_API_KEY
     }
   })
     .then((products) => {
