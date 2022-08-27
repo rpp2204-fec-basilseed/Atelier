@@ -41,6 +41,8 @@ class Index extends React.Component {
        } else {
         stars.push(<AiOutlineStar key={i} />)
 
+       }
+
     for(let i = 1; i <= 5; i++) {
       if (i <= rating) {
         stars.push(<FaStar key={i}/>);
@@ -52,7 +54,6 @@ class Index extends React.Component {
     return stars.map((star) => {
       return star
     })
-  }
   }
 
   sendReview() {
