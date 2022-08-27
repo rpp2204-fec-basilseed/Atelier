@@ -15,6 +15,7 @@ class Index extends React.Component {
 
   render() {
     return (
+      <Overview />
       <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
     )
   }
