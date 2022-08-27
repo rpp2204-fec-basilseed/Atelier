@@ -1,28 +1,66 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import RelatedItemsAndOutfits from './components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx';
+import * as ReactDOM from 'react-dom/client';
+import Overview from './components/Overview.jsx';
+import QandA from './components/QandA.jsx';
+import RelatedItemsAndOutfits from './components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx'
 
-ReactDOM.render(
-  <RelatedItemsAndOutfits p_id={71704} currentProduct={"YEasy 350"} currentFeatures={[
-    {
-        "feature": "Sole",
-        "value": "Rubber"
-    },
-    {
-        "feature": "Material",
-        "value": "FullControlSkin"
-    },
-    {
-        "feature": "Stitching",
-        "value": "Double Stitch"
+class Index extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      curr_product_id: 71697,
+      curr_product_name: 'Camo Onesie',
     }
-]}/>,
-  document.getElementById('root')
-);
+    this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
+    this.renderStarRating = this.renderStarRating.bind(this);
+  }
 
+  updateCurrentProduct(e) {
+    this.setState({curr_product_id: e.event.product_id});
+  };
 
-// Update Curr Prod
+  renderStarRating(rating) {
 
-// updateCurrProduct (product_id) {
-//   this.setState({currProd: product_id})
-// }
+    const stars = [];
+
+    for(let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(<FaStar key={i}/>);
+      } else {
+        stars.push(<AiOutlineStar key={i}/>)
+      }
+    }
+
+    return stars.map((star) => {
+      return star
+    })
+
+  }
+
+  render() {
+    return (
+    <div>
+      <Overview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
+      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
+      <RelatedItemsAndOutfits p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
+          {
+              "feature": "Sole",
+              "value": "Rubber"
+          },
+          {
+              "feature": "Material",
+              "value": "FullControlSkin"
+          },
+          {
+              "feature": "Stitching",
+              "value": "Double Stitch"
+          }
+      ]}/>
+    </div>
+    )
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Index/>);
