@@ -20,25 +20,19 @@ function AddAnswerModal(props) {
 
       <h3 style={{ marginBottom: "0" }}>Submit your Answer</h3>
       <span>{props.currentProductName}: {props.questionBody}</span>
-
-      <div className="your-answer-content">
-            <span>Your Answer *</span>
-            <input name="content"
-            style={{ width: "98%", height: "15rem", margin: "5px 5px" }} type="text"></input>
-      </div>
-
-      <div className="your-answer-nickname">
-          <span>What is your nickname *</span>
-          <input name="nickname"
-          type="text" placeholder="Example: jack543!"></input>
-          <span>For privacy reasons, do not use your full name or email address</span>
-      </div>
-
-      <div className="your-answer-email">
-          <span>Your email *</span>
-          <input name="email" type="text" placeholder="Example: jack@email.com"></input>
-          <span>For authentication reasons, you will not be emailed</span>
-      </div>
+      <span>Your Answer *</span>
+      <input name="content"
+      style={{ width: "98%", height: "15rem", margin: "5px 5px" }} type="text"></input>
+      <span>What is your nickname *</span>
+      <input name="nickname"
+      type="text" placeholder="Example: jack543!"></input>
+      <br />
+      <span>For privacy reasons, do not use your full name or email address</span>
+      <br />
+      <span>Your email *</span>
+      <input name="email" type="text" placeholder="Example: jack@email.com"></input>
+      <br />
+      <span>For authentication reasons, you will not be emailed</span>
 
       <button className="upload-photos-button">Upload your photos</button>
 
