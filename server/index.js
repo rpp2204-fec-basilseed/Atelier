@@ -9,11 +9,11 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 // more to come
 
-let port = process.env.REACT_APP_PORT;
+let port = process.env.PORT;
 
 app.get('/questions', (req, res) => {
   let config = {
-    headers: { 'Authorization' : process.env.REACT_APP_API_KEY },
+    headers: { 'Authorization' : process.env.API_KEY },
     params: {
       product_id: req.query.product_id
     },
@@ -49,7 +49,7 @@ app.get('/products', (req, res) => {
     method: 'get',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/'+req.query.curr_product_id,
     headers: {
-      'Authorization': process.env.REACT_APP_API_KEY
+      'Authorization': process.env.API_KEY
     }
   };
 
