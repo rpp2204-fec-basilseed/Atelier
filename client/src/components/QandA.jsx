@@ -9,16 +9,15 @@ function QandA (props) {
 
   const [allQuestions, setAllQuestions] = useState([]);
 
-  function update() {
+  function fetchData() {
     axios.get('/questions', {
       params: {
         product_id: props.curr_product_id
       }
     }).then((result) => {
-        console.log('log all answers here__', result.data.results[0].answers);
-        setAllQuestions((prev) => {
+        setAllQuestions(() => {
           const questionsSorted =
-          [...prev, ...result.data.results].filter((elem) => Object.keys(elem.answers).length !== 0)
+          [...result.data.results].filter((elem) => Object.keys(elem.answers).length !== 0)
           .sort((a, b) => b.question_helpfulness - a.question_helpfulness);
           return questionsSorted;
         });
@@ -27,38 +26,29 @@ function QandA (props) {
   }
 
   useEffect(() => {
-    update();
+    fetchData();
   }, []);
 
-  // Working on it: search function. Maybe combine search function with update?
-  // delete the search input will make the page back to default page and erase the original searched result
-  // || includes, include everything
   function handleSearch(event) {
     let searchText = event.target.value;
-    axios.get('/questions', {
-      params: {
-        product_id: props.curr_product_id
-      }
-    })
-    .then((result) => {
-      setAllQuestions((prev) => {
-        const searchedResults =
-        [...prev, ...result.data.results].filter((elem) => elem.question_body.includes(searchText));
-        return searchedResults;
-      });
-      console.log('log searchedResults here', searchedResults);
-      })
-      .catch((err) => console.log(err));
+    if (searchText.length > 2) {
+      setAllQuestions(allQuestions.filter((elem) => {
+        let answersForEachQ = Object.values(elem.answers);
+        return elem.question_body.includes(searchText)
+        || answersForEachQ.some((e) => e.body.includes(searchText));
+      }));
+    } else {
+      fetchData();
+    }
+    console.log('search', allQuestions);
   }
 
   const [ counter, setCounter] = useState(0);
-
   function displayTwoMoreQuestions() {
     setCounter(counter + 1);
   }
 
   const [ questionAdded, setQuestionAdded ] = useState(false);
-
   function handleAddAQuestionButton () {
     setQuestionAdded((prevVal) => {
       return !prevVal
@@ -70,9 +60,7 @@ function QandA (props) {
     <Header questionAdded={questionAdded}/>
     <Search onSearch={handleSearch} allQuestions={allQuestions} questionAdded={questionAdded}/>
 
-
-    {/* allQuestions.slice(0, counter * 2 + 2).map((elem) */}
-    { allQuestions.map((elem)=> {
+    { allQuestions.slice(0, counter * 2 + 2).map((elem)=> {
       return <Question
       key={elem.question_id}
       questionBody={elem.question_body}
