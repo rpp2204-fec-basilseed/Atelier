@@ -125,7 +125,7 @@ export default function Reviews ({currProduct, renderStarRating, sendReview }) {
         <div style={{border: 'solid black 3px', padding: '20px'}} onClick={increaseDisplayedReviews}>More Reviews</div>
         <div onClick={toggleShowReview} style={{border: 'solid black 3px', padding: '20px', marginLeft: '40px'}}>Add Review</div>
       </div>
-        <div>{showReview ? <AddReview productId={currProduct}/> : null}</div>
+        <div>{showReview ? <AddReview productId={currProduct} toggleShowReview={toggleShowReview} metaData={metaData}/> : null}</div>
       </div>
     </div>
   </div>

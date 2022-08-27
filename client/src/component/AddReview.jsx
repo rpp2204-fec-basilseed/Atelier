@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 const Axios = require ('axios');
 
 
-export default function AddReview ({ productId }) {
+export default function AddReview ({ productId, toggleShowReview, metaData }) {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -35,10 +35,11 @@ export default function AddReview ({ productId }) {
     left: '40%'
   }
 
+  console.log(metaData)
   return (
     <form style={backgroundStyling}>
       <div style={formStyling}>
-        <p style={{position: '0, 0, 0, 100'}}>X</p>
+        <p onClick={toggleShowReview} style={{position: '0, 0, 0, 100'}}>X</p>
       <input type='text' placeholder='summary' value={summary} onChange={(e) => setSummary(e.target.value)}></input>
       <input type='text' placeholder='body' value={body} onChange={(e) => setBody(e.target.value)}></input>
       <input type='checkbox' value={recommend} onChange={(e) => setRecommend(e.target.value)}></input>
