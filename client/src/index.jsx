@@ -8,7 +8,7 @@ class Index extends React.Component {
     super(props);
 
     this.state = {
-      curr_product_id: 71698,
+      curr_product_id: 71697,
       curr_product_name: 'Camo Onesie',
     }
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
@@ -38,7 +38,8 @@ class Index extends React.Component {
   }
 
   render() {
-    return (<div>
+    return (
+    <div>
       <Overview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
       <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
     </div>
