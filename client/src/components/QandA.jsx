@@ -40,7 +40,6 @@ function QandA (props) {
     } else {
       fetchData();
     }
-    console.log('search', allQuestions);
   }
 
   const [ counter, setCounter] = useState(0);
@@ -87,7 +86,8 @@ function QandA (props) {
       }}>MORE ANSWERED QUESTIONS
     </button>}
 
-    <AddAQuestion currentProductName={props.curr_product_name} questionAdded={questionAdded} addAQuestion={handleAddAQuestionButton}/>
+    <AddAQuestion currentProductName={props.curr_product_name}
+      questionAdded={questionAdded} addAQuestion={handleAddAQuestionButton}/>
 
   </div>);
 }

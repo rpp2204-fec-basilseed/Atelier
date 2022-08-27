@@ -38,7 +38,8 @@ function AddAQuestion(props) {
 
       <div className="modal" id="modal" style={{
         display: props.questionAdded ? "block" : "none",
-        position: "relative", zIndex: "2", opacity:"1", border: "solid grey", marginTop: "-35rem", width: "80%",
+        position: "absolute", zIndex: "2", opacity:"1", border: "solid grey",
+        top: "50%",left: "50%",transform: "translate(-50%, -50%)", float: "left", width: "40%",
         backgroundColor: "ivory",
         marginLeft: "5rem", padding: "5px 20px"}} >
         <h3 style={{ marginBottom: "0" }}>Ask Your Question</h3>
