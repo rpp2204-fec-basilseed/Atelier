@@ -28,11 +28,18 @@ app.get('/questions', (req, res) => {
 
 app.post('/questions', (req, res) => {
   // TODO: body parameters: body, name, email, product_id(INT)
-
+  let config = {
+    headers: { 'Authorization' : process.env.REACT_APP_API_KEY },
+    params: {
+      product_id: req.query.product_id
+    },
+  };
   axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions', config)
-    .then(
-      // TODO: status 201
-    )
+    .then((result) => {
+      console.log('server side POST request result', result);
+      console.log('server side POST req.body', req.body);
+      res.status(201).send('success');
+    })
     .catch(err => console.log(err));
 });
 

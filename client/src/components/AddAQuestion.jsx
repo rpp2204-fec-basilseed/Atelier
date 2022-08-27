@@ -47,6 +47,7 @@ function AddAQuestion(props) {
         marginLeft: "5rem", padding: "5px 20px"}} >
         <h3 style={{ marginBottom: "0" }}>Ask Your Question</h3>
         <span>About the {props.currentProductName}</span>
+        <br />
         <span>Your Question *</span>
         <input onChange={handleChange} value={inputQuestion.content} name="content" style={{ width: "98%", height: "15rem", margin: "5px 5px" }} type="text"
         placeholder="Why did you like the product or not?"></input>
