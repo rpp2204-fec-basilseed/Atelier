@@ -1,7 +1,11 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import Reviews from './component/Reviews.jsx';
+import Reviews from './components/RatingsAndReviews/Reviews.jsx';
 const Axios = require ('axios');
+import Overview from './components/Overview.jsx';
+import QandA from './components/QandA.jsx';
+import { FaStar } from 'react-icons/fa';
+import { AiOutLineStar } from 'react-icons/ai'
 
 class Index extends React.Component {
   constructor(props) {
@@ -9,7 +13,7 @@ class Index extends React.Component {
 
     this.state = {
       curr_product_id: 71697,
-      curr_product_name: 'Camo Onesie'
+      curr_product_name: 'Camo Onesie',
     }
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
@@ -39,8 +43,11 @@ class Index extends React.Component {
 
   render() {
     return (
+      <div>
       <Reviews />
       <Overview curr_product_id={this.state.curr_product_id} />
+      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
+    </div>
     )
   }
 }

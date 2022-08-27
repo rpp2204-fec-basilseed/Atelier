@@ -1,3 +1,4 @@
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const webpack = require('webpack');
 const dotEnv = require('dotenv-webpack');
@@ -6,14 +7,14 @@ module.exports = {
   mode: "development",
   entry: path.join(__dirname, "/client/src/index.jsx"),
   output: {
-    filename: ("bundle.js"),
+    filename: "bundle.js",
     path: path.join(__dirname, "/client/dist/"),
   },
   module: {
     rules: [
       {
-        test: /\.(jsx)?/,
-        exclude: /node_modules/,
+        test: /\.(js|jsx)?/,
+        exclude: /(node_modules|bower_components)/,
         use: {
           loader: "babel-loader",
           options: {
@@ -25,21 +26,14 @@ module.exports = {
         },
       },
       {
-        test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        options: { presets: ['@babel/env', '@babel/preset-react'] },
-      },
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      }
     ],
   },
   plugins: [
-    // new webpack.DefinePlugin({
-    //   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    //   'process.env.DEBUG': JSON.stringify(process.env.DEBUG),
-    // })
     new dotEnv({
       ignoreStub: true,
     })
   ]
 };
-
