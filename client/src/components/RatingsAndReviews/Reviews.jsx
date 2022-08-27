@@ -5,7 +5,7 @@ const Axios = require('axios');
 
 
 export default function Reviews ({currProduct, renderStarRating, sendReview }) {
-  console.log(currProduct)
+  console.log('current: ',currProduct)
 
   const starPercentage = (rating) => {
     let totalStars = 0;

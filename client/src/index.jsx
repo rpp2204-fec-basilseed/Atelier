@@ -1,6 +1,6 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import Reviews from './components/RatingsAndReviews/Reviews.jsx';
+// import Reviews from './components/RatingsAndReviews/Reviews.jsx';
 const Axios = require ('axios');
 import Overview from './components/Overview.jsx';
 import QandA from './components/QandA.jsx';
@@ -61,7 +61,7 @@ class Index extends React.Component {
           }
       ]}/>
       <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
-      <Reviews currProduct={this.state.curr_product_id} />
+      {/* <Reviews currProduct={this.state.curr_product_id} /> */}
     </div>
     )
   }

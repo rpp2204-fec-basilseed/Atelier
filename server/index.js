@@ -34,7 +34,7 @@ app.get('/products', (req, res) => {
     url: url,
     data: null,
     headers: {
-      Authorization: process.env.REACT_APP_API_KEY
+      Authorization: process.env.API_KEY
     }
   })
     .then((products) => {
@@ -116,11 +116,11 @@ app.get('/review', (req, res) => {
       method: 'get',
       url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=' + req.query.productId + '&count=200',
       headers: {
-        Authorization : apiKey
+        Authorization : process.env.API_KEY
       }
     }
 
-    Axios(config)
+    axios(config)
     .then((reviewData) => {
       res.send(reviewData.data.results);
     })
@@ -138,11 +138,11 @@ app.get('/review', (req, res) => {
         method: 'get',
         url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=' + req.query.productId,
         headers: {
-          Authorization : apiKey
+          Authorization : process.env.API_KEY
         }
       }
 
-      Axios(config)
+      axios(config)
       .then((metaData) => {
         res.send(metaData.data);
       })
@@ -163,7 +163,7 @@ app.get('/review', (req, res) => {
         }
       }
 
-      Axios(config)
+      axios(config)
       .then((response) => {
         res.send();
       })
@@ -181,11 +181,11 @@ app.get('/review', (req, res) => {
         method: 'put',
         url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/' + req.query.reviewId + '/report',
         headers: {
-          Authorization : apiKey
+          Authorization : process.env.API_KEY
         }
       }
 
-      Axios(config)
+      axios(config)
       .then((response) => {
         console.log(response)
         res.send();
@@ -212,7 +212,7 @@ var config = {
   method: 'post',
   url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
   headers: {
-    'Authorization': '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',
+    'Authorization': process.env.API_KEY,
     'Content-Type': 'text/plain'
   },
   data : data
