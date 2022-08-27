@@ -1,6 +1,6 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import Reviews from './components/Reviews.jsx';
+import Reviews from './components/RatingsAndReviews/Reviews.jsx';
 const Axios = require('axios');
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { AiOutlineStar } from 'react-icons/ai';
