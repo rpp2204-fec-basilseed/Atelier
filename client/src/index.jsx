@@ -7,8 +7,8 @@ class Index extends React.Component {
     super(props);
 
     this.state = {
-      curr_product_id: 71698,
-      curr_product_name: 'Bright Future Sunglasses',
+      curr_product_id: 71697,
+      curr_product_name: 'Camo Onesie',
     }
   }
 

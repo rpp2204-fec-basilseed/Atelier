@@ -18,13 +18,22 @@ app.get('/questions', (req, res) => {
       product_id: req.query.product_id
     },
   };
-
   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions', config)
     .then((result) => {
       console.log(result.data);
       res.status(200).send(result.data);
     })
     .catch((err) => console.log(err));
+});
+
+app.post('/questions', (req, res) => {
+  // TODO: body parameters: body, name, email, product_id(INT)
+
+  axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions', config)
+    .then(
+      // TODO: status 201
+    )
+    .catch(err => console.log(err));
 });
 
 app.listen(port, function() {

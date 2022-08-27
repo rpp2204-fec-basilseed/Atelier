@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function AddAQuestion(props) {
 
@@ -18,7 +19,9 @@ function AddAQuestion(props) {
     });
   }
 
-  // TODO: handleSubmit
+  function handleSubmit(event){
+    axios.post('/questions', );
+  }
   // once the user clicks submit, it will check the input for validation.
     // If input is invalid, send a warning message and prevent submitting.
     // If input is valid, form will be submitted and posted, the Modal window will disappear
@@ -58,6 +61,7 @@ function AddAQuestion(props) {
         <span>For authentication reasons, you will not be emailed</span>
         <br />
         <button className="submit-button">Submit question</button>
+        {/* onClick={handleSubmit} */}
       </div>
     </div>
   );
