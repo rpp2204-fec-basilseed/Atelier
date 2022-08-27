@@ -2,6 +2,9 @@
   "name": "atelier",
   "version": "1.0.0",
   "main": "server/index.js",
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
   "scripts": {
     "server-dev": "npx nodemon --watch server server/index.js",
     "client-dev": "npx webpack --watch",
@@ -17,6 +20,8 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
     "babel-plugin-macros": "^3.1.0",
     "babel-preset-env": "^1.7.0",
     "date-fns": "^2.29.2",
