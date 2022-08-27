@@ -1,6 +1,7 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import Overview from './components/Overview.jsx';
+import QandA from './components/QandA.jsx';
 
 class Index extends React.Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class Index extends React.Component {
 
     this.state = {
       curr_product_id: 71697,
-      curr_product_name: 'Camo Onesie'
+      curr_product_name: 'Camo Onesie',
     }
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
@@ -17,11 +18,6 @@ class Index extends React.Component {
   updateCurrentProduct(e) {
     this.setState({curr_product_id: e.event.product_id});
   };
-
-  /*
-  Render Star Rating takes in the rating (a number) and returns a div with up to 5 stars
-  usage example =>  <div>{renderStarRating(product.score)}</div>
-  */
 
   renderStarRating(rating) {
 
@@ -43,7 +39,10 @@ class Index extends React.Component {
 
   render() {
     return (
+    <div>
       <Overview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
+      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
+    </div>
     )
   }
 }
