@@ -2,6 +2,7 @@ import React from 'react';
 import Style from './Style.jsx';
 import Details from './Details.jsx';
 import CartFavorite from './CartFavorite.jsx';
+import ImgCarousel from './ImgCarousel.jsx';
 const axios = require('axios');
 
 class Overview extends React.Component {
@@ -12,10 +13,12 @@ class Overview extends React.Component {
       styleData: [],
       selectedStyle: '',
       selectedSKU: '',
+      selectedPhoto: ''
     }
 
     this.handleStyleChange = this.handleStyleChange.bind(this);
     this.handleSizeChange = this.handleSizeChange.bind(this);
+    this.onPhotoClick = this.onPhotoClick.bind(this);
   }
 
   handleStyleChange(style) {
@@ -51,7 +54,8 @@ class Overview extends React.Component {
     .then((response) => {
       this.setState({
         styleData: response.data.results,
-        selectedStyle: 0
+        selectedStyle: 0,
+        selectedPhoto: response.data.results[0].photos[0].url
       });
     })
     .catch((error) => {
@@ -70,6 +74,10 @@ class Overview extends React.Component {
     return sizesDiv;
   }
 
+  onPhotoClick(fullURL) {
+    this.setState({selectedPhoto:fullURL});
+  }
+
   render() {
     console.log('rendering');
     var currProdImage = <div>Product Image</div>;
@@ -78,13 +86,16 @@ class Overview extends React.Component {
     var currProdStyle = <div>Product Style</div>;
     var currProdPrice = <div>Product Price</div>;
     var currProdSizes = <div>Sizes</div>;
+    var currProdCarousel = <div>Carousel</div>
     if (this.state.styleData.length !== 0) {
-      currProdImage = <img src={this.state.styleData[this.state.selectedStyle].photos[0].url} alt="main product photo" />;
+      // currProdImage = <img src={this.state.styleData[this.state.selectedStyle].photos[0].url} alt="main product photo" />;
+      currProdImage = <img src={this.state.selectedPhoto} alt="main product photo" />;
       currProdCategory = <h2 id="prodCategory">{this.state.prodData.category}</h2>
       currProdName = <h1 id="prodName">{this.state.prodData.name}</h1>
       currProdStyle = <h2 id="prodStyle">Style > {this.state.styleData[this.state.selectedStyle].name}</h2>
       currProdPrice = <h2 id="prodPrice">${this.state.styleData[this.state.selectedStyle].original_price}</h2>
       currProdSizes = <select name="SELECT SIZE" onChange={this.handleSizeChange}>{this.getSizes()}</select>
+      currProdCarousel = <ImgCarousel photos={this.state.styleData[this.state.selectedStyle].photos} onPhotoClick={this.onPhotoClick} />
     }
     return (
       <div className="overview container">
@@ -113,6 +124,7 @@ class Overview extends React.Component {
         </div>
         <br></br>
         <Details prodData={this.state.prodData}/>
+        {currProdCarousel}
       </div>
     )
   }
