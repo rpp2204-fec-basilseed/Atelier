@@ -48,7 +48,7 @@ let port = process.env.PORT;
 
 app.get('/questions', (req, res) => {
   let config = {
-    headers: { 'Authorization' : process.env.REACT_APP_API_KEY },
+    headers: { 'Authorization' : process.env.API_KEY },
     params: {
       product_id: req.query.product_id
     },
@@ -84,7 +84,7 @@ app.get('/products', (req, res) => {
     method: 'get',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/'+req.query.curr_product_id,
     headers: {
-      'Authorization': process.env.REACT_APP_API_KEY
+      'Authorization': process.env.API_KEY
     }
   };
 
@@ -103,7 +103,7 @@ app.get('/styles', (req, res) => {
     method: 'get',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/'+req.query.curr_product_id+'/styles',
     headers: {
-      'Authorization': process.env.REACT_APP_API_KEY
+      'Authorization': process.env.API_KEY
     }
   };
 
@@ -127,7 +127,7 @@ app.post('/cart', (req, res) => {
     method: 'post',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/cart',
     headers: {
-      'Authorization': process.env.REACT_APP_API_KEY,
+      'Authorization': process.env.API_KEY,
       'Content-Type': 'application/json'
     },
     data : data
