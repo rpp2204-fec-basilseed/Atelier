@@ -5,12 +5,11 @@ import Overview from '../Overview.jsx';
 
 afterEach(cleanup);
 
-test("Rendering test", () => {
+test("Style should be rendered", () => {
 
 
   render(<Overview />);
-  const componentText = screen.queryByText(/Overview/i);
+  const componentText = screen.queryByText(/Style/i);
   expect(componentText).toBeInTheDocument();
-
 
 });
