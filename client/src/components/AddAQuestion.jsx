@@ -19,9 +19,9 @@ function AddAQuestion(props) {
     });
   }
 
-  function handleSubmit(event){
-    axios.post('/questions', );
-  }
+  // function handleSubmit(event){
+  //   axios.post('/questions', );
+  // }
   // once the user clicks submit, it will check the input for validation.
     // If input is invalid, send a warning message and prevent submitting.
     // If input is valid, form will be submitted and posted, the Modal window will disappear
@@ -41,7 +41,7 @@ function AddAQuestion(props) {
 
       <div className="modal" id="modal" style={{
         display: props.questionAdded ? "block" : "none",
-        position: "absolute", zIndex: "2", opacity:"1", border: "solid grey",
+        position: "fixed", zIndex: "2", opacity:"1", border: "solid grey",
         top: "50%",left: "50%",transform: "translate(-50%, -50%)", float: "left", width: "40%",
         backgroundColor: "ivory",
         marginLeft: "5rem", padding: "5px 20px"}} >
@@ -61,8 +61,10 @@ function AddAQuestion(props) {
         <br />
         <span>For authentication reasons, you will not be emailed</span>
         <br />
-        <button className="submit-button">Submit question</button>
-        {/* onClick={handleSubmit} */}
+        <button onClick={(event) => {
+          props.submitQuestion(inputQuestion);
+          event.preventDefault();
+        }} className="submit-button">Submit question</button>
       </div>
     </div>
   );

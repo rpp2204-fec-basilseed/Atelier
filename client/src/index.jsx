@@ -9,7 +9,7 @@ class Index extends React.Component {
     super(props);
 
     this.state = {
-      curr_product_id: 71699,
+      curr_product_id: 71698,
       curr_product_name: 'Camo Onesie',
     }
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
@@ -42,6 +42,7 @@ class Index extends React.Component {
     return (
     <div>
       <Overview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
+      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
       <RelatedItemsAndOutfits p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
           {
               "feature": "Sole",
@@ -56,7 +57,6 @@ class Index extends React.Component {
               "value": "Double Stitch"
           }
       ]}/>
-      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
     </div>
     )
   }

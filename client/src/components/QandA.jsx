@@ -17,7 +17,7 @@ function QandA (props) {
     }).then((result) => {
         setAllQuestions(() => {
           const questionsSorted =
-          [...result.data.results].filter((elem) => Object.keys(elem.answers).length !== 0)
+          [...result.data.results].filter((elem) => Object.keys(elem.answers).length >= 0)
           .sort((a, b) => b.question_helpfulness - a.question_helpfulness);
           return questionsSorted;
         });
@@ -54,6 +54,28 @@ function QandA (props) {
     });
   }
 
+  function submitQuestion(event){
+    console.log('question submitted!');
+    let data = {
+      "body": event.content,
+      "name": event.nickname,
+      "email": event.email,
+      "product_id": props.curr_product_id,
+    };
+
+    let config = {
+      headers: {
+        contentType: 'application/json'
+      }
+    };
+    axios.post('/addQuestion', data, config)
+      .then((response) => {
+        console.log('submit question post request client side- log response', response);
+        //setAllQuestions([...allQuestions, event]);
+      })
+      .catch(err => console.log(err));
+  }
+
   return (<div className="container" style={{
     margin: "0 20rem", padding: "50px 0", lineHeight: "2"}}>
     <Header questionAdded={questionAdded}/>
@@ -87,7 +109,8 @@ function QandA (props) {
     </button>}
 
     <AddAQuestion currentProductName={props.curr_product_name}
-      questionAdded={questionAdded} addAQuestion={handleAddAQuestionButton}/>
+      questionAdded={questionAdded} addAQuestion={handleAddAQuestionButton}
+      submitQuestion={submitQuestion}/>
 
   </div>);
 }

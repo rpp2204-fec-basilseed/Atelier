@@ -54,7 +54,6 @@ class RelatedItemsAndOutfits extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    console.log("You've been clicked");
   };
 
 
