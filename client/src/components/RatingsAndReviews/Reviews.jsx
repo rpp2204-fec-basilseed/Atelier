@@ -117,10 +117,10 @@ export default function Reviews ({currProduct, renderStarRating, sendReview }) {
       <div className='reviews' style={{paddingLeft: '20px'}}>
         <div className='total-reviews'>{`${currReviews.length} Reviews`}</div>
         <label for="filter">Show reviews by:</label>
-          <select name="filter" id="filters" onChange={(e) => {getReviews(e.target.value)}} value={filter}>
-           <option value="Helpful">Helpful</option>
-           <option value="Newest">Newest</option>
-           <option value="Relevant">Relevant</option>
+          <select name="filter" id="filters" onChange={(e) => {getReviews(e.target.value)}}>
+           <option value="helpful">Helpful</option>
+           <option value="newest">Newest</option>
+           <option value="relevant">Relevant</option>
          </select>
         <DisplayReview reviewsList={currReviews} displayedReviews={displayedReviews} renderStarRating={renderStarRating}/>
       <div className="more-and-add-review" style={{display: 'flex'}}>

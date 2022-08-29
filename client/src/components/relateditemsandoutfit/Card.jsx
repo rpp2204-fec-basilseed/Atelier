@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Card ({ category, header, price, img, imgalt, icon, rating }) {
+  console.log('rating: ', rating)
   return (
     <div className='card'>
       <div className='product-img-container'>

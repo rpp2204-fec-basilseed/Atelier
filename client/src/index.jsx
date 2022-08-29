@@ -1,12 +1,12 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-// import Reviews from './components/RatingsAndReviews/Reviews.jsx';
+import Reviews from './components/RatingsAndReviews/Reviews.jsx';
 const Axios = require ('axios');
 import Overview from './components/Overview.jsx';
 import QandA from './components/QandA.jsx';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { AiOutlineStar } from 'react-icons/ai';
-import RelatedItemsAndOutfits from './components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx'
+import RelatedItemsAndOutfits from './components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx';
 
 class Index extends React.Component {
   constructor(props) {
@@ -46,6 +46,8 @@ class Index extends React.Component {
     return (
     <div>
       <Overview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
+      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
+      <Reviews currProduct={this.state.curr_product_id} renderStarRating={this.renderStarRating}/>
       <RelatedItemsAndOutfits p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
           {
               "feature": "Sole",
@@ -60,8 +62,6 @@ class Index extends React.Component {
               "value": "Double Stitch"
           }
       ]}/>
-      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
-      {/* <Reviews currProduct={this.state.curr_product_id} /> */}
     </div>
     )
   }

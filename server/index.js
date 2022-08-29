@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/products', (req, res) => {
-  let url = `${process.env.URL}/products`;
+  let url = `${process.env.URL}products`;
 
   if (req.query.p_id) {
     url += `/${req.query.p_id}`;
@@ -49,6 +49,126 @@ app.get('/products', (req, res) => {
 
 let port = process.env.PORT;
 
+let apiKey = process.env.API_KEY;
+
+app.get('/review', (req, res) => {
+  if (req.query.productId) {
+
+    let config = {
+      method: 'get',
+      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=' + req.query.productId + '&count=200',
+      headers: {
+        Authorization : apiKey
+      }
+    }
+
+    axios(config)
+    .then((reviewData) => {
+      res.send(reviewData.data.results);
+    })
+    .catch((error) => {
+      throw error;
+    })
+
+  }
+  });
+
+  app.get('/meta', (req, res) => {
+    if (req.query.productId) {
+
+      let config = {
+        method: 'get',
+        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=' + req.query.productId,
+        headers: {
+          Authorization : apiKey
+        }
+      }
+
+      axios(config)
+      .then((metaData) => {
+        res.send(metaData.data);
+      })
+      .catch((error) => {
+        throw error;
+      })
+    }
+  });
+
+  app.put('/helpful', (req, res) => {
+    if (req.query.reviewId) {
+
+      let config = {
+        method: 'put',
+        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/' + req.query.reviewId + '/helpful',
+        headers: {
+          Authorization : apiKey
+        }
+      }
+
+      axios(config)
+      .then((response) => {
+        res.send();
+      })
+
+      .catch((error) => {
+        throw error;
+      })
+    }
+  });
+
+  app.put('/report', (req, res) => {
+    if (req.query.reviewId) {
+
+      let config = {
+        method: 'put',
+        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/' + req.query.reviewId + '/report',
+        headers: {
+          Authorization : apiKey
+        }
+      }
+
+      axios(config)
+      .then((response) => {
+        console.log(response)
+        res.send();
+      })
+
+      .catch((error) => {
+        throw error;
+      })
+    }
+  });
+
+  app.post('/addReview', (req, res) => {
+    var data = {
+      product_id:71697,
+      rating:5,
+      summary:"It can't get better than this! Buy this one now!!",
+      body:"Seriously. This is life changing. I have already ordered 73 more for all my family and friends.",
+      recommend:true,
+      name:"marysmith74",
+      email:"mzmarys74@aol.com",
+      photos:[]
+    }
+var config = {
+  method: 'post',
+  url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
+  headers: {
+    'Authorization': apiKey,
+    'Content-Type': 'text/plain'
+  },
+  data : data
+};
+
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+  })
+
 app.get('/questions', (req, res) => {
   let config = {
     headers: { 'Authorization' : process.env.API_KEY },
@@ -56,7 +176,7 @@ app.get('/questions', (req, res) => {
       product_id: req.query.product_id
     },
   };
-  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions', config)
+  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions/', config)
     .then((result) => {
       console.log(result.data);
       res.status(200).send(result.data);
@@ -108,124 +228,6 @@ app.post('/cart', (req, res) => {
     res.status(500);
   });
 });
-
-app.get('/review', (req, res) => {
-  if (req.query.productId) {
-
-    let config = {
-      method: 'get',
-      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=' + req.query.productId + '&count=200',
-      headers: {
-        Authorization : process.env.API_KEY
-      }
-    }
-
-    axios(config)
-    .then((reviewData) => {
-      res.send(reviewData.data.results);
-    })
-    .catch((error) => {
-      throw error;
-    })
-
-  }
-  });
-
-  app.get('/meta', (req, res) => {
-    if (req.query.productId) {
-
-      let config = {
-        method: 'get',
-        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=' + req.query.productId,
-        headers: {
-          Authorization : process.env.API_KEY
-        }
-      }
-
-      axios(config)
-      .then((metaData) => {
-        res.send(metaData.data);
-      })
-      .catch((error) => {
-        throw error;
-      })
-    }
-  });
-
-  app.put('/helpful', (req, res) => {
-    if (req.query.reviewId) {
-
-      let config = {
-        method: 'put',
-        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/' + req.query.reviewId + '/helpful',
-        headers: {
-          Authorization : apiKey
-        }
-      }
-
-      axios(config)
-      .then((response) => {
-        res.send();
-      })
-
-      .catch((error) => {
-        throw error;
-      })
-    }
-  });
-
-  app.put('/report', (req, res) => {
-    if (req.query.reviewId) {
-
-      let config = {
-        method: 'put',
-        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/' + req.query.reviewId + '/report',
-        headers: {
-          Authorization : process.env.API_KEY
-        }
-      }
-
-      axios(config)
-      .then((response) => {
-        console.log(response)
-        res.send();
-      })
-
-      .catch((error) => {
-        throw error;
-      })
-    }
-  });
-
-  app.post('/addReview', (req, res) => {
-    var data = {
-      product_id:71697,
-      rating:5,
-      summary:"It can't get better than this! Buy this one now!!",
-      body:"Seriously. This is life changing. I have already ordered 73 more for all my family and friends.",
-      recommend:true,
-      name:"marysmith74",
-      email:"mzmarys74@aol.com",
-      photos:[]
-    }
-var config = {
-  method: 'post',
-  url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
-  headers: {
-    'Authorization': process.env.API_KEY,
-    'Content-Type': 'text/plain'
-  },
-  data : data
-};
-
-Axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.data));
-})
-.catch(function (error) {
-  console.log(error);
-});
-  })
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
