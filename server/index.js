@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/products', (req, res) => {
-  let url = `${process.env.URL}/products`;
+  let url = `${process.env.URL}products`;
 
   if (req.query.p_id) {
     url += `/${req.query.p_id}`;
@@ -34,7 +34,7 @@ app.get('/products', (req, res) => {
     url: url,
     data: null,
     headers: {
-      Authorization: process.env.REACT_APP_API_KEY
+      Authorization: process.env.API_KEY
     }
   })
     .then((products) => {
@@ -62,7 +62,7 @@ app.get('/review', (req, res) => {
       }
     }
 
-    Axios(config)
+    axios(config)
     .then((reviewData) => {
       res.send(reviewData.data.results);
     })
@@ -84,7 +84,7 @@ app.get('/review', (req, res) => {
         }
       }
 
-      Axios(config)
+      axios(config)
       .then((metaData) => {
         res.send(metaData.data);
       })
@@ -105,7 +105,7 @@ app.get('/review', (req, res) => {
         }
       }
 
-      Axios(config)
+      axios(config)
       .then((response) => {
         res.send();
       })
@@ -127,7 +127,7 @@ app.get('/review', (req, res) => {
         }
       }
 
-      Axios(config)
+      axios(config)
       .then((response) => {
         console.log(response)
         res.send();
@@ -154,13 +154,13 @@ var config = {
   method: 'post',
   url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
   headers: {
-    'Authorization': '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',
+    'Authorization': apiKey,
     'Content-Type': 'text/plain'
   },
   data : data
 };
 
-Axios(config)
+axios(config)
 .then(function (response) {
   console.log(JSON.stringify(response.data));
 })
@@ -176,7 +176,7 @@ app.get('/questions', (req, res) => {
       product_id: req.query.product_id
     },
   };
-  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions', config)
+  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions/', config)
     .then((result) => {
       console.log(result.data);
       res.status(200).send(result.data);
