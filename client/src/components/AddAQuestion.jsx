@@ -19,13 +19,39 @@ function AddAQuestion(props) {
     });
   }
 
-  // function handleSubmit(event){
-  //   axios.post('/questions', );
-  // }
-  // once the user clicks submit, it will check the input for validation.
-    // If input is invalid, send a warning message and prevent submitting.
-    // If input is valid, form will be submitted and posted, the Modal window will disappear
-       // and Modal container's opacity will go back to "1".
+  function submitQuestion(event){
+  const { content, nickname, email } = event;
+  const data = {
+    "body": content,
+    "name": nickname,
+    "email": email,
+    "product_id": props.currentProductID,
+  };
+
+  let config = {
+    headers: {
+      contentType: 'application/json'
+    }
+  };
+  let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+  if(content.length === 0 || nickname.length === 0 || email.length === 0 || !email.match(validRegex)) {
+    alert(`You must enter the following:`);
+  } else {
+    axios.post('/addQuestion', data, config)
+    .then((response) => {
+      console.log(response);
+      setInputQuestion({
+        content: '',
+        nickname: '',
+        email: ''
+      });
+      props.handleQuestionSubmitted();
+      props.addAQuestion();
+    })
+    .catch(err => console.log(err));
+  }
+}
 
   return (<div className="modal-add-a-question">
       <button className="toggle-button" id="add-a-question-toggle-button" onClick={props.addAQuestion} style={{
@@ -35,12 +61,12 @@ function AddAQuestion(props) {
         backgroundColor: "white",
         marginTop: "20px",
         border: "1px solid grey",
-        opacity: props.questionAdded ? "0.2" : "1"
+        opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1"
         }}>ADD A QUESTION +
       </button>
 
       <div className="modal" id="modal" style={{
-        display: props.questionAdded ? "block" : "none",
+        display: !props.questionAdded ? "none" : !props.questionSubmitted ? "block" : "none",
         position: "fixed", zIndex: "2", opacity:"1", border: "solid grey",
         top: "50%",left: "50%",transform: "translate(-50%, -50%)", float: "left", width: "40%",
         backgroundColor: "ivory",
@@ -62,7 +88,7 @@ function AddAQuestion(props) {
         <span>For authentication reasons, you will not be emailed</span>
         <br />
         <button onClick={(event) => {
-          props.submitQuestion(inputQuestion);
+          submitQuestion(inputQuestion);
           event.preventDefault();
         }} className="submit-button">Submit question</button>
       </div>

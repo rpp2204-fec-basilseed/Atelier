@@ -9,7 +9,7 @@ function Answer(props) {
     setAnswersVotes(answers_votes + 1);
   }
 
-  return (<div style={{opacity: props.questionAdded ? "0.2" : "1", zIndex: "1"}}>
+  return (<div style={{opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1", zIndex: "1"}}>
     <span style={{ fontWeight: "bold", display: "inline-flex" }}>A: </span>
     <div className="answer-body" style={{ display: "inline-flex", marginLeft: "5px" }}>
       {props.answerBody}

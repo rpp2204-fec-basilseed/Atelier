@@ -50,36 +50,20 @@ function QandA (props) {
   const [ questionAdded, setQuestionAdded ] = useState(false);
   function handleAddAQuestionButton () {
     setQuestionAdded((prevVal) => {
-      return !prevVal
+      return !prevVal;
     });
   }
 
-  function submitQuestion(event){
-    console.log('question submitted!');
-    let data = {
-      "body": event.content,
-      "name": event.nickname,
-      "email": event.email,
-      "product_id": props.curr_product_id,
-    };
-
-    let config = {
-      headers: {
-        contentType: 'application/json'
-      }
-    };
-    axios.post('/addQuestion', data, config)
-      .then((response) => {
-        console.log('submit question post request client side- log response', response);
-        //setAllQuestions([...allQuestions, event]);
-      })
-      .catch(err => console.log(err));
+  const [ questionSubmitted, setQuestionSubmitted ] = useState(false);
+  function handleQuestionSubmitted () {
+    setQuestionSubmitted(false);
   }
 
   return (<div className="container" style={{
     margin: "0 20rem", padding: "50px 0", lineHeight: "2"}}>
-    <Header questionAdded={questionAdded}/>
-    <Search onSearch={handleSearch} allQuestions={allQuestions} questionAdded={questionAdded}/>
+    <Header questionAdded={questionAdded} questionSubmitted={questionSubmitted}/>
+    <Search onSearch={handleSearch} allQuestions={allQuestions} questionAdded={questionAdded}
+    questionSubmitted={questionSubmitted}/>
 
     { allQuestions.slice(0, counter * 2 + 2).map((elem)=> {
       return <Question
@@ -90,6 +74,7 @@ function QandA (props) {
       questionAdded={questionAdded}
       questionBody={elem.question_body}
       currentProductName={props.curr_product_name}
+      questionSubmitted={questionSubmitted}
       />;
     })}
 
@@ -103,14 +88,14 @@ function QandA (props) {
       marginRight: "10px",
       border: "1px solid grey",
       display: "inline-flex",
-      opacity: questionAdded ? "0.2" : "1",
+      opacity: !questionAdded ? "1" : !questionSubmitted ? "0.2" : "1",
       zIndex: "1"
       }}>MORE ANSWERED QUESTIONS
     </button>}
 
-    <AddAQuestion currentProductName={props.curr_product_name}
-      questionAdded={questionAdded} addAQuestion={handleAddAQuestionButton}
-      submitQuestion={submitQuestion}/>
+    <AddAQuestion currentProductName={props.curr_product_name} currentProductID={props.curr_product_id}
+      questionAdded={questionAdded} questionSubmitted={questionSubmitted}
+      addAQuestion={handleAddAQuestionButton} handleQuestionSubmitted={handleQuestionSubmitted}/>
 
   </div>);
 }
