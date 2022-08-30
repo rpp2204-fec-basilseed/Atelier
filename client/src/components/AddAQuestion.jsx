@@ -22,10 +22,10 @@ function AddAQuestion(props) {
   function submitQuestion(event){
   const { content, nickname, email } = event;
   const data = {
-    "body": content,
-    "name": nickname,
-    "email": email,
-    "product_id": props.currentProductID,
+    'body': content,
+    'name': nickname,
+    'email': email,
+    'product_id': props.currentProductID,
   };
 
   let config = {

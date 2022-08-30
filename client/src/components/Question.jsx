@@ -4,6 +4,9 @@ import Answer from './Answer.jsx';
 
 function Question(props) {
   const answersData = Object.values(props.answers);
+
+  // const [ allAnswers, setAllAnswers ] = useState(answersData);
+
   const sellerAnswer = answersData.filter(elem => elem.answerer_name === 'Seller');
 
   const nonSellerAnswers =
@@ -11,6 +14,7 @@ function Question(props) {
     .sort((a, b) => b.helpfulness - a.helpfulness);
 
   const answersModified = [...sellerAnswer, ...nonSellerAnswers];
+
   const shortAnswers = answersModified.slice(0, 2);
 
   const [ clicked, setClicked ] = useState(false);
@@ -24,8 +28,8 @@ function Question(props) {
   return (<div>
     <div className="question-body" style={{ fontWeight: "bold", display: "inline-flex",
     opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1", zIndex: "1" }}>Q: {props.questionBody}</div>
-    <Sidebar questionSubmitted={props.questionSubmitted} questionAdded={props.questionAdded} helpful={props.questionHelpfulness}
-    questionBody={props.questionBody} currentProductName={props.currentProductName}/>
+    <Sidebar fetchData={props.fetchData} questionSubmitted={props.questionSubmitted} questionAdded={props.questionAdded} helpful={props.questionHelpfulness}
+    questionBody={props.questionBody} currentProductName={props.currentProductName} questionID={props.questionID}/>
 
     { !clicked && shortAnswers.map((elem) => {
       return (

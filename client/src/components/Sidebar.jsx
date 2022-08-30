@@ -7,8 +7,9 @@ function Sidebar(props) {
   function handleHelpful() {
     setVotes(votes + 1);
   }
-  // TODO: validate form input upon submission.
+
   const [ addAnswerClicked, setAddAnswer ] = useState(false);
+
   function handleAddAnswer () {
     console.log(`You just clicked Add Answer for question body: ${props.questionBody}`);
     setAddAnswer((prevVal) => {
@@ -28,8 +29,8 @@ function Sidebar(props) {
         paddingLeft: "10px", textDecoration: "underline", textAlign: "right"
       }}>Add Answer</span>
     </div>
-    <AddAnswerModal addAnswerButtonClicked={addAnswerClicked}
-    currentProductName={props.currentProductName} questionBody={props.questionBody}/>
+    <AddAnswerModal fetchData={props.fetchData} addAnswerButtonClicked={addAnswerClicked}
+    currentProductName={props.currentProductName} questionBody={props.questionBody} questionID={props.questionID}/>
 
   </div>);
 }

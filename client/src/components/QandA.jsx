@@ -19,6 +19,7 @@ function QandA (props) {
           const questionsSorted =
           [...result.data.results].filter((elem) => Object.keys(elem.answers).length >= 0)
           .sort((a, b) => b.question_helpfulness - a.question_helpfulness);
+          console.log('result.data.results', result.data.results);
           return questionsSorted;
         });
       })
@@ -62,12 +63,14 @@ function QandA (props) {
   return (<div className="container" style={{
     margin: "0 20rem", padding: "50px 0", lineHeight: "2"}}>
     <Header questionAdded={questionAdded} questionSubmitted={questionSubmitted}/>
-    <Search onSearch={handleSearch} allQuestions={allQuestions} questionAdded={questionAdded}
+    <Search onSearch={handleSearch} questionAdded={questionAdded}
     questionSubmitted={questionSubmitted}/>
 
     { allQuestions.slice(0, counter * 2 + 2).map((elem)=> {
       return <Question
+      fetchData={fetchData}
       key={elem.question_id}
+      questionID={elem.question_id}
       questionBody={elem.question_body}
       questionHelpfulness={elem.question_helpfulness}
       answers={elem.answers}

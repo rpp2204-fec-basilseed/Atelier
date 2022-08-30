@@ -13,6 +13,8 @@ app.use(express.json());
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+let port = process.env.PORT;
+
 app.get('/products', (req, res) => {
   let url = `${process.env.URL}/products`;
 
@@ -41,8 +43,6 @@ app.get('/products', (req, res) => {
     })
 })
 
-let port = process.env.PORT;
-
 app.get('/questions', (req, res) => {
   let config = {
     headers: { 'Authorization' : process.env.API_KEY },
@@ -50,19 +50,29 @@ app.get('/questions', (req, res) => {
       product_id: req.query.product_id
     },
   };
-  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions', config)
+  axios.get(`${process.env.URL}/qa/questions`, config)
     .then((result) => {
       res.status(200).send(result.data);
     })
     .catch((err) => console.log(err));
 });
 
-app.post('/addQuestion', (req, res) => {
-  // TODO: body parameters: body, name, email, product_id(INT)
+// app.get('/answers', (req, res) => {
+//   let config = {
+//     headers: { 'Authorization' : process.env.API_KEY },
+//   };
+//   let question_id = req.query.question_id;
+//   axios.get(`${process.env.URL}/qa/questions/${question_id}/answers`, config)
+//     .then((result) => {
+//       res.status(200).send(result.data);
+//     })
+//     .catch((err) => console.log(err));
+// });
 
+app.post('/addQuestion', (req, res) => {
   axios({
     method: 'post',
-    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions',
+    url: `${process.env.URL}/qa/questions`,
     headers: {
       Authorization: process.env.API_KEY,
       contentType: 'application/json'
@@ -76,6 +86,30 @@ app.post('/addQuestion', (req, res) => {
   })
     .then((response) => {
       console.log('log req body', req.body);
+      res.status(201).send(response.data);
+    })
+    .catch(error =>
+      console.log(error)
+    );
+});
+
+app.post('/addAnswer', (req, res) => {
+  axios({
+    method: 'post',
+    url: `${process.env.URL}/qa/questions/${req.body.question_id}/answers`,
+    headers: {
+      Authorization: process.env.API_KEY,
+      contentType: 'application/json'
+    },
+    data: {
+      body: req.body.body,
+      name:  req.body.name,
+      email: req.body.email,
+      photos: req.body.photos,
+    }
+  })
+    .then((response) => {
+      console.log('post an answer---log req body', req.body);
       res.status(201).send(response.data);
     })
     .catch(error =>
