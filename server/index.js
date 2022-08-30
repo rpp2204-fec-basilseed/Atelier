@@ -26,9 +26,6 @@ app.get('/products', (req, res) => {
     url += `/${req.query.endpoint}`;
   }
 
-  console.log('/products url: ' + url);
-
-  console.log(req.query)
   axios({
     method: 'get',
     url: url,
@@ -38,7 +35,6 @@ app.get('/products', (req, res) => {
     }
   })
     .then((products) => {
-      console.log('PRODUCTS: ' + products);
       return res.status(200).send(products.data);
     })
     .catch((err) => {
@@ -140,33 +136,49 @@ app.get('/review', (req, res) => {
   });
 
   app.post('/addReview', (req, res) => {
-    var data = {
-      product_id:71697,
-      rating:5,
-      summary:"It can't get better than this! Buy this one now!!",
-      body:"Seriously. This is life changing. I have already ordered 73 more for all my family and friends.",
-      recommend:true,
-      name:"marysmith74",
-      email:"mzmarys74@aol.com",
-      photos:[]
-    }
-var config = {
-  method: 'post',
-  url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
-  headers: {
-    'Authorization': apiKey,
-    'Content-Type': 'text/plain'
-  },
-  data : data
-};
 
-axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.data));
-})
-.catch(function (error) {
-  console.log(error);
-});
+    console.log(req.body)
+
+    var data = JSON.stringify(req.body);
+
+  var config = {
+    method: 'post',
+    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/',
+    headers: {
+      'Authorization': apiKey,
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+
+    // axios(config)
+    // .then((res) => {
+    //   console.log(res.data)
+    // })
+    // .catch((err) => {
+    //   console.log('Therewasanerror: ')
+    // })
+
+    res.send('okay')
+
+// var config = {
+//   method: 'post',
+//   url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
+//   headers: {
+//     'Authorization': apiKey,
+//     'Content-Type': 'text/plain'
+//   },
+//   data : data
+// };
+
+// axios(config)
+// .then(function (response) {
+//   console.log(JSON.stringify(response.data));
+// })
+// .catch(function (error) {
+//   console.log(error);
+// });
+//   })
   })
 
 app.get('/questions', (req, res) => {
@@ -178,7 +190,6 @@ app.get('/questions', (req, res) => {
   };
   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions/', config)
     .then((result) => {
-      console.log(result.data);
       res.status(200).send(result.data);
     })
     .catch((err) => console.log(err));
@@ -202,7 +213,6 @@ app.get('/questions', (req, res) => {
 // });
 
 app.post('/cart', (req, res) => {
-  console.log('req body: ' + JSON.stringify(req.body));
 
   var data = JSON.stringify({
     "sku_id": req.body.sku_id
@@ -220,7 +230,6 @@ app.post('/cart', (req, res) => {
 
   axios(config)
   .then(function (response) {
-    console.log(JSON.stringify(response.data));
     res.status(200);
   })
   .catch(function (error) {
