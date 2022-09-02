@@ -1,35 +1,30 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import Reviews from './components/RatingsAndReviews/Reviews.jsx';
+// import Reviews from './components/RatingsAndReviews/Reviews.jsx';
 const Axios = require('axios');
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { AiOutlineStar } from 'react-icons/ai';
 import Overview from './components/Overview.jsx';
 import QandA from './components/QandA.jsx';
-import RelatedItemsAndOutfits from './components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx'
+import RelatedItemsAndOutfits from './components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx';
+import clickWrapper from './ClickWrapper.jsx';
 
 class Index extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-<<<<<<< HEAD
-      curr_product_id: 71700,
+      curr_product_id: 71701,
       curr_product_name: 'Slacker\'s Slacks',
-=======
-      curr_product_id: 71698,
-      curr_product_name: 'Camo Onesie'
->>>>>>> a07d175c59ccb13f8c151cd490e037b5c4960791
     }
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
     this.sendReview = this.sendReview.bind(this);
-    }
   }
 
   updateCurrentProduct(e) {
     this.setState({curr_product_id: e.event.product_id});
-  };
+  }
 
   renderStarRating(rating) {
 
@@ -45,6 +40,8 @@ class Index extends React.Component {
         halfStarPushed = true
        } else {
         stars.push(<AiOutlineStar key={i} />)
+       }
+    }
 
     for(let i = 1; i <= 5; i++) {
       if (i <= rating) {
@@ -56,9 +53,9 @@ class Index extends React.Component {
 
     return stars.map((star) => {
       return star
-    })
+    });
   }
-  }
+
 
   sendReview() {
     Axios.post('/addReview', {
@@ -72,15 +69,19 @@ class Index extends React.Component {
         email:"mzmarys74@aol.com",
         photos:[]
       }
-    })
+    });
   }
 
   render() {
+    const WrappedOverview = clickWrapper(Overview);
+    const WrappedQandA = clickWrapper(QandA);
+    const WrappedRelatedItemsAndOutfits = clickWrapper(RelatedItemsAndOutfits);
+
     return (
       <div>
-      <Overview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
-      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
-      <RelatedItemsAndOutfits p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
+      <WrappedOverview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
+      <WrappedQandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
+      <WrappedRelatedItemsAndOutfits p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
         {
           "feature": "Sole",
           "value": "Rubber"
@@ -94,12 +95,7 @@ class Index extends React.Component {
           "value": "Double Stitch"
         }
       ]}/>
-<<<<<<< HEAD
-
-=======
-      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
-      <Reviews renderStarRating={this.renderStarRating} currProduct={this.state.curr_product_id} sendReview={this.sendReview}/>
->>>>>>> a07d175c59ccb13f8c151cd490e037b5c4960791
+      {/* <Reviews renderStarRating={this.renderStarRating} currProduct={this.state.curr_product_id} sendReview={this.sendReview}/> */}
     </div>
     )
   }
