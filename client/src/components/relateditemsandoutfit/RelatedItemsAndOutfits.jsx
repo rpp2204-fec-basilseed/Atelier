@@ -11,7 +11,6 @@ class RelatedItemsAndOutfits extends React.Component {
       outfitItems: []
     };
 
-    this.handleClick = this.handleClick.bind(this);
     this.getRelatedItems = this.getRelatedItems.bind(this);
     this.getOutfitItems = this.getOutfitItems.bind(this);
     this.addToOutfit = this.addToOutfit.bind(this);
@@ -50,13 +49,6 @@ class RelatedItemsAndOutfits extends React.Component {
     this.getRelatedItems();
     this.getOutfitItems();
   };
-
-
-  handleClick(e) {
-    e.preventDefault();
-    console.log("You've been clicked");
-  };
-
 
   render() {
     return (

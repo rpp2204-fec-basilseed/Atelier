@@ -1,6 +1,6 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import Reviews from './components/RatingsAndReviews/Reviews.jsx';
+// import Reviews from './components/RatingsAndReviews/Reviews.jsx';
 const Axios = require('axios');
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { AiOutlineStar } from 'react-icons/ai';
@@ -20,7 +20,6 @@ class Index extends React.Component {
     this.renderStarRating = this.renderStarRating.bind(this);
     this.sendReview = this.sendReview.bind(this);
     }
-  }
 
   updateCurrentProduct(e) {
     this.setState({curr_product_id: e.event.product_id});
@@ -40,19 +39,20 @@ class Index extends React.Component {
         halfStarPushed = true
        } else {
         stars.push(<AiOutlineStar key={i} />)
+       }
 
-    for(let i = 1; i <= 5; i++) {
-      if (i <= rating) {
-        stars.push(<FaStar key={i}/>);
-      } else {
-        stars.push(<AiOutlineStar key={i}/>)
+      for(let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+          stars.push(<FaStar key={i}/>);
+        } else {
+          stars.push(<AiOutlineStar key={i}/>)
+        }
       }
-    }
 
-    return stars.map((star) => {
-      return star
-    })
-  }
+      return stars.map((star) => {
+        return star;
+      })
+    }
   }
 
   sendReview() {
@@ -74,6 +74,7 @@ class Index extends React.Component {
     return (
       <div>
       <Overview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
+      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
       <RelatedItemsAndOutfits p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
         {
           "feature": "Sole",
@@ -88,8 +89,7 @@ class Index extends React.Component {
           "value": "Double Stitch"
         }
       ]}/>
-      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
-      <Reviews renderStarRating={this.renderStarRating} currProduct={this.state.curr_product_id} sendReview={this.sendReview}/>
+      {/* <Reviews renderStarRating={this.renderStarRating} currProduct={this.state.curr_product_id} sendReview={this.sendReview}/> */}
     </div>
     )
   }
