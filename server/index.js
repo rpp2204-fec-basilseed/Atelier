@@ -57,18 +57,6 @@ app.get('/questions', (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// app.get('/answers', (req, res) => {
-//   let config = {
-//     headers: { 'Authorization' : process.env.API_KEY },
-//   };
-//   let question_id = req.query.question_id;
-//   axios.get(`${process.env.URL}/qa/questions/${question_id}/answers`, config)
-//     .then((result) => {
-//       res.status(200).send(result.data);
-//     })
-//     .catch((err) => console.log(err));
-// });
-
 app.post('/addQuestion', (req, res) => {
   axios({
     method: 'post',
