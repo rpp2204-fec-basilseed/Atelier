@@ -14,28 +14,25 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
 
 
   const backgroundStyling = {
-    margin: "20px",
     position: "fixed",
-    transform: "translate(-50%, -50%)",
-    top: "48%",
-    left: "48%",
+    top: "0%",
+    left: "0%",
     zIndex: "2",
     backgroundColor: "rgba(100,100,100,0.5)",
-    width: "110%",
-    height: "110%",
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center"
   };
 
   const formStyling = {
-    margin: "200px",
-    padding: "200px",
-    display: "block",
-    height: "200px",
-    width: "220px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "80vh",
+    width: "60vw",
     backgroundColor: "white",
-    position: "fixed",
-    transform: "translate(-50%, -50%)",
-    top: "40%",
-    left: "40%",
+    position: "fixed"
   };
 
   const reviewData = {
@@ -51,7 +48,7 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
     }
   }
 
-  const sendReview = () => {
+  function sendReview() {
       axios.post('/addReview', reviewData)
       .then((res) => {
         console.log(res);
@@ -64,7 +61,7 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
   return (
     <form style={backgroundStyling}>
       <div style={formStyling}>
-        <p onClick={() => console.log({recommend})}>X</p>
+        <p onClick={() => {toggleShowReview()}}>X</p>
         <label>Nickname: </label>
         <input
           type="text"

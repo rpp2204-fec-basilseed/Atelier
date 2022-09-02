@@ -9,8 +9,12 @@ export default function Reviews({ currProduct, renderStarRating, sendReview }) {
     for (let currentRating in metaData.ratings) {
       totalStars += parseInt(metaData.ratings[currentRating]);
     }
-    let barLength = Math.floor((rating / totalStars) * 100)
-    return <div style={{border: "solid black 5px", width: `${barLength+'px'}`}}></div>;
+    let barLength = Math.floor((rating / totalStars) * 100);
+    return (
+      <div
+        style={{ border: "solid black 5px", width: `${barLength + "px"}` }}
+      ></div>
+    );
   };
 
   const [displayedReviews, setDisplayedReviews] = useState(4);
