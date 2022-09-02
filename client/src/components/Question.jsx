@@ -5,8 +5,6 @@ import Answer from './Answer.jsx';
 function Question(props) {
   const answersData = Object.values(props.answers);
 
-  // const [ allAnswers, setAllAnswers ] = useState(answersData);
-
   const sellerAnswer = answersData.filter(elem => elem.answerer_name === 'Seller');
 
   const nonSellerAnswers =
