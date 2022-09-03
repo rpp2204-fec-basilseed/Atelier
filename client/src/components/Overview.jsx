@@ -37,20 +37,20 @@ class Overview extends React.Component {
 
   componentDidMount() {
 
-    // axios.get('/products', {
-    //   params: {
-    //     // curr_product_id: this.props.curr_product_id
-    //     p_id: this.props.curr_product_id
-    //   }
-    // })
-    // .then((response) => {
-    //   this.setState({
-    //     prodData: response.data
-    //   });
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
+    axios.get('/products', {
+      params: {
+        // curr_product_id: this.props.curr_product_id
+        p_id: this.props.curr_product_id
+      }
+    })
+    .then((response) => {
+      this.setState({
+        prodData: response.data
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
     axios.get('/products', {
       params: {
