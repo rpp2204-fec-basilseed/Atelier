@@ -35,7 +35,7 @@ class RelatedCarousel extends React.Component {
         {this.state.displayRightBtn ? <button data-testid="r-next" aria-labelledby="next" className='next-btn' onClick={this.clickNext}><FaAngleRight size={32} /></button> : <div></div>}
         <div className='carousel-cards'>
         {this.props.relatedItems.map(item => (
-            <RelatedItemCard key={item} p_id={item} currentProduct={this.props.currentProduct} currentFeatures={this.props.currentFeatures}/>
+            <RelatedItemCard key={item} p_id={item} currentProduct={this.props.currentProduct} currentFeatures={this.props.currentFeatures} updateCurrentProduct={this.props.updateCurrentProduct}/>
           ))}
         </div>
       </div>

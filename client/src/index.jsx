@@ -14,15 +14,32 @@ class Index extends React.Component {
 
     this.state = {
       curr_product_id: 71698,
-      curr_product_name: 'Camo Onesie'
+      curr_product_name: 'Camo Onesie',
+      c_url: 'http://localhost:8080/71968'
     }
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
     this.sendReview = this.sendReview.bind(this);
     }
 
-  updateCurrentProduct(e) {
-    this.setState({curr_product_id: e.event.product_id});
+  // updateCurrentProduct(e) {
+  //   this.setState({curr_product_id: e.event.product_id});
+  // };
+
+  updateCurrentProduct(p_id) {
+    // let n_url = this.state.c_url.slice(0, -5) + p_id;
+    // console.log('pid', p_id)
+    console.log('o state', this.state.curr_product_id)
+    this.setState({
+      // c_url: n_url,
+      curr_product_id: p_id
+    });
+    setTimeout(() => {
+      console.log('n state', this.state)
+    }, "1000")
+
+    // console.log('pid2',this.state.curr_product_id)
+    // location.assign(n_url);
   };
 
   renderStarRating(rating) {
@@ -70,12 +87,24 @@ class Index extends React.Component {
     })
   }
 
+  componentDidMount() {
+    // console.log('a', window.location.pathname.split('/')[1])
+    // let u = parseInt(window.location.pathname.split('/')[1]);
+    // console.log('u', u)
+    // this.setState({
+    //   curr_product_id: u
+    // })
+    // setTimeout(() => {
+    //   console.log('new state', this.state)
+    // }, "1000")
+  }
+
   render() {
     return (
       <div>
       <Overview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
       <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
-      <RelatedItemsAndOutfits p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
+      <RelatedItemsAndOutfits updateCurrentProduct={this.updateCurrentProduct} p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
         {
           "feature": "Sole",
           "value": "Rubber"

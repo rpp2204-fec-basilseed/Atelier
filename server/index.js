@@ -15,6 +15,10 @@ app.use(express.json());
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+let port = process.env.PORT;
+
+let apiKey = process.env.API_KEY;
+
 app.get('/products', (req, res) => {
   let url = `${process.env.URL}/products`;
 
@@ -26,9 +30,6 @@ app.get('/products', (req, res) => {
     url += `/${req.query.endpoint}`;
   }
 
-  console.log('/products url: ' + url);
-
-  console.log(req.query)
   axios({
     method: 'get',
     url: url,
@@ -47,9 +48,6 @@ app.get('/products', (req, res) => {
     })
 })
 
-let port = process.env.PORT;
-
-let apiKey = process.env.API_KEY;
 
 app.get('/review', (req, res) => {
   if (req.query.productId) {
@@ -62,7 +60,7 @@ app.get('/review', (req, res) => {
       }
     }
 
-    Axios(config)
+    axios(config)
     .then((reviewData) => {
       res.send(reviewData.data.results);
     })
@@ -84,7 +82,7 @@ app.get('/review', (req, res) => {
         }
       }
 
-      Axios(config)
+      axios(config)
       .then((metaData) => {
         res.send(metaData.data);
       })
@@ -105,7 +103,7 @@ app.get('/review', (req, res) => {
         }
       }
 
-      Axios(config)
+      axios(config)
       .then((response) => {
         res.send();
       })
@@ -127,7 +125,7 @@ app.get('/review', (req, res) => {
         }
       }
 
-      Axios(config)
+      axios(config)
       .then((response) => {
         console.log(response)
         res.send();
@@ -160,7 +158,7 @@ var config = {
   data : data
 };
 
-Axios(config)
+axios(config)
 .then(function (response) {
   console.log(JSON.stringify(response.data));
 })
@@ -228,6 +226,30 @@ app.post('/cart', (req, res) => {
     res.status(500);
   });
 });
+
+app.post('/interactions', (req, res) => {
+  let url = `${process.env.URL}/interactions`;
+
+  axios({
+    method: 'post',
+    url: url,
+    data: req.body,
+    headers: {
+      Authorization: process.env.API_KEY
+    }
+  })
+    .then(() => {
+      return res.status(200).end();
+    })
+    .catch((err) => {
+      return res.status(500).send('Error: Interaction Data Failed');
+    });
+});
+
+// app.get(/^\/\b\d{5}$/, (req, res) => {
+//   res.sendFile('index.html', {root: './client/dist'});
+// });
+
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);

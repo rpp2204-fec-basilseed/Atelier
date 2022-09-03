@@ -1,8 +1,6 @@
 import React from "react";
-import { unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
+import '@testing-library/jest-dom/extend-expect';
 import {render, fireEvent, waitFor, screen, cleanup, getByText, getByTestId} from '@testing-library/react'
-import '@testing-library/jest-dom';
 import axios from 'axios';
 import RelatedItemsAndOutfits from '../relateditemsandoutfit/RelatedItemsAndOutfits.jsx';
 import RelatedCarousel from '../relateditemsandoutfit/RelatedItemCarousel.jsx'
@@ -32,35 +30,57 @@ afterEach(cleanup);
 //   })
 
 // })
-test("Comparison Modal should be rendered", () => {
-  render(<ComparisonModal />);
-  expect(screen.queryByText(/COMPARING/i)).toBeInTheDocument();
-});
+describe("Comparison Modal", () => {
+  beforeEach(() => {
+    render(<ComparisonModal currentFeatures={[{"feature": "Sole", "value": "Rubber"},
+    {"feature": "Material", "value": "FullControlSkin"},
+    {"feature": "Stitching", "value": "Double Stitch"}]}
+    comparisonFeatures={[
+    {"feature": "Sole", "value": "Rubber"},
+    {"feature": "Material", "value": "FullControlSkin"},
+    {"feature": "Mid-Sole", "value": "ControlSupport Arch Bridge"},
+    {"feature": "Stitching", "value": "Double Stitch"}]}/>);
+  });
 
-test("Outfit Card rendered", () => {
-  render(<OutfitCard />);
-  expect(screen.queryByText(/Styles/i)).toBeInTheDocument();
-});
+  test("Comparison Modal should be rendered", () => {
+    expect(screen.queryByText(/Double Stitch/i)).toBeInTheDocument();
+  });
 
-test("Outfit Carousel rendered", () => {
-  render(<OutfitCarousel />);
-  expect(screen.getByTestId(/c-prev/i)).toBeInTheDocument();
-  expect(screen.getByTestId(/c-next/i)).toBeInTheDocument();
-});
+  test("Comparison Modal should be rendered", () => {
+    expect(screen.queryByText(/Fake Item/i)).not.toBeInTheDocument();
+  });
 
-test("Related Items Card rendered", () => {
-  render(<RelatedItemCard />);
-  expect(screen.getByTestId(/r-card/i)).toBeInTheDocument();
-});
+  test("Comparison Modal should be rendered", () => {
+    const sharedFeature = screen.getAllByTestId(/FullControlSkin✔/i);
+    expect(sharedFeature).toHaveLength(2);
+  });
 
-test("RelatedItemsCarousel rendered", () => {
-  render(<RelatedCarousel />);
-  expect(screen.getByTestId(/r-prev/i)).toBeInTheDocument();
-  expect(screen.getByTestId(/r-next/i)).toBeInTheDocument();
-});
+  // ✔
+})
+// test("Outfit Card rendered", () => {
+//   render(<OutfitCard />);
+//   expect(screen.queryByText(/Styles/i)).toBeInTheDocument();
+// });
+
+// test("Outfit Carousel rendered", () => {
+//   render(<OutfitCarousel />);
+//   expect(screen.getByTestId(/c-prev/i)).toBeInTheDocument();
+//   expect(screen.getByTestId(/c-next/i)).toBeInTheDocument();
+// });
+
+// test("Related Items Card rendered", () => {
+//   render(<RelatedItemCard />);
+//   expect(screen.getByTestId(/r-card/i)).toBeInTheDocument();
+// });
+
+// test("RelatedItemsCarousel rendered", () => {
+//   render(<RelatedCarousel />);
+//   expect(screen.getByTestId(/r-prev/i)).toBeInTheDocument();
+//   expect(screen.getByTestId(/r-next/i)).toBeInTheDocument();
+// });
 
 
-test('RelatedItemsAndOutfit rendered', () => {
-  render(<RelatedItemsAndOutfits />);
-  expect(screen.queryByText(/RELATED ITEMS/i)).toBeInTheDocument();
-});
+// test('RelatedItemsAndOutfit rendered', () => {
+//   render(<RelatedItemsAndOutfits />);
+//   expect(screen.queryByText(/RELATED ITEMS/i)).toBeInTheDocument();
+// });
