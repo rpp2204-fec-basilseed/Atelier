@@ -7,7 +7,7 @@ import AddAQuestion from './AddAQuestion.jsx';
 
 function QandA (props) {
 
-  const [allQuestions, setAllQuestions] = useState([]);
+  const [ allQuestions, setAllQuestions ] = useState([]);
 
   function fetchData() {
     axios.get('/questions', {

@@ -96,7 +96,7 @@ function AddAnswerModal(props) {
       <button className="upload-photos-button">Upload your photos</button>
 
       <div className="modal-actions">
-          <button onClick={(event) => {
+          <button type="button" onClick={(event) => {
             handleSubmit(newAnswerInput);
             event.preventDefault();
           }} className="submit-answer-button">Submit answer</button>
