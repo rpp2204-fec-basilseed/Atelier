@@ -108,7 +108,7 @@ class Index extends React.Component {
       <div>
       <WrappedOverview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
       <WrappedQandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
-      <WrappedRelatedItemsAndOutfits p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
+      <WrappedRelatedItemsAndOutfits updateCurrentProduct={this.updateCurrentProduct} p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
         {
           "feature": "Sole",
           "value": "Rubber"
