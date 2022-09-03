@@ -50,8 +50,8 @@ class OutfitCarousel extends React.Component {
     return (
       <div className='outfit carousel-container'>
         {console.log(this.props)}
-        {this.state.displayLeftBtn ? <button aria-labelledby="previous" className='prev-btn' onClick={this.clickPrev}><FaAngleLeft size={32} /></button> : <div></div>}
-        {this.state.displayRightBtn ? <button aria-labelledby="next" className='next-btn' onClick={this.clickNext}><FaAngleRight size={32} /></button> : <div></div>}
+        {this.state.displayLeftBtn ? <button data-testid="c-prev" aria-labelledby="previous" className='prev-btn' onClick={this.clickPrev}><FaAngleLeft size={32} /></button> : <div></div>}
+        {this.state.displayRightBtn ? <button data-testid="c-next" aria-labelledby="next" className='next-btn' onClick={this.clickNext}><FaAngleRight size={32} /></button> : <div></div>}
           <div className='outfit carousel-cards'>
             <div className="outfit-items card" onClick={() => this.props.addToOutfit(this.props.p_id)}>
               <div className="add-to-outfit-card">

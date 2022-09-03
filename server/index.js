@@ -15,6 +15,10 @@ app.use(express.json());
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+let port = process.env.PORT;
+
+let apiKey = process.env.API_KEY;
+
 app.get('/products', (req, res) => {
   let url = `${process.env.URL}/products`;
 
@@ -26,15 +30,12 @@ app.get('/products', (req, res) => {
     url += `/${req.query.endpoint}`;
   }
 
-  console.log('/products url: ' + url);
-
-  console.log(req.query)
   axios({
     method: 'get',
     url: url,
     data: null,
     headers: {
-      Authorization: process.env.REACT_APP_API_KEY
+      Authorization: process.env.API_KEY
     }
   })
     .then((products) => {
@@ -47,9 +48,6 @@ app.get('/products', (req, res) => {
     })
 })
 
-let port = process.env.PORT;
-
-let apiKey = process.env.API_KEY;
 
 app.get('/review', (req, res) => {
   if (req.query.productId) {
@@ -62,7 +60,7 @@ app.get('/review', (req, res) => {
       }
     }
 
-    Axios(config)
+    axios(config)
     .then((reviewData) => {
       res.send(reviewData.data.results);
     })
@@ -84,7 +82,7 @@ app.get('/review', (req, res) => {
         }
       }
 
-      Axios(config)
+      axios(config)
       .then((metaData) => {
         res.send(metaData.data);
       })
@@ -105,7 +103,7 @@ app.get('/review', (req, res) => {
         }
       }
 
-      Axios(config)
+      axios(config)
       .then((response) => {
         res.send();
       })
@@ -127,7 +125,7 @@ app.get('/review', (req, res) => {
         }
       }
 
-      Axios(config)
+      axios(config)
       .then((response) => {
         console.log(response)
         res.send();
@@ -150,6 +148,7 @@ app.get('/review', (req, res) => {
       email:"mzmarys74@aol.com",
       photos:[]
     }
+
     var config = {
       method: 'post',
       url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
@@ -160,7 +159,7 @@ app.get('/review', (req, res) => {
       data : data
     };
 
-    Axios(config)
+    axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
     })
@@ -169,12 +168,12 @@ app.get('/review', (req, res) => {
     });
   })
 
-app.get('/questions', (req, res) => {
-  let config = {
-    headers: { 'Authorization' : process.env.API_KEY },
-    params: {
-      product_id: req.query.product_id
-    },
+  app.get('/questions', (req, res) => {
+    let config = {
+      headers: { 'Authorization' : process.env.API_KEY },
+      params: {
+        product_id: req.query.product_id
+      },
   };
   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions', config)
     .then((result) => {
@@ -182,7 +181,7 @@ app.get('/questions', (req, res) => {
       res.status(200).send(result.data);
     })
     .catch((err) => console.log(err));
-});
+  });
 
 // app.post('/questions', (req, res) => {
 //   // TODO: body parameters: body, name, email, product_id(INT)
@@ -230,7 +229,6 @@ app.post('/cart', (req, res) => {
 });
 
 app.post('/interactions', (req, res) => {
-
   var config = {
     method: 'post',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/interactions',

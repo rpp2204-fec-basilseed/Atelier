@@ -20,10 +20,26 @@ class Index extends React.Component {
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
     this.sendReview = this.sendReview.bind(this);
-  }
+    }
 
-  updateCurrentProduct(e) {
-    this.setState({curr_product_id: e.event.product_id});
+  // updateCurrentProduct(e) {
+  //   this.setState({curr_product_id: e.event.product_id});
+  // };
+
+  updateCurrentProduct(p_id) {
+    // let n_url = this.state.c_url.slice(0, -5) + p_id;
+    // console.log('pid', p_id)
+    console.log('o state', this.state.curr_product_id)
+    this.setState({
+      // c_url: n_url,
+      curr_product_id: p_id
+    });
+    setTimeout(() => {
+      console.log('n state', this.state)
+    }, "1000")
+
+    // console.log('pid2',this.state.curr_product_id)
+    // location.assign(n_url);
   }
 
   renderStarRating(rating) {
@@ -43,14 +59,13 @@ class Index extends React.Component {
        }
     }
 
-    for(let i = 1; i <= 5; i++) {
-      if (i <= rating) {
-        stars.push(<FaStar key={i}/>);
-      } else {
-        stars.push(<AiOutlineStar key={i}/>)
+      for(let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+          stars.push(<FaStar key={i}/>);
+        } else {
+          stars.push(<AiOutlineStar key={i}/>)
+        }
       }
-    }
-
     return stars.map((star) => {
       return star
     });
@@ -70,6 +85,18 @@ class Index extends React.Component {
         photos:[]
       }
     });
+  }
+
+  componentDidMount() {
+    // console.log('a', window.location.pathname.split('/')[1])
+    // let u = parseInt(window.location.pathname.split('/')[1]);
+    // console.log('u', u)
+    // this.setState({
+    //   curr_product_id: u
+    // })
+    // setTimeout(() => {
+    //   console.log('new state', this.state)
+    // }, "1000")
   }
 
   render() {
