@@ -54,8 +54,6 @@ describe("Comparison Modal", () => {
     const sharedFeature = screen.getAllByTestId(/FullControlSkin✔/i);
     expect(sharedFeature).toHaveLength(2);
   });
-
-  // ✔
 })
 // test("Outfit Card rendered", () => {
 //   render(<OutfitCard />);
