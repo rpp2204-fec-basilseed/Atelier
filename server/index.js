@@ -127,6 +127,7 @@ app.get('/review', (req, res) => {
         }
       }
 
+
       axios(config)
       .then((response) => {
         console.log(response)
@@ -150,6 +151,7 @@ app.get('/review', (req, res) => {
       email:"mzmarys74@aol.com",
       photos:[]
     }
+
 var config = {
   method: 'post',
   url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
@@ -167,6 +169,7 @@ axios(config)
 .catch(function (error) {
   console.log(error);
 });
+
   })
 
 app.get('/questions', (req, res) => {
@@ -184,22 +187,6 @@ app.get('/questions', (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// app.post('/questions', (req, res) => {
-//   // TODO: body parameters: body, name, email, product_id(INT)
-//   let config = {
-//     headers: { 'Authorization' : process.env.REACT_APP_API_KEY },
-//     params: {
-//       product_id: req.query.product_id
-//     },
-//   };
-//   axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions', config)
-//     .then((result) => {
-//       console.log('server side POST request result', result);
-//       console.log('server side POST req.body', req.body);
-//       res.status(201).send('success');
-//     })
-//     .catch(err => console.log(err));
-// });
 
 app.post('/cart', (req, res) => {
   console.log('req body: ' + JSON.stringify(req.body));
@@ -227,6 +214,31 @@ app.post('/cart', (req, res) => {
     console.log(error);
     res.status(500);
   });
+});
+
+app.post('/interactions', (req, res) => {
+
+  var config = {
+    method: 'post',
+    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/interactions',
+    headers: {
+      'Authorization': process.env.API_KEY,
+      'Content-Type': 'application/json'
+    },
+    data : req.body
+  };
+
+  console.log('WE INTERACTING');
+
+  axios(config)
+  .then(function (response) {
+    // console.log(JSON.stringify(response.data));
+    res.sendStatus(response.status);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
 });
 
 app.listen(port, function() {

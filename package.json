@@ -12,7 +12,8 @@
     "build": "npx webpack",
     "start": "node server/index.js",
     "test": "jest",
-    "test-jsdom": "jest --env=jsdom"
+    "test-jsdom": "jest --env=jsdom",
+    "test-overview": "npm test -- overview-test.js --coverage"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
