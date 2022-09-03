@@ -150,23 +150,23 @@ app.get('/review', (req, res) => {
       email:"mzmarys74@aol.com",
       photos:[]
     }
-var config = {
-  method: 'post',
-  url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
-  headers: {
-    'Authorization': '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',
-    'Content-Type': 'text/plain'
-  },
-  data : data
-};
+    var config = {
+      method: 'post',
+      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
+      headers: {
+        'Authorization': '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',
+        'Content-Type': 'text/plain'
+      },
+      data : data
+    };
 
-Axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.data));
-})
-.catch(function (error) {
-  console.log(error);
-});
+    Axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   })
 
 app.get('/questions', (req, res) => {
@@ -227,6 +227,31 @@ app.post('/cart', (req, res) => {
     console.log(error);
     res.status(500);
   });
+});
+
+app.post('/interactions', (req, res) => {
+
+  var config = {
+    method: 'post',
+    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/interactions',
+    headers: {
+      'Authorization': process.env.API_KEY,
+      'Content-Type': 'application/json'
+    },
+    data : req.body
+  };
+
+  console.log('WE INTERACTING');
+
+  axios(config)
+  .then(function (response) {
+    // console.log(JSON.stringify(response.data));
+    res.sendStatus(response.status);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
 });
 
 app.listen(port, function() {
