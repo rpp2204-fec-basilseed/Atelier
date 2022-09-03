@@ -67,15 +67,21 @@ function AddAnswerModal(props) {
   // preventing further additions.
 
   return (
-    <div className="modal-add-answer"
-      style={{display: props.addAnswerButtonClicked && !submitted ? "block" : "none"}}>
+    <div style={{display:
+      props.addAnswerButtonClicked && !submitted ? "block" : "none",
+      fontSize: "1rem",
+      position: "fixed", zIndex: "2", opacity:"1", border: "solid grey",
+      top: "50%", left: "60%", transform: "translate(-50%, -50%)", width: "40%",
+      float: "left",
+      backgroundColor: "ivory",
+      marginLeft: "-10rem", padding: "5px 20px"}}>
 
       <h3 style={{ marginBottom: "0" }}>Submit your Answer</h3>
       <span>{props.currentProductName}: {props.questionBody}</span>
       <br />
       <span>Your Answer *</span>
-      <input onChange={handleNewAnswer} value={newAnswerInput.content} name="content"
-      style={{ width: "98%", height: "15rem", margin: "5px 5px" }} type="text"></input>
+      <input className="modal-answer-input" onChange={handleNewAnswer} value={newAnswerInput.content}
+       name="content" type="text"></input>
       <span>What is your nickname *</span>
       <input onChange={handleNewAnswer} value={newAnswerInput.nickname} name="nickname"
       type="text" placeholder="Example: jack543!"></input>
@@ -95,7 +101,6 @@ function AddAnswerModal(props) {
             event.preventDefault();
           }} className="submit-answer-button">Submit answer</button>
       </div>
-
     </div>
   );
 }
