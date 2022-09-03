@@ -15,10 +15,11 @@ function Search(props) {
   }
 
   return (
-    <div className="search-box" style={{opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1", zIndex: "1"}}>
-      <input onChange={ () => {handleInput(event); search(event) }} value={input} type="text"
+    <div>
+      <input className="QandA-search-box" onChange={ () => {handleInput(event); search(event) }}
+      value={input} type="text"
       placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS... 🔍"
-      style={{ width: "100%", height: "3rem", margin: "15px 0" }}/>
+      style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}/>
     </div>
   );
 }

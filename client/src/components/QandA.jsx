@@ -60,8 +60,7 @@ function QandA (props) {
     setQuestionSubmitted(false);
   }
 
-  return (<div className="container" style={{
-    margin: "0 20rem", padding: "50px 0", lineHeight: "2"}}>
+  return (<div className="QandA-container">
     <Header questionAdded={questionAdded} questionSubmitted={questionSubmitted}/>
     <Search onSearch={handleSearch} questionAdded={questionAdded}
     questionSubmitted={questionSubmitted}/>
@@ -82,17 +81,8 @@ function QandA (props) {
     })}
 
     { allQuestions.length > 2 && (counter * 2 + 2 < allQuestions.length) &&
-    <button onClick={displayTwoMoreQuestions} style={{
-      lineHeight: "3.5",
-      fontWeight: "bold",
-      height: "3rem",
-      backgroundColor: "white",
-      marginTop: "20px",
-      marginRight: "10px",
-      border: "1px solid grey",
-      display: "inline-flex",
+    <button className="button-more-answered-questions" onClick={displayTwoMoreQuestions} style={{
       opacity: !questionAdded ? "1" : !questionSubmitted ? "0.2" : "1",
-      zIndex: "1"
       }}>MORE ANSWERED QUESTIONS
     </button>}
 

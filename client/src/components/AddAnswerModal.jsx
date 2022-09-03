@@ -67,14 +67,8 @@ function AddAnswerModal(props) {
   // preventing further additions.
 
   return (
-    <div style={{display:
-      props.addAnswerButtonClicked && !submitted ? "block" : "none",
-      fontSize: "1rem",
-      position: "fixed", zIndex: "2", opacity:"1", border: "solid grey",
-      top: "50%", left: "60%", transform: "translate(-50%, -50%)", width: "40%",
-      float: "left",
-      backgroundColor: "ivory",
-      marginLeft: "-10rem", padding: "5px 20px"}}>
+    <div className="modal-add-answer"
+      style={{display: props.addAnswerButtonClicked && !submitted ? "block" : "none"}}>
 
       <h3 style={{ marginBottom: "0" }}>Submit your Answer</h3>
       <span>{props.currentProductName}: {props.questionBody}</span>

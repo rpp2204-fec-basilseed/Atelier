@@ -17,18 +17,15 @@ function Sidebar(props) {
     });
   }
 
-  return (<div className="sidebar" style={{ fontSize: "0.7rem", display: "inline-flex",
-    opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}>
-    <span style={{  margin: "0 5px", paddingLeft: "140px" }}>Helpful?</span>
-    <div style={{ textDecoration: "underline" }} onClick={handleHelpful}>Yes</div>
-    <div style={{  margin: "0 3px" }}>({votes})</div>
-    <span className="pipe-symbol" style={{ margin: "0 5px" }}>|</span>
+  return (<div className="sidebar"
+    style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}>
+    <span className="sidebar-helpful">Helpful?</span>
+    <div className="sidebar-yes" onClick={handleHelpful}>Yes</div>
+    <div className="sidebar-votes">({votes})</div>
+    <span className="pipe-symbol">|</span>
 
-    <div className="add-answer">
-      <span onClick={handleAddAnswer} style={{
-        paddingLeft: "10px", textDecoration: "underline", textAlign: "right"
-      }}>Add Answer</span>
-    </div>
+    <span className="add-answer" onClick={handleAddAnswer}>Add Answer</span>
+
     <AddAnswerModal fetchData={props.fetchData} addAnswerButtonClicked={addAnswerClicked}
     currentProductName={props.currentProductName} questionBody={props.questionBody} questionID={props.questionID}/>
 
