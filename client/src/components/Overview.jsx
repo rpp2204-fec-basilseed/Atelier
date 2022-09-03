@@ -37,6 +37,7 @@ class Overview extends React.Component {
 
   componentDidMount() {
 
+    //Product level API call
     axios.get('/products', {
       params: {
         // curr_product_id: this.props.curr_product_id
@@ -52,6 +53,7 @@ class Overview extends React.Component {
       console.log(error);
     });
 
+    //Style level API call
     axios.get('/products', {
       params: {
         // curr_product_id: this.props.curr_product_id,
