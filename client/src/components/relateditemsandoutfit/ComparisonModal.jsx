@@ -42,9 +42,9 @@ class ComparisonModal extends React.Component {
       return this.state.comparison.map((i) => {
         return (
           <tr key={i.compItem}>
-            <td className="left">{i.curr}</td>
+            <td data-testid={i.compItem + i.curr} className="left">{i.curr}</td>
             <td className="center">{i.compItem}</td>
-            <td className="right">{i.comp}</td>
+            <td data-testid={i.compItem + i.curr} className="right">{i.comp}</td>
           </tr>
         )
       })
