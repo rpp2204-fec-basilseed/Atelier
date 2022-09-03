@@ -13,7 +13,8 @@
     "start": "node server/index.js",
     "test": "jest",
     "test-jsdom": "jest --env=jsdom",
-    "test-related": "npm test --relatedItemsAndOutfits.test.js --coverage"
+    "test-related": "npm test --relatedItemsAndOutfits.test.js --coverage",
+    "test-overview": "npm test -- overview-test.js --coverage"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.2",

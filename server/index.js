@@ -148,31 +148,32 @@ app.get('/review', (req, res) => {
       email:"mzmarys74@aol.com",
       photos:[]
     }
-var config = {
-  method: 'post',
-  url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
-  headers: {
-    'Authorization': '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',
-    'Content-Type': 'text/plain'
-  },
-  data : data
-};
 
-axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.data));
-})
-.catch(function (error) {
-  console.log(error);
-});
+    var config = {
+      method: 'post',
+      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
+      headers: {
+        'Authorization': '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',
+        'Content-Type': 'text/plain'
+      },
+      data : data
+    };
+
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   })
 
-app.get('/questions', (req, res) => {
-  let config = {
-    headers: { 'Authorization' : process.env.API_KEY },
-    params: {
-      product_id: req.query.product_id
-    },
+  app.get('/questions', (req, res) => {
+    let config = {
+      headers: { 'Authorization' : process.env.API_KEY },
+      params: {
+        product_id: req.query.product_id
+      },
   };
   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions', config)
     .then((result) => {
@@ -180,7 +181,7 @@ app.get('/questions', (req, res) => {
       res.status(200).send(result.data);
     })
     .catch((err) => console.log(err));
-});
+  });
 
 // app.post('/questions', (req, res) => {
 //   // TODO: body parameters: body, name, email, product_id(INT)
@@ -228,28 +229,28 @@ app.post('/cart', (req, res) => {
 });
 
 app.post('/interactions', (req, res) => {
-  let url = `${process.env.URL}/interactions`;
-
-  axios({
+  var config = {
     method: 'post',
-    url: url,
-    data: req.body,
+    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/interactions',
     headers: {
-      Authorization: process.env.API_KEY
-    }
+      'Authorization': process.env.API_KEY,
+      'Content-Type': 'application/json'
+    },
+    data : req.body
+  };
+
+  console.log('WE INTERACTING');
+
+  axios(config)
+  .then(function (response) {
+    // console.log(JSON.stringify(response.data));
+    res.sendStatus(response.status);
   })
-    .then(() => {
-      return res.status(200).end();
-    })
-    .catch((err) => {
-      return res.status(500).send('Error: Interaction Data Failed');
-    });
+  .catch(function (error) {
+    console.log(error);
+  });
+
 });
-
-// app.get(/^\/\b\d{5}$/, (req, res) => {
-//   res.sendFile('index.html', {root: './client/dist'});
-// });
-
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);

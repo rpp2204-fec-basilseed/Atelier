@@ -6,16 +6,16 @@ import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { AiOutlineStar } from 'react-icons/ai';
 import Overview from './components/Overview.jsx';
 import QandA from './components/QandA.jsx';
-import RelatedItemsAndOutfits from './components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx'
+import RelatedItemsAndOutfits from './components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx';
+import clickWrapper from './ClickWrapper.jsx';
 
 class Index extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      curr_product_id: 71698,
-      curr_product_name: 'Camo Onesie',
-      c_url: 'http://localhost:8080/71968'
+      curr_product_id: 71701,
+      curr_product_name: 'Slacker\'s Slacks',
     }
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
@@ -40,7 +40,7 @@ class Index extends React.Component {
 
     // console.log('pid2',this.state.curr_product_id)
     // location.assign(n_url);
-  };
+  }
 
   renderStarRating(rating) {
 
@@ -57,6 +57,7 @@ class Index extends React.Component {
        } else {
         stars.push(<AiOutlineStar key={i} />)
        }
+    }
 
       for(let i = 1; i <= 5; i++) {
         if (i <= rating) {
@@ -65,12 +66,11 @@ class Index extends React.Component {
           stars.push(<AiOutlineStar key={i}/>)
         }
       }
-
-      return stars.map((star) => {
-        return star;
-      })
-    }
+    return stars.map((star) => {
+      return star
+    });
   }
+
 
   sendReview() {
     Axios.post('/addReview', {
@@ -84,7 +84,7 @@ class Index extends React.Component {
         email:"mzmarys74@aol.com",
         photos:[]
       }
-    })
+    });
   }
 
   componentDidMount() {
@@ -100,11 +100,15 @@ class Index extends React.Component {
   }
 
   render() {
+    const WrappedOverview = clickWrapper(Overview);
+    const WrappedQandA = clickWrapper(QandA);
+    const WrappedRelatedItemsAndOutfits = clickWrapper(RelatedItemsAndOutfits);
+
     return (
       <div>
-      <Overview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
-      <QandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
-      <RelatedItemsAndOutfits updateCurrentProduct={this.updateCurrentProduct} p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
+      <WrappedOverview curr_product_id={this.state.curr_product_id} renderStars={this.renderStarRating}/>
+      <WrappedQandA curr_product_id={ this.state.curr_product_id } curr_product_name={ this.state.curr_product_name }/>
+      <WrappedRelatedItemsAndOutfits p_id={this.state.curr_product_id} currentProduct={this.state.curr_product_name} currentFeatures={[
         {
           "feature": "Sole",
           "value": "Rubber"
