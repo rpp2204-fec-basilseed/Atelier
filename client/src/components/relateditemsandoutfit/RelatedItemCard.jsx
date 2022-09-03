@@ -69,10 +69,10 @@ class RelatedItemCard extends React.Component {
   render() {
     return (
       <>
-        <div className="related-items card">
+        <div className="related-items card" data-testid="r-card">
           <div className="card-img-container">
             <span onClick={this.openModal} className='related-products-tracker card-icon'><FaRegStar size={32}/></span>
-            <img className="related-img" src={this.state.img}  alt="picture of item" />
+            <img onClick={() => this.props.updateCurrentProduct(this.props.p_id)} className="related-img" src={this.state.img}  alt="picture of item" />
           </div>
           <div className="card-body-container">
             <h4 className="card-category">{this.state.category}</h4>

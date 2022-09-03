@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 const axios = require("axios");
 
 export default function AddReview({ productId, toggleShowReview, metaData }) {
+  console.log('meta: ', metaData.characteristics)
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [summary, setSummary] = useState("");
   const [body, setBody] = useState("");
   const [recommend, setRecommend] = useState(false);
   const [comfort, setComfort] = useState(metaData.characteristics.Comfort.id);
-  const [fit, setFit] = useState(metaData.characteristics.Fit.id);
-  const [length, setLength] = useState(metaData.characteristics.Length.id);
+  const [fit, setFit] = useState(metaData.characteristics.Width.id);
+  const [length, setLength] = useState(metaData.characteristics.Size.id);
   const [quality, setQuality] = useState(metaData.characteristics.Quality.id);
 
 
@@ -65,7 +66,6 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
         <label>Nickname: </label>
         <input
           type="text"
-          placeholder="Example: jackson11!"
           value={name}
           onChange={(e) => setName(e.target.value)}
         ></input>

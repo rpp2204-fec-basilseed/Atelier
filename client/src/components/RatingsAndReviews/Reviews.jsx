@@ -4,6 +4,7 @@ import AddReview from "./AddReview.jsx";
 const axios = require("axios");
 
 export default function Reviews({ currProduct, renderStarRating, sendReview }) {
+  console.log('prod: ', currProduct)
   const starPercentage = (rating) => {
     let totalStars = 0;
     for (let currentRating in metaData.ratings) {

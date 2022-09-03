@@ -11,7 +11,6 @@ class RelatedItemsAndOutfits extends React.Component {
       outfitItems: []
     };
 
-    this.handleClick = this.handleClick.bind(this);
     this.getRelatedItems = this.getRelatedItems.bind(this);
     this.getOutfitItems = this.getOutfitItems.bind(this);
     this.addToOutfit = this.addToOutfit.bind(this);
@@ -25,6 +24,7 @@ class RelatedItemsAndOutfits extends React.Component {
       .catch((err) => {
       console.log(err);
       });
+      return;
   };
 
   getOutfitItems () {
@@ -32,6 +32,7 @@ class RelatedItemsAndOutfits extends React.Component {
       localStorage.setItem('outfit', JSON.stringify([]));
     }
     this.setState({outfitItems: JSON.parse(localStorage.getItem('outfit'))});
+    return;
   };
 
   addToOutfit (product_id) {
@@ -51,19 +52,12 @@ class RelatedItemsAndOutfits extends React.Component {
     this.getOutfitItems();
   };
 
-
-  handleClick(e) {
-    e.preventDefault();
-    console.log("You've been clicked");
-  };
-
-
   render() {
     return (
     <div className="related-items-and-outfit-container">
       <div className="related-items-container">
         <div className="related-title-container"><h3 className="related-title">RELATED PRODUCTS</h3></div>
-        <RelatedCarousel relatedItems={this.state.relatedItems} currentProduct={this.props.currentProduct} currentFeatures={this.props.currentFeatures} />
+        <RelatedCarousel relatedItems={this.state.relatedItems} currentProduct={this.props.currentProduct} currentFeatures={this.props.currentFeatures} updateCurrentProduct={this.props.updateCurrentProduct}/>
         <div className="outfit-title-container"><h3 className="outfit-title">YOUR OUTFIT</h3></div>
         <OutfitCarousel outfitItems={this.state.outfitItems} updateOutfit={this.getOutfitItems} addToOutfit={this.addToOutfit} p_id={this.props.p_id}/>
       </div>
