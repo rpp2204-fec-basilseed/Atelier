@@ -203,6 +203,54 @@ app.get('/questions', (req, res) => {
     .catch((err) => console.log(err));
 });
 
+app.post('/addQuestion', (req, res) => {
+  axios({
+    method: 'post',
+    url: `${process.env.URL}/qa/questions`,
+    headers: {
+      Authorization: process.env.API_KEY,
+      contentType: 'application/json'
+    },
+    data: {
+      body: req.body.body,
+      name:  req.body.name,
+      email: req.body.email,
+      product_id: req.body.product_id,
+    }
+  })
+    .then((response) => {
+      console.log('log req body', req.body);
+      res.status(201).send(response.data);
+    })
+    .catch(error =>
+      console.log(error)
+    );
+});
+
+app.post('/addAnswer', (req, res) => {
+  axios({
+    method: 'post',
+    url: `${process.env.URL}/qa/questions/${req.body.question_id}/answers`,
+    headers: {
+      Authorization: process.env.API_KEY,
+      contentType: 'application/json'
+    },
+    data: {
+      body: req.body.body,
+      name:  req.body.name,
+      email: req.body.email,
+      photos: req.body.photos,
+    }
+  })
+    .then((response) => {
+      console.log('post an answer---log req body', req.body);
+      res.status(201).send(response.data);
+    })
+    .catch(error =>
+      console.log(error)
+    );
+});
+
 app.post("/cart", (req, res) => {
   var data = JSON.stringify({
     sku_id: req.body.sku_id,
