@@ -41,7 +41,7 @@ function AddAQuestion(props) {
 
       <div className="modal" id="modal" style={{
         display: props.questionAdded ? "block" : "none",
-        position: "absolute", zIndex: "2", opacity:"1", border: "solid grey",
+        position: "fixed", zIndex: "2", opacity:"1", border: "solid grey",
         top: "50%",left: "50%",transform: "translate(-50%, -50%)", float: "left", width: "40%",
         backgroundColor: "ivory",
         marginLeft: "5rem", padding: "5px 20px"}} >
