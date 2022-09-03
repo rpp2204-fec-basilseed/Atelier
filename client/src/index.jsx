@@ -13,13 +13,8 @@ class Index extends React.Component {
     super(props);
 
     this.state = {
-<<<<<<< HEAD
       curr_product_id: 71700,
       curr_product_name: 'Slacker\'s Slacks',
-=======
-      curr_product_id: 71698,
-      curr_product_name: 'Camo Onesie'
->>>>>>> a07d175c59ccb13f8c151cd490e037b5c4960791
     }
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
