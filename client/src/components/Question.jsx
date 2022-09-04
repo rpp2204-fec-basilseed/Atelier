@@ -28,7 +28,7 @@ function Question(props) {
     style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}>
     Q: {props.questionBody}</div>
     <Sidebar fetchData={props.fetchData} questionSubmitted={props.questionSubmitted}
-    questionAdded={props.questionAdded} helpful={props.questionHelpfulness}
+    questionAdded={props.questionAdded} helpful={props.questionHelpfulness} reported={props.questionReported}
     questionBody={props.questionBody} currentProductName={props.currentProductName} questionID={props.questionID}/>
 
     { !clicked && shortAnswers.map((elem) => {

@@ -9,6 +9,11 @@ function Answer(props) {
     setAnswersVotes(answers_votes + 1);
   }
 
+  const [ report, setReport ] = useState(false);
+  function handleReport() {
+    setReport(true);
+  }
+
   return (<div className="answers-feed"
     style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}>
     <span className="answers-feed-A">A: </span>
@@ -28,7 +33,8 @@ function Answer(props) {
     <div className="answer-yes" onClick={handleAnswerHelpful}>Yes</div>
     <div className="answer-votes">({answers_votes})</div>
     <span className="pipe-symbol">|</span>
-    <span className="answer-report">Report</span>
+    { !report && <span onClick={handleReport} className="answer-report">Report</span> }
+    { report && <span className="answer-reported">Reported</span>}
 
   </div>);
 }

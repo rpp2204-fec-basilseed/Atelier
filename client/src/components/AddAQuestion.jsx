@@ -48,6 +48,7 @@ function AddAQuestion(props) {
       });
       props.handleQuestionSubmitted();
       props.addAQuestion();
+      props.fetchData();
     })
     .catch(err => console.log(err));
   }

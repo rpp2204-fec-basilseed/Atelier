@@ -72,6 +72,7 @@ function QandA (props) {
       questionID={elem.question_id}
       questionBody={elem.question_body}
       questionHelpfulness={elem.question_helpfulness}
+      questionReported={elem.reported}
       answers={elem.answers}
       questionAdded={questionAdded}
       questionBody={elem.question_body}
@@ -86,7 +87,7 @@ function QandA (props) {
       }}>MORE ANSWERED QUESTIONS
     </button>}
 
-    <AddAQuestion currentProductName={props.curr_product_name} currentProductID={props.curr_product_id}
+    <AddAQuestion fetchData={fetchData} currentProductName={props.curr_product_name} currentProductID={props.curr_product_id}
       questionAdded={questionAdded} questionSubmitted={questionSubmitted}
       addAQuestion={handleAddAQuestionButton} handleQuestionSubmitted={handleQuestionSubmitted}/>
 
