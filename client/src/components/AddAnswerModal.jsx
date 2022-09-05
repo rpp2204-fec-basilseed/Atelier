@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import UploadPhotosModal from './UploadPhotosModal.jsx';
+
 
 function AddAnswerModal(props) {
 
@@ -60,6 +62,12 @@ function AddAnswerModal(props) {
     }
   }
 
+  // Working on it!!
+  const [ uploadPhotos, setUploadPhotos ] = useState(false);
+  function handleUploadPhotos () {
+    setUploadPhotos(true);
+  }
+
   // TODO: Up to five photos should be allowed for each answer.
   // Clicking the button should open a separate window where the photo to be can be selected.
   // After the first image is uploaded, a thumbnail showing the image should appear.
@@ -70,7 +78,7 @@ function AddAnswerModal(props) {
     <div className="modal-add-answer"
     style={{ display: props.addAnswerButtonClicked && !submitted ? "block" : "none" }}>
 
-      <h3 style={{ marginBottom: "0" }}>Submit your Answer</h3>
+      <h3 className="heading-submit-your-answer">Submit your Answer</h3>
       <span>{props.currentProductName}: {props.questionBody}</span>
       <br />
       <span>Your Answer *</span>
@@ -87,8 +95,8 @@ function AddAnswerModal(props) {
       placeholder="Example: jack@email.com"></input>
       <br />
       <span>For authentication reasons, you will not be emailed</span>
-
-      <button className="upload-photos-button">Upload your photos</button>
+      <br />
+      <button onClick={handleUploadPhotos} className="upload-photos-button">Upload your photos</button>
 
       <div className="modal-actions">
           <button type="button" onClick={(event) => {
@@ -96,6 +104,7 @@ function AddAnswerModal(props) {
             event.preventDefault();
           }} className="submit-answer-button">Submit answer</button>
       </div>
+      <UploadPhotosModal uploadPhotosButtonClicked={uploadPhotos} />
     </div>
   );
 }
