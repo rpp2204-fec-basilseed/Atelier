@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
+import Characteristics from "./Characteristics.jsx";
 const axios = require("axios");
 
 export default function AddReview({ productId, toggleShowReview, metaData }) {
-  console.log('meta: ', metaData.characteristics)
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [summary, setSummary] = useState("");
@@ -15,6 +15,7 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
 
 
   const backgroundStyling = {
+    display: "flex",
     position: "fixed",
     top: "0%",
     left: "0%",
@@ -23,7 +24,8 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
     width: "100%",
     height: "100%",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    overflow: "overlay"
   };
 
   const formStyling = {
@@ -33,7 +35,8 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
     height: "80vh",
     width: "60vw",
     backgroundColor: "white",
-    position: "fixed"
+    position: "fixed",
+    paddingTop: "40px"
   };
 
   const reviewData = {
@@ -62,7 +65,8 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
   return (
     <form style={backgroundStyling}>
       <div style={formStyling}>
-        <p onClick={() => {toggleShowReview()}}>X</p>
+        <p style={{position: "absolute", top: "0px", right: "20px"}} onClick={() => {toggleShowReview()}}>X</p>
+        <h2 style={{position: "absolute", top: "0px", left: "50px"}}>Write Your Review</h2>
         <label>Nickname: </label>
         <input
           type="text"
@@ -94,22 +98,7 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
           onChange={() => {setRecommend(true)}}
         ></input>
         <br></br>
-        <label>Comfort: </label>
-        <input type="text" placeholder="" onChange={(e) => {
-          reviewData.characteristics[`${comfort}`] = parseInt(e.target.value);
-        }}></input>
-        <label>Fit: </label>
-        <input type="text" onChange={(e) => {
-          reviewData.characteristics[`${fit}`] = parseInt(e.target.value);
-        }}></input>
-        <label>Length: </label>
-        <input type="text" onChange={(e) => {
-          reviewData.characteristics[`${length}`] = parseInt(e.target.value);
-        }}></input>
-        <label>Quality: </label>
-        <input type="text" onChange={(e) => {
-          reviewData.characteristics[`${quality}`] = parseInt(e.target.value);
-        }}></input>
+        <Characteristics metaData={metaData}/>
         <button type="submit" onClick={sendReview}>Submit</button>
       </div>
     </form>

@@ -33,7 +33,7 @@ export default function DisplayReview({
         </div>
         <div className="review-photo">
           {review.photos.length > 0 ? (
-            <img src={`${review.photos[0].url}`} width="50px"></img>
+            <img src={`${review.photos[0].url}`} width="50px" alt=""></img>
           ) : null}
         </div>
         <div
