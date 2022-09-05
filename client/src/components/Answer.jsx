@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
 import { parseJSON } from 'date-fns';
 import moment from 'moment';
+const axios = require('axios');
 
 function Answer(props) {
-  const [ answers_votes, setAnswersVotes ] = useState(props.answerHelpfulness);
+  const [ answerHelpfulClicked, setAnswerHelpfulClicked ] = useState(false);
+  const [ answersVotes, setAnswersVotes ] = useState(props.answerHelpfulness);
 
   function handleAnswerHelpful() {
-    setAnswersVotes(answers_votes + 1);
+    const data = {
+      answer_id: props.answerID,
+    };
+
+    axios.put('/answerHelpful', data)
+    .then((response) => {
+      console.log('PUT request for answer helpfulness, log response.data here', response.data);
+      setAnswersVotes((prev) => {
+        return answersVotes + 1;
+      });
+      setAnswerHelpfulClicked(true);
+      props.fetchData();
+    })
+    .catch(err => console.log(err));
   }
 
   const [ report, setReport ] = useState(false);
@@ -23,15 +38,15 @@ function Answer(props) {
     {/* <div className="photos"></div> */}
 
     <br />
-    <div className="answerer" style={{fontWeight: props.answerer === 'Seller' ? "bold" : "none"}}>
-      by {props.answerer},
+    <div className="answer-by">by<div className="answerer"
+    style={{fontWeight: props.answerer === 'Seller' ? "bold" : "none"}}>{props.answerer},</div>
     </div>
 
     <div className="answer-date"> {moment(props.answered_date).format('LL')}</div>
     <span className="pipe-symbol">|</span>
     <span className="answer-helpful">Helpful?</span>
-    <div className="answer-yes" onClick={handleAnswerHelpful}>Yes</div>
-    <div className="answer-votes">({answers_votes})</div>
+    <button disabled={answerHelpfulClicked} className="answer-yes" onClick={handleAnswerHelpful}>Yes</button>
+    <div className="answer-votes">({answersVotes})</div>
     <span className="pipe-symbol">|</span>
     { !report && <span onClick={handleReport} className="answer-report">Report</span> }
     { report && <span className="answer-reported">Reported</span>}

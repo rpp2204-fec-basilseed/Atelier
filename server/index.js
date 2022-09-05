@@ -120,6 +120,36 @@ app.put('/reportQuestion', (req, res) => {
     .catch(err => console.log(err));
 });
 
+app.put('/questionHelpful', (req, res) => {
+  axios({
+    method: 'put',
+    url: `${process.env.URL}/qa/questions/${req.body.question_id}/helpful`,
+    headers: {
+      Authorization: process.env.API_KEY,
+      contentType: 'application/json'
+    },
+  })
+    .then((response) => {
+      res.status(204).send(response.data);
+    })
+    .catch(err => console.log(err));
+});
+
+app.put('/answerHelpful', (req, res) => {
+  axios({
+    method: 'put',
+    url: `${process.env.URL}/qa/answers/${req.body.answer_id}/helpful`,
+    headers: {
+      Authorization: process.env.API_KEY,
+      contentType: 'application/json'
+    },
+  })
+    .then((response) => {
+      res.status(204).send(response.data);
+    })
+    .catch(err => console.log(err));
+});
+
 app.post('/cart', (req, res) => {
   var data = JSON.stringify({
     "sku_id": req.body.sku_id

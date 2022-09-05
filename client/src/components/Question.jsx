@@ -34,9 +34,11 @@ function Question(props) {
     { !clicked && shortAnswers.map((elem) => {
       return (
         <Answer
+          fetchData={props.fetchData}
           questionSubmitted={props.questionSubmitted}
           questionAdded={props.questionAdded}
           key={elem.id}
+          answerID={elem.id}
           answerBody={elem.body}
           answerer={elem.answerer_name}
           answered_date={elem.date}
@@ -49,9 +51,11 @@ function Question(props) {
     { clicked && answersModified.map((elem) => {
       return (
         <Answer
+          fetchData={props.fetchData}
           questionSubmitted={props.questionSubmitted}
           questionAdded={props.questionAdded}
           key={elem.id}
+          answerID={elem.id}
           answerBody={elem.body}
           answerer={elem.answerer_name}
           answered_date={elem.date}

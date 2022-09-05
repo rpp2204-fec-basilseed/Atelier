@@ -3,10 +3,24 @@ import AddAnswerModal from './AddAnswerModal.jsx';
 const axios = require('axios');
 
 function Sidebar(props) {
-  const [votes, setVotes] = useState(props.helpful);
+  const [ questionHelpfulClicked, setQuestionHelpfulClicked ] = useState(false);
+  const [questionVotes, setQuestionVotes] = useState(props.helpful);
 
-  function handleHelpful() {
-    setVotes(votes + 1);
+  function handleQuestionHelpful() {
+    const data = {
+      question_id: props.questionID,
+    };
+
+    axios.put('/questionHelpful', data)
+    .then((response) => {
+      console.log('PUT request for question helpfulness, log response.data here', response.data);
+      setQuestionVotes((prev) => {
+        return questionVotes + 1
+      });
+      console.log('log current helpfulness here', questionVotes);
+      setQuestionHelpfulClicked(true);
+    })
+    .catch(err => console.log(err));
   }
 
   const [ questionReport, setQuestionReport ] = useState(props.reported);
@@ -39,8 +53,8 @@ function Sidebar(props) {
   return (<div className="sidebar"
     style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}>
     <span className="sidebar-helpful">Helpful?</span>
-    <div className="sidebar-yes" onClick={handleHelpful}>Yes</div>
-    <div className="sidebar-votes">({votes})</div>
+    <button disabled={questionHelpfulClicked} className="sidebar-yes" onClick={handleQuestionHelpful}>Yes</button>
+    <div className="sidebar-votes">({questionVotes})</div>
     <span className="pipe-symbol">|</span>
     <span onClick={handleQuestionReport} className="question-report">Report</span>
     <span className="pipe-symbol">|</span>
