@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from "react";
 import DisplayReview from "./DisplayReview.jsx";
 import AddReview from "./AddReview.jsx";
+import RatingBar from "./RatingBar.jsx";
 const axios = require("axios");
 
 export default function Reviews({ currProduct, renderStarRating }) {
-  console.log('prod: ', currProduct)
-  const starPercentage = (rating) => {
-    let totalStars = 0;
-    for (let currentRating in metaData.ratings) {
-      totalStars += parseInt(metaData.ratings[currentRating]);
+
+  const starPercentage = (rating, total) => {
+
+    let totalReviews = 0;
+
+    for (let currentRating in total) {
+      totalReviews += parseInt(total[currentRating]);
     }
-    let barLength = Math.floor((rating / totalStars) * 100);
+
+
+    let barLength = Math.floor((total[rating] / totalReviews) * 100);
+    console.log(barLength)
+
     return (
-      <div
-        style={{ border: "solid black 5px", width: `${barLength + "px"}` }}
+      <div style={{display: "flex", flexDirection: "row", margin: "0"}}>
+        <div
+          style={{ border: "solid green 5px", width: `${barLength + "px"}` }}
+        ></div>
+        <div
+        style={{ border: "solid gray 5px", width: `${100 - barLength + "px"}` }}
       ></div>
+      </div>
     );
   };
 
@@ -115,26 +127,26 @@ export default function Reviews({ currProduct, renderStarRating }) {
           {/* <div className='stars'>{metaData.ratings ? renderStarRating(totalScore(metaData.ratings)) : null}</div> */}
           <div>
             5 star reviews:{" "}
-            {metaData.ratings ? starPercentage(metaData.ratings[5]) : null}
+            {metaData.ratings ? starPercentage(5, metaData.ratings) : null}
           </div>
           <div>
             4 star reviews:{" "}
-            {metaData.ratings ? starPercentage(metaData.ratings[4]) : null}
+            {metaData.ratings ? starPercentage(4, metaData.ratings) : null}
           </div>
           <div>
             3 star reviews:{" "}
-            {metaData.ratings ? starPercentage(metaData.ratings[3]) : null}
+            {metaData.ratings ? starPercentage(3, metaData.ratings) : null}
           </div>
           <div>
             2 star reviews:{" "}
-            {metaData.ratings ? starPercentage(metaData.ratings[2]) : null}
+            {metaData.ratings ? starPercentage(2, metaData.ratings) : null}
           </div>
           <div>
             1 star reviews:{" "}
-            {metaData.ratings ? starPercentage(metaData.ratings[1]) : null}
+            {metaData.ratings ? starPercentage(1, metaData.ratings) : null}
           </div>
-          <div className="size-rating-slide">Size rating goes here</div>
-          <div className="comfort-rating-slide">Comfort rating goes here</div>
+          <RatingBar type="Size" rating={metaData.characteristics ? metaData.characteristics.Size : null}/>
+          <RatingBar type="Comfort" rating={metaData.characteristics ? metaData.characteristics.Comfort : null}/>
         </div>
         <div className="reviews" style={{ paddingLeft: "20px" }}>
           <div className="total-reviews">{`${currReviews.length} Reviews`}</div>
@@ -159,6 +171,8 @@ export default function Reviews({ currProduct, renderStarRating }) {
             <div
               style={{ border: "solid black 3px", padding: "20px" }}
               onClick={increaseDisplayedReviews}
+              onMouseEnter={(e) => e.target.style.backgroundColor = 'lightgray'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
             >
               More Reviews
             </div>
@@ -169,6 +183,8 @@ export default function Reviews({ currProduct, renderStarRating }) {
                 padding: "20px",
                 marginLeft: "40px",
               }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = 'lightgray'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
             >
               Add Review
             </div>
