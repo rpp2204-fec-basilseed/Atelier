@@ -146,6 +146,7 @@ app.put("/report", (req, res) => {
 
 
 app.post("/addReview", (req, res) => {
+  console.log(req.body);
 
   var data = JSON.stringify(req.body);
 
@@ -164,10 +165,10 @@ app.post("/addReview", (req, res) => {
       console.log(res.data);
     })
     .catch((err) => {
-      console.log("Therewasanerror: ");
+      console.log('Could not add review: ', err);
     });
 
-  res.send("okay");
+    res.send();
 
   // var config = {
   //   method: 'post',
@@ -201,6 +202,54 @@ app.get('/questions', (req, res) => {
       res.status(200).send(result.data);
     })
     .catch((err) => console.log(err));
+});
+
+app.post('/addQuestion', (req, res) => {
+  axios({
+    method: 'post',
+    url: `${process.env.URL}/qa/questions`,
+    headers: {
+      Authorization: process.env.API_KEY,
+      contentType: 'application/json'
+    },
+    data: {
+      body: req.body.body,
+      name:  req.body.name,
+      email: req.body.email,
+      product_id: req.body.product_id,
+    }
+  })
+    .then((response) => {
+      console.log('log req body', req.body);
+      res.status(201).send(response.data);
+    })
+    .catch(error =>
+      console.log(error)
+    );
+});
+
+app.post('/addAnswer', (req, res) => {
+  axios({
+    method: 'post',
+    url: `${process.env.URL}/qa/questions/${req.body.question_id}/answers`,
+    headers: {
+      Authorization: process.env.API_KEY,
+      contentType: 'application/json'
+    },
+    data: {
+      body: req.body.body,
+      name:  req.body.name,
+      email: req.body.email,
+      photos: req.body.photos,
+    }
+  })
+    .then((response) => {
+      console.log('post an answer---log req body', req.body);
+      res.status(201).send(response.data);
+    })
+    .catch(error =>
+      console.log(error)
+    );
 });
 
 app.post("/cart", (req, res) => {

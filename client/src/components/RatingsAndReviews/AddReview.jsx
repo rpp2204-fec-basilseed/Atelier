@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Characteristics from "./Characteristics.jsx";
+import OverallRating from "./OverallRating.jsx";
+import UploadPhotos from "./UploadPhotos.jsx";
 const axios = require("axios");
 
-export default function AddReview({ productId, toggleShowReview, metaData }) {
+export default function AddReview({ productId, toggleShowReview, metaData, getReviews }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [summary, setSummary] = useState("");
   const [body, setBody] = useState("");
   const [recommend, setRecommend] = useState(false);
-  const [comfort, setComfort] = useState(metaData.characteristics.Comfort.id);
-  const [fit, setFit] = useState(metaData.characteristics.Width.id);
-  const [length, setLength] = useState(metaData.characteristics.Size.id);
-  const [quality, setQuality] = useState(metaData.characteristics.Quality.id);
+  const [overall, setOverall] = useState(3);
+  const [comfort, setComfort] = useState("");
+  const [fit, setFit] = useState("");
+  const [length, setLength] = useState("");
+  const [quality, setQuality] = useState("");
 
 
   const backgroundStyling = {
@@ -19,7 +22,7 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
     position: "fixed",
     top: "0%",
     left: "0%",
-    zIndex: "2",
+    zIndex: "1",
     backgroundColor: "rgba(100,100,100,0.5)",
     width: "100%",
     height: "100%",
@@ -32,8 +35,8 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "80vh",
-    width: "60vw",
+    height: "60vh",
+    width: "40vw",
     backgroundColor: "white",
     position: "fixed",
     paddingTop: "40px"
@@ -41,7 +44,7 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
 
   const reviewData = {
     product_id: parseInt(metaData.product_id),
-    rating: 5,
+    rating: overall,
     summary: summary,
     body: body,
     recommend: recommend,
@@ -52,10 +55,12 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
     }
   }
 
-  function sendReview() {
+  function sendReview(submission) {
+      submission.preventDefault();
       axios.post('/addReview', reviewData)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        toggleShowReview();
+        getReviews('newest');
       })
       .catch((err) => {
         console.log(err);
@@ -67,39 +72,51 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
       <div style={formStyling}>
         <p style={{position: "absolute", top: "0px", right: "20px"}} onClick={() => {toggleShowReview()}}>X</p>
         <h2 style={{position: "absolute", top: "0px", left: "50px"}}>Write Your Review</h2>
+        <div className="review-nickname" style={{display: 'flex', flexDirection: "row"}}>
         <label>Nickname: </label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
         ></input>
+        </div>
+        <div className="review-email" style={{display: 'flex', flexDirection: "row"}}>
         <label>Email: </label>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         ></input>
+        </div>
+        <div className="review-summary" style={{display: 'flex', flexDirection: "row"}}>
         <label>Summary: </label>
         <input
           type="text"
           value={summary}
           onChange={(e) => setSummary(e.target.value)}
         ></input>
+        </div>
+        <div className="review-body" style={{display: 'flex', flexDirection: "row"}}>
         <label>Review: </label>
         <input
           type="text"
           value={body}
           onChange={(e) => setBody(e.target.value)}
         ></input>
+        </div>
         <label>Recommend? </label>
         <input
           type="checkbox"
           value={recommend}
           onChange={() => {setRecommend(true)}}
         ></input>
-        <br></br>
-        <Characteristics metaData={metaData}/>
-        <button type="submit" onClick={sendReview}>Submit</button>
+        <div className="ratings-overall" style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+        <label style={{paddingRight: "10px"}}>Overall Rating: </label>
+        <OverallRating rating={overall} setRating={setOverall}/>
+        </div>
+        <Characteristics metaData={metaData} reviewData={reviewData}/>
+        <UploadPhotos />
+        <button type="submit" onClick={(e) => sendReview(e)}>Submit</button>
       </div>
     </form>
   );

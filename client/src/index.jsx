@@ -83,8 +83,8 @@ class Index extends React.Component {
         {/* <WrappedOverview
           curr_product_id={this.state.curr_product_id}
           renderStars={this.renderStarRating}
-        />
-        <WrappedQandA
+        /> */}
+        {/* <WrappedQandA
           curr_product_id={this.state.curr_product_id}
           curr_product_name={this.state.curr_product_name}
         /> */}
