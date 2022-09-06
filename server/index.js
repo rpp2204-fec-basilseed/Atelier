@@ -146,6 +146,7 @@ app.put("/report", (req, res) => {
 
 
 app.post("/addReview", (req, res) => {
+  console.log(req.body);
 
   var data = JSON.stringify(req.body);
 
@@ -164,10 +165,10 @@ app.post("/addReview", (req, res) => {
       console.log(res.data);
     })
     .catch((err) => {
-      console.log("Therewasanerror: ", err);
+      console.log('Could not add review: ', err);
     });
 
-  res.send("okay");
+    res.send();
 
   // var config = {
   //   method: 'post',

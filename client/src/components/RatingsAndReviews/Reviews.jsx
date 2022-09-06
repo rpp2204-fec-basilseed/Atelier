@@ -138,7 +138,7 @@ export default function Reviews({ currProduct, renderStarRating }) {
         </div>
         <div className="reviews" style={{ paddingLeft: "20px" }}>
           <div className="total-reviews">{`${currReviews.length} Reviews`}</div>
-          <label form="filter">Show reviews by:</label>
+          <label form="filter" style={{marginRight: "10px"}}>Sort reviews by:</label>
           <select
             name="filter"
             id="filters"

@@ -32,9 +32,9 @@ export default function DisplayReview({
           {review.body}
         </div>
         <div className="review-photo">
-          {review.photos.length > 0 ? (
-            <img src={`${review.photos[0].url}`} width="50px" alt=""></img>
-          ) : null}
+          {review.photos.length > 0 ?
+            review.photos.map((photo) => <img src={`${photo.url}`} alt="" width="50px" style={{padding: "5px"}}></img>)
+            : null}
         </div>
         <div
           className="helpful"

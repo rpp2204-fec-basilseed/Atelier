@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Characteristics from "./Characteristics.jsx";
 import OverallRating from "./OverallRating.jsx";
+import UploadPhotos from "./UploadPhotos.jsx";
 const axios = require("axios");
 
 export default function AddReview({ productId, toggleShowReview, metaData, getReviews }) {
@@ -10,10 +11,10 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
   const [body, setBody] = useState("");
   const [recommend, setRecommend] = useState(false);
   const [overall, setOverall] = useState(3);
-  const [comfort, setComfort] = useState(metaData.characteristics.Comfort.id);
-  const [fit, setFit] = useState(metaData.characteristics.Width.id);
-  const [length, setLength] = useState(metaData.characteristics.Size.id);
-  const [quality, setQuality] = useState(metaData.characteristics.Quality.id);
+  const [comfort, setComfort] = useState("");
+  const [fit, setFit] = useState("");
+  const [length, setLength] = useState("");
+  const [quality, setQuality] = useState("");
 
 
   const backgroundStyling = {
@@ -21,7 +22,7 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
     position: "fixed",
     top: "0%",
     left: "0%",
-    zIndex: "2",
+    zIndex: "1",
     backgroundColor: "rgba(100,100,100,0.5)",
     width: "100%",
     height: "100%",
@@ -109,9 +110,12 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
           value={recommend}
           onChange={() => {setRecommend(true)}}
         ></input>
-        <label>Overall Rating: </label>
+        <div className="ratings-overall" style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+        <label style={{paddingRight: "10px"}}>Overall Rating: </label>
         <OverallRating rating={overall} setRating={setOverall}/>
+        </div>
         <Characteristics metaData={metaData} reviewData={reviewData}/>
+        <UploadPhotos />
         <button type="submit" onClick={(e) => sendReview(e)}>Submit</button>
       </div>
     </form>
