@@ -92,7 +92,7 @@ class Index extends React.Component {
             currProduct={this.state.curr_product_id}
             renderStarRating={this.renderStarRating}
           />
-        {/* <WrappedRelatedItemsAndOutfits
+        <WrappedRelatedItemsAndOutfits
           updateCurrentProduct={this.updateCurrentProduct}
           p_id={this.state.curr_product_id}
           currentProduct={this.state.curr_product_name}
@@ -110,7 +110,7 @@ class Index extends React.Component {
               value: "Double Stitch",
             },
           ]}
-        /> */}
+        />
       </div>
     );
   }

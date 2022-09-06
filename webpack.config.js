@@ -41,5 +41,5 @@ module.exports = {
     new dotEnv({
       ignoreStub: true,
     })
-  ]
+  ],
 };

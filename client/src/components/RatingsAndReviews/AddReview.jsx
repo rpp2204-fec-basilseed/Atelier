@@ -57,6 +57,7 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
 
   function sendReview(submission) {
       submission.preventDefault();
+      console.log(reviewData);
       axios.post('/addReview', reviewData)
       .then(() => {
         toggleShowReview();
@@ -72,50 +73,54 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
       <div style={formStyling}>
         <p style={{position: "absolute", top: "0px", right: "20px"}} onClick={() => {toggleShowReview()}}>X</p>
         <h2 style={{position: "absolute", top: "0px", left: "50px"}}>Write Your Review</h2>
-        <div className="review-nickname" style={{display: 'flex', flexDirection: "row"}}>
-        <label>Nickname: </label>
+        <div className="review-form-fields" style={{display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px", width: "300px"}}>
+        <div className="review-nickname" style={{display: "flex", flexDirection: "row"}}>
+        <label style={{paddingRight: "3px"}}>Nickname: </label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
         ></input>
         </div>
-        <div className="review-email" style={{display: 'flex', flexDirection: "row"}}>
-        <label>Email: </label>
+        <div className="review-email" style={{display: "flex", flexDirection: "row", padding: "2px"}}>
+        <label style={{paddingRight: "3px"}}>Email: </label>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         ></input>
         </div>
-        <div className="review-summary" style={{display: 'flex', flexDirection: "row"}}>
-        <label>Summary: </label>
+        <div className="review-summary" style={{display: "flex", flexDirection: "row", padding: "2px"}}>
+        <label style={{paddingRight: "3px"}}>Summary: </label>
         <input
           type="text"
           value={summary}
           onChange={(e) => setSummary(e.target.value)}
         ></input>
         </div>
-        <div className="review-body" style={{display: 'flex', flexDirection: "row"}}>
-        <label>Review: </label>
+        <div className="review-body" style={{display: "flex", flexDirection: "row", padding: "2px", height: "100px"}}>
+        <label style={{paddingRight: "3px"}}>Review: </label>
         <input
           type="text"
           value={body}
           onChange={(e) => setBody(e.target.value)}
         ></input>
         </div>
-        <label>Recommend? </label>
+        <div className="review-recommend" style={{display: 'flex', flexDirection: "row", padding: "2px"}}>
+        <label style={{paddingRight: "3px"}}>Recommend? </label>
         <input
           type="checkbox"
           value={recommend}
           onChange={() => {setRecommend(true)}}
         ></input>
+        </div>
+        </div>
         <div className="ratings-overall" style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
         <label style={{paddingRight: "10px"}}>Overall Rating: </label>
         <OverallRating rating={overall} setRating={setOverall}/>
         </div>
         <Characteristics metaData={metaData} reviewData={reviewData}/>
-        <UploadPhotos />
+        <UploadPhotos photos={reviewData.photos}/>
         <button type="submit" onClick={(e) => sendReview(e)}>Submit</button>
       </div>
     </form>
@@ -131,7 +136,7 @@ summary
 body
 recommend
 name
-email
+email1
 photos
 characteristics
 

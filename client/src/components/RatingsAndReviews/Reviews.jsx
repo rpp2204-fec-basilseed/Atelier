@@ -16,7 +16,6 @@ export default function Reviews({ currProduct, renderStarRating }) {
 
 
     let barLength = Math.floor((total[rating] / totalReviews) * 100);
-    console.log(barLength)
 
     return (
       <div style={{display: "flex", flexDirection: "row", margin: "0"}}>
