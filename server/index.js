@@ -164,7 +164,7 @@ app.post("/addReview", (req, res) => {
       console.log(res.data);
     })
     .catch((err) => {
-      console.log("Therewasanerror: ");
+      console.log("Therewasanerror: ", err);
     });
 
   res.send("okay");

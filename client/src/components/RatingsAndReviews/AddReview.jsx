@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
+import Characteristics from "./Characteristics.jsx";
+import OverallRating from "./OverallRating.jsx";
 const axios = require("axios");
 
-export default function AddReview({ productId, toggleShowReview, metaData }) {
-  console.log('meta: ', metaData.characteristics)
+export default function AddReview({ productId, toggleShowReview, metaData, getReviews }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [summary, setSummary] = useState("");
   const [body, setBody] = useState("");
   const [recommend, setRecommend] = useState(false);
+  const [overall, setOverall] = useState(3);
   const [comfort, setComfort] = useState(metaData.characteristics.Comfort.id);
   const [fit, setFit] = useState(metaData.characteristics.Width.id);
   const [length, setLength] = useState(metaData.characteristics.Size.id);
@@ -15,6 +17,7 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
 
 
   const backgroundStyling = {
+    display: "flex",
     position: "fixed",
     top: "0%",
     left: "0%",
@@ -23,22 +26,24 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
     width: "100%",
     height: "100%",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    overflow: "overlay"
   };
 
   const formStyling = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "80vh",
-    width: "60vw",
+    height: "60vh",
+    width: "40vw",
     backgroundColor: "white",
-    position: "fixed"
+    position: "fixed",
+    paddingTop: "40px"
   };
 
   const reviewData = {
     product_id: parseInt(metaData.product_id),
-    rating: 5,
+    rating: overall,
     summary: summary,
     body: body,
     recommend: recommend,
@@ -49,10 +54,12 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
     }
   }
 
-  function sendReview() {
+  function sendReview(submission) {
+      submission.preventDefault();
       axios.post('/addReview', reviewData)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        toggleShowReview();
+        getReviews('newest');
       })
       .catch((err) => {
         console.log(err);
@@ -62,55 +69,50 @@ export default function AddReview({ productId, toggleShowReview, metaData }) {
   return (
     <form style={backgroundStyling}>
       <div style={formStyling}>
-        <p onClick={() => {toggleShowReview()}}>X</p>
+        <p style={{position: "absolute", top: "0px", right: "20px"}} onClick={() => {toggleShowReview()}}>X</p>
+        <h2 style={{position: "absolute", top: "0px", left: "50px"}}>Write Your Review</h2>
+        <div className="review-nickname" style={{display: 'flex', flexDirection: "row"}}>
         <label>Nickname: </label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
         ></input>
+        </div>
+        <div className="review-email" style={{display: 'flex', flexDirection: "row"}}>
         <label>Email: </label>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         ></input>
+        </div>
+        <div className="review-summary" style={{display: 'flex', flexDirection: "row"}}>
         <label>Summary: </label>
         <input
           type="text"
           value={summary}
           onChange={(e) => setSummary(e.target.value)}
         ></input>
+        </div>
+        <div className="review-body" style={{display: 'flex', flexDirection: "row"}}>
         <label>Review: </label>
         <input
           type="text"
           value={body}
           onChange={(e) => setBody(e.target.value)}
         ></input>
+        </div>
         <label>Recommend? </label>
         <input
           type="checkbox"
           value={recommend}
           onChange={() => {setRecommend(true)}}
         ></input>
-        <br></br>
-        <label>Comfort: </label>
-        <input type="text" placeholder="" onChange={(e) => {
-          reviewData.characteristics[`${comfort}`] = parseInt(e.target.value);
-        }}></input>
-        <label>Fit: </label>
-        <input type="text" onChange={(e) => {
-          reviewData.characteristics[`${fit}`] = parseInt(e.target.value);
-        }}></input>
-        <label>Length: </label>
-        <input type="text" onChange={(e) => {
-          reviewData.characteristics[`${length}`] = parseInt(e.target.value);
-        }}></input>
-        <label>Quality: </label>
-        <input type="text" onChange={(e) => {
-          reviewData.characteristics[`${quality}`] = parseInt(e.target.value);
-        }}></input>
-        <button type="submit" onClick={sendReview}>Submit</button>
+        <label>Overall Rating: </label>
+        <OverallRating rating={overall} setRating={setOverall}/>
+        <Characteristics metaData={metaData} reviewData={reviewData}/>
+        <button type="submit" onClick={(e) => sendReview(e)}>Submit</button>
       </div>
     </form>
   );
