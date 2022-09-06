@@ -9,8 +9,7 @@ function AddAnswerModal(props) {
     content: '',
     nickname: '',
     email: '',
-    // TODO later - photos: [],
-    // photos: [],
+    photos: [],
   });
 
   function handleNewAnswer(event) {
@@ -104,7 +103,7 @@ function AddAnswerModal(props) {
             event.preventDefault();
           }} className="submit-answer-button">Submit answer</button>
       </div>
-      <UploadPhotosModal uploadPhotosButtonClicked={uploadPhotos} />
+      <UploadPhotosModal uploadPhotosButtonClicked={uploadPhotos} photos={newAnswerInput.photos}/>
     </div>
   );
 }
