@@ -7,6 +7,7 @@ export default function Helpful({ helpfulness, reviewId }) {
   return (
     <div
       id={reviewId}
+      style={{display: "flex", flexDirection: "row"}}
       onClick={(e) => {
         axios({
           method: "put",
@@ -24,7 +25,8 @@ export default function Helpful({ helpfulness, reviewId }) {
           });
       }}
     >
-      Yes ({helpfulnessRating})
+      <p style={{textDecoration: "underline", marginTop: "0", marginRight: "5px"}}>Yes</p>
+      <p style={{marginTop: "0"}}>({helpfulnessRating})</p>
     </div>
   );
 }

@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 const axios = require("axios");
 const FormData = require("form-data");
 import { FaCheck } from "react-icons/fa";
 
 export default function UploadPhotos({ photos }) {
-  const [successful, setSuccessful] = useState(false);
 
-  var file;
+  const [successful, setSuccessful] = useState(false);
+  const [files, setFiles] = useState([]);
+  const [pending, setPending] = useState(0);
 
   const uploadFile = (image) => {
     var data = new FormData();
 
     data.append("file", image);
     data.append("upload_preset", "ml_default");
+
+    console.log(data)
 
     var config = {
       method: "post",
@@ -33,9 +36,30 @@ export default function UploadPhotos({ photos }) {
       });
   };
 
+  const RenderThumbnails = ({ thumbnails }) => {
+    console.log(files)
+    return thumbnails.map((photo) => {
+      return (
+        <img
+          src={URL.createObjectURL(photo)}
+          key={photo.name}
+          width="50px"
+          height="50px"
+        ></img>
+      );
+    });
+  };
+
   return (
+    <>
+      <div
+        className="reviews-pending-uploads"
+        style={{ display: "flex", flexDirection: "row" }}
+      >
+        {pending > 0 ? <RenderThumbnails thumbnails={files} /> : "No"}
+      </div>
     <div
-      className="ratings-upload-button"
+      className="reviews-upload-photos"
       style={{
         display: "flex",
         flexDirection: "row",
@@ -47,15 +71,18 @@ export default function UploadPhotos({ photos }) {
         type="file"
         name="photo"
         style={{ paddingRight: "0px", width: "200px" }}
-        onChange={(e) => (file = e.target.files[0])}
+        onChange={(e) => {
+          setFiles(files.concat(e.target.files[0]));
+          setPending(1);
+        }}
       ></input>
       <p
         style={{ fontSize: "12px", border: "solid black 2px", padding: "2px" }}
-        onClick={() => uploadFile(file)}
+        onClick={() => uploadFile(files[0])}
         onMouseEnter={(e) => (e.target.style.backgroundColor = "lightgray")}
         onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}
       >
-        Upload Photo
+        {pending > 1 ? "Upload Photos" : "Upload Photo"}
       </p>
       {successful ? (
         <FaCheck
@@ -63,5 +90,6 @@ export default function UploadPhotos({ photos }) {
         />
       ) : null}
     </div>
+    </>
   );
 }

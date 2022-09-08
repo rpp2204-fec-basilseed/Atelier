@@ -1,23 +1,85 @@
 import React from "react";
 import { GoTriangleDown } from "react-icons/go";
 
-export default function RatingBar ({ type, rating }) {
-
-  let bar = 0;
-
+export default function RatingBar({ metaData }) {
   // for (let currentRating in metaData.ratings) {
   //   totalStars += parseInt(metaData.ratings[currentRating]);
-  // }
-  // let barLength = Math.floor((rating / totalStars) * 100);
 
-  return (
-    <div className="reviews-rating-bar" style={{display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "2px"}}>
-    <h3>{type}</h3>
-    <div style={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
-    <div style={{ border: "solid black 2px", width: "90px", backgroundColor: "black", margin: "0", padding: "0"}}></div>
-    <GoTriangleDown style={{zIndex: "9", margin: "0", height: "20px", padding: "0px 0px 15px 0px"}}/>
-    <div style={{ border: "solid black 2px", width: "90px", backgroundColor: "black", margin: "0", padding: "0"}}></div>
-    </div>
-    </div>
-  );
-};
+  const characteristics = Object.keys(metaData);
+  const descriptions = {
+    Comfort: ["Poor", "Perfect"],
+    Fit: ["Runs Short", "Runs Long"],
+    Length: ["Runs Short", "Runs Long"],
+    Quality: ["Poor", "Perfect"],
+    Size: ["Too Small", "Too Wide"],
+    Width: ["Too Narrow", "Too Wide"],
+  };
+
+  return characteristics.map((characteristic) => {
+    let barLength = Math.floor(metaData[characteristic].value * 20) * 2;
+
+    return (
+      <div
+        className="reviews-rating-bar"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          paddingTop: "2px",
+        }}
+      >
+        <h3 style={{ margin: "20px 0px 10px 0px" }}>{characteristic}</h3>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              border: "solid lightgray 3px",
+              width: `${barLength}px`,
+              backgroundColor: "black",
+              margin: "-5px",
+              padding: "0",
+            }}
+          ></div>
+          <GoTriangleDown
+            style={{
+              zIndex: "9",
+              margin: "0",
+              height: "20px",
+              padding: "0px 0px 15px 0px",
+            }}
+          />
+          <div
+            style={{
+              border: "solid lightgray 3px",
+              width: `${200 - barLength}px`,
+              backgroundColor: "black",
+              margin: "-5px",
+              padding: "0",
+            }}
+          ></div>
+        </div>
+        <div
+          className="review-bar-descriptions"
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "space-between",
+            fontSize: "12px",
+            alignItems: "flex-end",
+            height: "15px"
+          }}
+        >
+          <p>{descriptions[characteristic][0]}</p>
+          <p>{descriptions[characteristic][1]}</p>
+        </div>
+      </div>
+    );
+  });
+}

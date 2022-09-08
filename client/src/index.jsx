@@ -48,7 +48,7 @@ class Index extends React.Component {
       if (i <= rating) {
         stars.push(<FaStar key={i} />);
       } else if (rating < i && rating > i - 1) {
-        stars.push(<FaStarHalfAlt key={i} />)
+        stars.push(<FaStarHalfAlt className="reviews-halfstar" key={i} />)
       } else {
         stars.push(<FaRegStar key={i} />);
       }
@@ -83,8 +83,8 @@ class Index extends React.Component {
         {/* <WrappedOverview
           curr_product_id={this.state.curr_product_id}
           renderStars={this.renderStarRating}
-        /> */}
-        {/* <WrappedQandA
+        />
+        <WrappedQandA
           curr_product_id={this.state.curr_product_id}
           curr_product_name={this.state.curr_product_name}
         /> */}

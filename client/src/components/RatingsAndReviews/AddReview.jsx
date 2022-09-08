@@ -34,9 +34,8 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
   const formStyling = {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    height: "60vh",
-    width: "40vw",
+    height: "65vh",
+    width: "45vw",
     backgroundColor: "white",
     position: "fixed",
     paddingTop: "40px"
@@ -73,8 +72,8 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
       <div style={formStyling}>
         <p style={{position: "absolute", top: "0px", right: "20px"}} onClick={() => {toggleShowReview()}}>X</p>
         <h2 style={{position: "absolute", top: "0px", left: "50px"}}>Write Your Review</h2>
-        <div className="review-form-fields" style={{display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px", width: "300px"}}>
-        <div className="review-nickname" style={{display: "flex", flexDirection: "row"}}>
+        <div className="review-form-fields" style={{display: "flex", flexDirection: "column", alignItems: "flex-start", marginTop: "30px", width: "300px"}}>
+        <div className="review-nickname" style={{display: "flex", flexDirection: "row", padding: "5px 25px"}}>
         <label style={{paddingRight: "3px"}}>Nickname: </label>
         <input
           type="text"
@@ -82,7 +81,7 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
           onChange={(e) => setName(e.target.value)}
         ></input>
         </div>
-        <div className="review-email" style={{display: "flex", flexDirection: "row", padding: "2px"}}>
+        <div className="review-email" style={{display: "flex", flexDirection: "row", padding: "5px 25px"}}>
         <label style={{paddingRight: "3px"}}>Email: </label>
         <input
           type="email"
@@ -90,7 +89,7 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
           onChange={(e) => setEmail(e.target.value)}
         ></input>
         </div>
-        <div className="review-summary" style={{display: "flex", flexDirection: "row", padding: "2px"}}>
+        <div className="review-summary" style={{display: "flex", flexDirection: "row", padding: "5px 25px"}}>
         <label style={{paddingRight: "3px"}}>Summary: </label>
         <input
           type="text"
@@ -98,16 +97,19 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
           onChange={(e) => setSummary(e.target.value)}
         ></input>
         </div>
-        <div className="review-body" style={{display: "flex", flexDirection: "row", padding: "2px", height: "100px"}}>
+        <div className="review-body" style={{display: "flex", flexDirection: "row", padding: "5px 25px", height: "100px"}}>
         <label style={{paddingRight: "3px"}}>Review: </label>
-        <input
+        <textarea
           type="text"
+          rows="10"
+          cols="20"
+          wrap="hard"
           value={body}
           onChange={(e) => setBody(e.target.value)}
-        ></input>
+        ></textarea>
         </div>
-        <div className="review-recommend" style={{display: 'flex', flexDirection: "row", padding: "2px"}}>
-        <label style={{paddingRight: "3px"}}>Recommend? </label>
+        <div className="review-recommend" style={{display: 'flex', flexDirection: "row", padding: "5px 25px"}}>
+        <label style={{paddingRight: "3px"}}>Would you Recommend? </label>
         <input
           type="checkbox"
           value={recommend}
@@ -115,13 +117,15 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
         ></input>
         </div>
         </div>
-        <div className="ratings-overall" style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+        <div className="ratings-overall" style={{display: "flex", flexDirection: "row", alignItems: "center", padding: "5px 25px"}}>
         <label style={{paddingRight: "10px"}}>Overall Rating: </label>
         <OverallRating rating={overall} setRating={setOverall}/>
         </div>
+        <div className="review-characteristics-container" style={{display: "flex", flexDirection: "column", width: "100%", alignItems: "flex-start", padding: "5px 25px"}}>
         <Characteristics metaData={metaData} reviewData={reviewData}/>
+        </div>
         <UploadPhotos photos={reviewData.photos}/>
-        <button type="submit" onClick={(e) => sendReview(e)}>Submit</button>
+        <button type="submit" style={{width: "75px", marginLeft: "10px"}} onClick={(e) => sendReview(e)}>Submit</button>
       </div>
     </form>
   );

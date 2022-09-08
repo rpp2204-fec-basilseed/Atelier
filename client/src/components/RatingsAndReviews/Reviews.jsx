@@ -5,31 +5,40 @@ import RatingBar from "./RatingBar.jsx";
 const axios = require("axios");
 
 export default function Reviews({ currProduct, renderStarRating }) {
-
   const starPercentage = (rating, total) => {
-
     let totalReviews = 0;
 
     for (let currentRating in total) {
       totalReviews += parseInt(total[currentRating]);
     }
 
-
     let barLength = Math.floor((total[rating] / totalReviews) * 100);
 
     return (
-      <div style={{display: "flex", flexDirection: "row", margin: "0"}}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          margin: "0",
+          height: "10px",
+          alignItems: "center",
+        }}
+      >
         <div
           style={{ border: "solid green 5px", width: `${barLength + "px"}` }}
         ></div>
         <div
-        style={{ border: "solid gray 5px", width: `${100 - barLength + "px"}` }}
-      ></div>
+          style={{
+            border: "solid gray 5px",
+            width: `${100 - barLength + "px"}`,
+          }}
+        ></div>
+        <p style={{ paddingLeft: "5px" }}>({total[rating]})</p>
       </div>
     );
   };
 
-  const [displayedReviews, setDisplayedReviews] = useState(4);
+  const [displayedReviews, setDisplayedReviews] = useState(2);
 
   const [metaData, setMetaData] = useState({});
 
@@ -114,7 +123,7 @@ export default function Reviews({ currProduct, renderStarRating }) {
   }
 
   return (
-    <div style={{ marginLeft: "10px" }}>
+    <div style={{ margin: "10px 10px 10px 50px" }}>
       <h2>Ratings and Reviews</h2>
       <div className="main" style={{ display: "flex" }}>
         <div className="ratings">
@@ -144,37 +153,48 @@ export default function Reviews({ currProduct, renderStarRating }) {
             1 star reviews:{" "}
             {metaData.ratings ? starPercentage(1, metaData.ratings) : null}
           </div>
-          <RatingBar type="Size" rating={metaData.characteristics ? metaData.characteristics.Size : null}/>
-          <RatingBar type="Comfort" rating={metaData.characteristics ? metaData.characteristics.Comfort : null}/>
+          {metaData.characteristics ? (
+            <RatingBar metaData={metaData.characteristics} />
+          ) : null}
         </div>
-        <div className="reviews" style={{ paddingLeft: "20px" }}>
-          <div className="total-reviews">{`${currReviews.length} Reviews`}</div>
-          <label form="filter" style={{marginRight: "10px"}}>Sort reviews by:</label>
-          <select
-            name="filter"
-            id="filters"
-            onChange={(e) => {
-              getReviews(e.target.value);
-            }}
+        <div className="reviews" style={{ paddingLeft: "50px" }}>
+          <div
+            className="total-reviews"
+            style={{ display: "flex", flexDirection: "row" }}
           >
-            <option value="helpful">Helpful</option>
-            <option value="newest">Newest</option>
-            <option value="relevant">Relevant</option>
-          </select>
+            {`${currReviews.length} reviews, sorted by:`}
+            {/* <label form="filter" style={{marginRight: "10px"}}>sorted by:</label> */}
+            <select
+              name="filter"
+              id="filters"
+              style={{ marginLeft: "10px" }}
+              onChange={(e) => {
+                getReviews(e.target.value);
+              }}
+            >
+              <option value="helpful">Helpful</option>
+              <option value="newest">Newest</option>
+              <option value="relevant">Relevant</option>
+            </select>
+          </div>
           <DisplayReview
             reviewsList={currReviews}
             displayedReviews={displayedReviews}
             renderStarRating={renderStarRating}
           />
           <div className="more-and-add-review" style={{ display: "flex" }}>
-            <div
-              style={{ border: "solid black 3px", padding: "20px" }}
-              onClick={increaseDisplayedReviews}
-              onMouseEnter={(e) => e.target.style.backgroundColor = 'lightgray'}
-              onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
-            >
-              More Reviews
-            </div>
+            {currReviews.length > 0 ? (
+              <div
+                style={{ border: "solid black 3px", padding: "20px" }}
+                onClick={increaseDisplayedReviews}
+                onMouseEnter={(e) =>
+                  (e.target.style.backgroundColor = "lightgray")
+                }
+                onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}
+              >
+                MORE REVIEWS
+              </div>
+            ) : null}
             <div
               onClick={toggleShowReview}
               style={{
@@ -182,10 +202,12 @@ export default function Reviews({ currProduct, renderStarRating }) {
                 padding: "20px",
                 marginLeft: "40px",
               }}
-              onMouseEnter={(e) => e.target.style.backgroundColor = 'lightgray'}
-              onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
+              onMouseEnter={(e) =>
+                (e.target.style.backgroundColor = "lightgray")
+              }
+              onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}
             >
-              Add Review
+              ADD REVIEW
             </div>
           </div>
           <div>

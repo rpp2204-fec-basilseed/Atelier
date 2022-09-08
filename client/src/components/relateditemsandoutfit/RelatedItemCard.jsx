@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import ComparisonModal from './ComparisonModal.jsx';
-import { FaRegStar } from 'react-icons/fa'
+import { FaStar } from 'react-icons/fa'
 
 class RelatedItemCard extends React.Component {
   constructor(props) {
@@ -71,7 +71,7 @@ class RelatedItemCard extends React.Component {
       <>
         <div className="related-items card" data-testid="r-card">
           <div className="card-img-container">
-            <span onClick={this.openModal} className='related-products-tracker card-icon'><FaRegStar size={32}/></span>
+            <span onClick={this.openModal} className='related-products-tracker card-icon'><FaStar size={32}/></span>
             <img onClick={() => this.props.updateCurrentProduct(this.props.p_id)} className="related-img" src={this.state.img}  alt="picture of item" />
           </div>
           <div className="card-body-container">
