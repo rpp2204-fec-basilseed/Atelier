@@ -4,18 +4,19 @@ const FormData = require("form-data");
 import { FaCheck } from "react-icons/fa";
 
 export default function UploadPhotos({ photos }) {
-
   const [successful, setSuccessful] = useState(false);
   const [files, setFiles] = useState([]);
   const [pending, setPending] = useState(0);
 
-  const uploadFile = (image) => {
+  const uploadFiles = (images, index) => {
+
+
     var data = new FormData();
 
-    data.append("file", image);
+    data.append("file", images[index]);
     data.append("upload_preset", "ml_default");
 
-    console.log(data)
+    console.log(data);
 
     var config = {
       method: "post",
@@ -28,7 +29,11 @@ export default function UploadPhotos({ photos }) {
       .then((res) => {
         photos.push(res.data.secure_url);
         if (res.status === 200) {
-          setSuccessful(true);
+          if(files[index + 1]) {
+            uploadFiles(files, index + 1)
+          } else {
+            setSuccessful(true);
+          }
         }
       })
       .catch((err) => {
@@ -37,7 +42,7 @@ export default function UploadPhotos({ photos }) {
   };
 
   const RenderThumbnails = ({ thumbnails }) => {
-    console.log(files)
+    console.log(files);
     return thumbnails.map((photo) => {
       return (
         <img
@@ -56,40 +61,50 @@ export default function UploadPhotos({ photos }) {
         className="reviews-pending-uploads"
         style={{ display: "flex", flexDirection: "row" }}
       >
-        {pending > 0 ? <RenderThumbnails thumbnails={files} /> : "No"}
+        <p style={{ margin: "5px 15px" }}>
+          {pending > 0 ? <RenderThumbnails thumbnails={files} /> : null}
+        </p>
       </div>
-    <div
-      className="reviews-upload-photos"
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        padding: "10px",
-      }}
-    >
-      <input
-        type="file"
-        name="photo"
-        style={{ paddingRight: "0px", width: "200px" }}
-        onChange={(e) => {
-          setFiles(files.concat(e.target.files[0]));
-          setPending(1);
+      <div
+        className="reviews-upload-photos"
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          padding: "10px",
         }}
-      ></input>
-      <p
-        style={{ fontSize: "12px", border: "solid black 2px", padding: "2px" }}
-        onClick={() => uploadFile(files[0])}
-        onMouseEnter={(e) => (e.target.style.backgroundColor = "lightgray")}
-        onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}
       >
-        {pending > 1 ? "Upload Photos" : "Upload Photo"}
-      </p>
-      {successful ? (
-        <FaCheck
-          style={{ backgroundColor: "green", size: "10px", marginLeft: "10px" }}
-        />
-      ) : null}
-    </div>
+        <input
+          type="file"
+          name="photo"
+          style={{ paddingRight: "0px", width: "200px" }}
+          onChange={(e) => {
+            setFiles(files.concat(e.target.files[0]));
+            setPending(pending + 1);
+          }}
+        ></input>
+        <p
+          style={{
+            fontSize: "12px",
+            border: "solid black 2px",
+            padding: "2px",
+          }}
+          onClick={() => uploadFiles(files, 0)}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = "lightgray")}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}
+        >
+          {pending > 1 ? "Upload Photos" : "Upload Photo"}
+        </p>
+        {successful ? (
+          <FaCheck
+            style={{
+              backgroundColor: "green",
+              size: "10px",
+              marginLeft: "10px",
+            }}
+          />
+        ) : null}
+      </div>
     </>
   );
 }

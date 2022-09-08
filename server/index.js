@@ -162,13 +162,11 @@ app.post("/addReview", (req, res) => {
 
   axios(config)
     .then((res) => {
-      console.log(res.data);
+      res.status(200).send()
     })
     .catch((err) => {
       console.log('Could not add review: ', err);
     });
-
-    res.send();
 
   // var config = {
   //   method: 'post',

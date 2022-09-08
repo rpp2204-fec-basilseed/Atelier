@@ -22,7 +22,7 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
     position: "fixed",
     top: "0%",
     left: "0%",
-    zIndex: "1",
+    zIndex: "13",
     backgroundColor: "rgba(100,100,100,0.5)",
     width: "100%",
     height: "100%",
@@ -56,7 +56,6 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
 
   function sendReview(submission) {
       submission.preventDefault();
-      console.log(reviewData);
       axios.post('/addReview', reviewData)
       .then(() => {
         toggleShowReview();
