@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import DisplayReview from "./DisplayReview.jsx";
 import AddReview from "./AddReview.jsx";
+import DisplayReview from "./DisplayReview.jsx";
 import RatingBar from "./RatingBar.jsx";
+import ReviewScore from "./ReviewScore.jsx";
 const axios = require("axios");
 
 export default function Reviews({ currProduct, renderStarRating }) {
@@ -47,6 +48,7 @@ export default function Reviews({ currProduct, renderStarRating }) {
   const [showReview, setShowReview] = useState(false);
 
   const [filter, updateFilter] = useState("helpful");
+
 
   const getReviews = (newFilter) => {
     updateFilter(newFilter);
@@ -127,12 +129,7 @@ export default function Reviews({ currProduct, renderStarRating }) {
       <h2>Ratings and Reviews</h2>
       <div className="main" style={{ display: "flex" }}>
         <div className="ratings">
-          <div className="review-score" style={{ fontSize: "36px" }}>
-            {metaData.ratings
-              ? renderStarRating(metaData.characteristics.Quality.value)
-              : null}
-          </div>
-          {/* <div className='stars'>{metaData.ratings ? renderStarRating(totalScore(metaData.ratings)) : null}</div> */}
+          {metaData.ratings ? <ReviewScore ratings={metaData.ratings} recommended={metaData.recommended}starRender={renderStarRating}/> : null}
           <div>
             5 star reviews:{" "}
             {metaData.ratings ? starPercentage(5, metaData.ratings) : null}

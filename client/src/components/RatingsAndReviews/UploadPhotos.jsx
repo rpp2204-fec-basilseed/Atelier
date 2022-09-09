@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 const axios = require("axios");
 const FormData = require("form-data");
 import { FaCheck } from "react-icons/fa";
+import { MdRemoveCircle } from "react-icons/md";
 
 export default function UploadPhotos({ photos }) {
   const [successful, setSuccessful] = useState(false);
@@ -9,8 +10,6 @@ export default function UploadPhotos({ photos }) {
   const [pending, setPending] = useState(0);
 
   const uploadFiles = (images, index) => {
-
-
     var data = new FormData();
 
     data.append("file", images[index]);
@@ -29,8 +28,8 @@ export default function UploadPhotos({ photos }) {
       .then((res) => {
         photos.push(res.data.secure_url);
         if (res.status === 200) {
-          if(files[index + 1]) {
-            uploadFiles(files, index + 1)
+          if (files[index + 1]) {
+            uploadFiles(files, index + 1);
           } else {
             setSuccessful(true);
           }
@@ -42,17 +41,38 @@ export default function UploadPhotos({ photos }) {
   };
 
   const RenderThumbnails = ({ thumbnails }) => {
-    console.log(files);
-    return thumbnails.map((photo) => {
-      return (
-        <img
-          src={URL.createObjectURL(photo)}
-          key={photo.name}
-          width="50px"
-          height="50px"
-        ></img>
-      );
-    });
+    console.log(thumbnails)
+    var counter = 0;
+
+    if (thumbnails) {
+      return thumbnails.map((photo) => {
+        return (
+          <div
+            key={`"${counter}"`}
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              flexDirection: "row",
+            }}
+          >
+            <img
+              src={URL.createObjectURL(photo)}
+              width="50px"
+              height="50px"
+            ></img>
+            <MdRemoveCircle
+              key={files.length}
+              style={{ color: "red" }}
+              onClick={() => {
+                setPending(pending - 1);
+                setFiles(files.splice(0, pending - 1))
+              }}
+            />
+          </div>
+        );
+      });
+    }
+    return null;
   };
 
   return (
@@ -61,9 +81,11 @@ export default function UploadPhotos({ photos }) {
         className="reviews-pending-uploads"
         style={{ display: "flex", flexDirection: "row" }}
       >
-        <p style={{ margin: "5px 15px" }}>
+        <div
+          style={{ margin: "5px 15px", display: "flex", flexDirection: "row" }}
+        >
           {pending > 0 ? <RenderThumbnails thumbnails={files} /> : null}
-        </p>
+        </div>
       </div>
       <div
         className="reviews-upload-photos"
@@ -77,13 +99,20 @@ export default function UploadPhotos({ photos }) {
         <input
           type="file"
           name="photo"
-          style={{ paddingRight: "0px", width: "200px" }}
+          style={{
+            paddingRight: "0px",
+            width: "200px",
+            display: "flex",
+            flexDirection: "row",
+          }}
           onChange={(e) => {
-            setFiles(files.concat(e.target.files[0]));
-            setPending(pending + 1);
+            if (e.target.files) {
+              setFiles(files.concat(e.target.files[0]));
+              setPending(pending + 1);
+            }
           }}
         ></input>
-        <p
+        <div
           style={{
             fontSize: "12px",
             border: "solid black 2px",
@@ -94,7 +123,7 @@ export default function UploadPhotos({ photos }) {
           onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}
         >
           {pending > 1 ? "Upload Photos" : "Upload Photo"}
-        </p>
+        </div>
         {successful ? (
           <FaCheck
             style={{

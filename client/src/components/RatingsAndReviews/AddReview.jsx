@@ -34,7 +34,7 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
   const formStyling = {
     display: "flex",
     flexDirection: "column",
-    height: "65vh",
+    height: "70vh",
     width: "45vw",
     backgroundColor: "white",
     position: "fixed",
@@ -54,11 +54,11 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
     }
   }
 
-  function sendReview(submission) {
-      submission.preventDefault();
+  function sendReview(e) {
+      e.preventDefault();
+      toggleShowReview();
       axios.post('/addReview', reviewData)
       .then(() => {
-        toggleShowReview();
         getReviews('newest');
       })
       .catch((err) => {
@@ -124,7 +124,7 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
         <Characteristics metaData={metaData} reviewData={reviewData}/>
         </div>
         <UploadPhotos photos={reviewData.photos}/>
-        <button type="submit" style={{width: "75px", marginLeft: "10px"}} onClick={(e) => sendReview(e)}>Submit</button>
+        <button type="submit" style={{width: "75px", marginLeft: "10px"}} onClick={sendReview}>Submit</button>
       </div>
     </form>
   );

@@ -21,6 +21,7 @@ export default function RatingBar({ metaData }) {
     return (
       <div
         className="reviews-rating-bar"
+        key={characteristic}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -41,8 +42,7 @@ export default function RatingBar({ metaData }) {
             style={{
               border: "solid lightgray 3px",
               width: `${barLength}px`,
-              backgroundColor: "black",
-              margin: "-5px",
+              margin: "-6px",
               padding: "0",
             }}
           ></div>
@@ -58,8 +58,7 @@ export default function RatingBar({ metaData }) {
             style={{
               border: "solid lightgray 3px",
               width: `${200 - barLength}px`,
-              backgroundColor: "black",
-              margin: "-5px",
+              margin: "-6px",
               padding: "0",
             }}
           ></div>
