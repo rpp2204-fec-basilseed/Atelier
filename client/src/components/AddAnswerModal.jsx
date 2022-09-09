@@ -9,7 +9,7 @@ function AddAnswerModal(props) {
     content: '',
     nickname: '',
     email: '',
-    photos: [],
+    // photos: [],
   });
 
   function handleNewAnswer(event) {
@@ -49,7 +49,7 @@ function AddAnswerModal(props) {
         setNewAnswer({
           content: '',
           nickname: '',
-          email: ''
+          email: '',
         });
         setSubmitted((prevVal) => {
           return !prevVal;
@@ -67,13 +67,18 @@ function AddAnswerModal(props) {
     setUploadPhotos(true);
   }
 
-  // TODO: Up to five photos should be allowed for each answer.
-  // Clicking the button should open a separate window where the photo to be can be selected.
-  // After the first image is uploaded, a thumbnail showing the image should appear.
-  // A user should be able to add up to five images before the button to add disappears,
-  // preventing further additions.
+  // newAnswerInput.photos
+  const [ allPhotos, setPhotos ] = useState([]);
+  function addPhotos(event) {
+    const image = event.target.files[0] || null;
+    if (image !== null) {
+      setPhotos((prev) => {
+        return [...prev, image];
+      });
+    }
+  }
 
-  return (
+  return (<div>
     <div className="modal-add-answer"
     style={{ display: props.addAnswerButtonClicked && !submitted ? "block" : "none" }}>
 
@@ -96,14 +101,19 @@ function AddAnswerModal(props) {
       <span>For authentication reasons, you will not be emailed</span>
       <br />
       <button onClick={handleUploadPhotos} className="upload-photos-button">Upload your photos</button>
+      {allPhotos.map((photo, i) => {
+        return (<div key={i}>{photo.name}</div>);
+      })}
 
       <div className="modal-actions">
           <button type="button" onClick={(event) => {
-            handleSubmit(newAnswerInput);
             event.preventDefault();
+            handleSubmit(newAnswerInput);
           }} className="submit-answer-button">Submit answer</button>
       </div>
-      <UploadPhotosModal uploadPhotosButtonClicked={uploadPhotos} photos={newAnswerInput.photos}/>
+      </div>
+
+      <UploadPhotosModal className="modal-upload-photos" addPhotos={addPhotos} uploadPhotosButtonClicked={uploadPhotos} allPhotos={allPhotos}/>
     </div>
   );
 }
