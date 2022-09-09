@@ -12,7 +12,7 @@ function AddAnswerModal(props) {
     <div style={{display:
       props.addAnswerButtonClicked && !submitted ? "block" : "none",
       fontSize: "1rem",
-      position: "absolute", zIndex: "2", opacity:"1", border: "solid grey",
+      position: "fixed", zIndex: "2", opacity:"1", border: "solid grey",
       top: "50%", left: "60%", transform: "translate(-50%, -50%)", width: "40%",
       float: "left",
       backgroundColor: "ivory",

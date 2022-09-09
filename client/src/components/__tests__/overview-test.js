@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-// import '@testing-library/jest-dom';
-// import React from 'react';
-// import {cleanup, fireEvent, render, screen} from '@testing-library/react';
-// import Overview from '../Overview.jsx';
-=======
 import '@testing-library/jest-dom';
 import React from 'react';
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
@@ -13,20 +7,9 @@ import Styles from '../Styles.jsx';
 import CartFavorite from '../CartFavorite.jsx';
 import ImgCarousel from '../ImgCarousel.jsx';
 import ImgSlide from '../ImgSlide.jsx';
->>>>>>> 1c09777ea251db653f0672fffe32c8ff11203f86
 
 // afterEach(cleanup);
 
-<<<<<<< HEAD
-// test("Style should be rendered", () => {
-
-
-//   render(<Overview />);
-//   const componentText = screen.queryByText(/Style/i);
-//   expect(componentText).toBeInTheDocument();
-
-// });
-=======
 test("Style should be rendered", () => {
   render(<Overview />);
   const componentText = screen.queryByText(/Overview/i);
@@ -58,5 +41,3 @@ test("ImgSlide should be rendered", () => {
   render(<ImgSlide />);
   expect(screen.queryByText(/ImgSlide/i)).toBeInTheDocument();
 });
-
->>>>>>> 1c09777ea251db653f0672fffe32c8ff11203f86
