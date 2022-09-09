@@ -4,12 +4,15 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const axios = require("axios");
+const compression = require('compression');
 
 // axios.defaults.baseURL = process.env.URL;
 // const baseURL = process.env.URL;
 // axios.default.headers.common['Authorization'] = process.env.API_KEY;
 
 const app = express();
+// Compress all HTTP responses
+app.use(compression());
 app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname + "/../client/dist"));
