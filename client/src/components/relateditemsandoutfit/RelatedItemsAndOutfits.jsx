@@ -19,12 +19,14 @@ class RelatedItemsAndOutfits extends React.Component {
   getRelatedItems () {
     axios.get('/products', {params: { p_id: this.props.p_id, endpoint: 'related' }})
       .then((res) => {
-        this.setState({relatedItems: res.data})
+        return [... new Set(res.data)];
+      })
+      .then((arr) => {
+        this.setState({relatedItems: arr})
       })
       .catch((err) => {
-      console.log(err);
+        console.log(err);
       });
-      return;
   };
 
   getOutfitItems () {
