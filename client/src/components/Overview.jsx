@@ -22,6 +22,7 @@ class Overview extends React.Component {
   }
 
   handleStyleChange(style) {
+    console.log('STYLE CHANGE: ' + style);
     this.setState({
       selectedStyle: style,
       selectedSKU: '',
@@ -30,13 +31,16 @@ class Overview extends React.Component {
   }
 
   handleSizeChange(e) {
+    console.log('SIZE CHANGE SKU: ' + e.target.value);
     this.setState({selectedSKU: e.target.value});
   }
 
   componentDidMount() {
 
+    //Product level API call
     axios.get('/products', {
       params: {
+        // curr_product_id: this.props.curr_product_id
         p_id: this.props.curr_product_id
       }
     })
@@ -49,8 +53,10 @@ class Overview extends React.Component {
       console.log(error);
     });
 
+    //Style level API call
     axios.get('/products', {
       params: {
+        // curr_product_id: this.props.curr_product_id,
         p_id: this.props.curr_product_id,
         endpoint: 'styles'
       }
@@ -101,6 +107,7 @@ class Overview extends React.Component {
     }
     return (
       <div className="overview-container">
+        {/* {this.renderStars(4.5)} */}
         <div className="wrapper">
           <div className="overviewImages-container">
             {currProdCarousel}

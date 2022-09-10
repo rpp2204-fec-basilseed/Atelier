@@ -31,11 +31,11 @@ class RelatedCarousel extends React.Component {
   render () {
     return (
       <div className='carousel-container'>
-        {this.state.displayLeftBtn ? <button aria-labelledby="previous" className='prev-btn' onClick={this.clickPrev}><FaAngleLeft size={32} /></button> : <div></div>}
-        {this.state.displayRightBtn ? <button aria-labelledby="next" className='next-btn' onClick={this.clickNext}><FaAngleRight size={32} /></button> : <div></div>}
+        {this.state.displayLeftBtn ? <button data-testid="r-prev" aria-labelledby="previous" className='prev-btn' onClick={this.clickPrev}><FaAngleLeft size={32} /></button> : <div></div>}
+        {this.state.displayRightBtn ? <button data-testid="r-next" aria-labelledby="next" className='next-btn' onClick={this.clickNext}><FaAngleRight size={32} /></button> : <div></div>}
         <div className='carousel-cards'>
         {this.props.relatedItems.map(item => (
-            <RelatedItemCard key={item} p_id={item} addToOutfit={this.props.addToOutfit} currentProduct={this.props.currentProduct} currentFeatures={this.props.currentFeatures}/>
+            <RelatedItemCard key={item} p_id={item} currentProduct={this.props.currentProduct} currentFeatures={this.props.currentFeatures} updateCurrentProduct={this.props.updateCurrentProduct}/>
           ))}
         </div>
       </div>

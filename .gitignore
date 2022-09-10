@@ -105,3 +105,7 @@ dist
 
 # EC2 key
 helloWorld.pem
+=======
+# EC2
+*.pem
+
