@@ -32,7 +32,6 @@ function AddAnswerModal(props) {
     });
   }
 
-<<<<<<< HEAD
   const [ allPhotos, setPhotos ] = useState(newAnswerInput.photos);
 
   function addPhotos(event) {
