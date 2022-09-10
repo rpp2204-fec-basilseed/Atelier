@@ -1,14 +1,48 @@
 import React, { useState } from 'react';
 import AddAnswerModal from './AddAnswerModal.jsx';
+const axios = require('axios');
 
 function Sidebar(props) {
-  const [votes, setVotes] = useState(props.helpful);
+  const [ questionHelpfulClicked, setQuestionHelpfulClicked ] = useState(false);
+  const [questionVotes, setQuestionVotes] = useState(props.helpful);
 
-  function handleHelpful() {
-    setVotes(votes + 1);
+  function handleQuestionHelpful() {
+    const data = {
+      question_id: props.questionID,
+    };
+
+    axios.put('/questionHelpful', data)
+    .then((response) => {
+      console.log('PUT request for question helpfulness, log response.data here', response.data);
+      setQuestionVotes((prev) => {
+        return questionVotes + 1
+      });
+      console.log('log current helpfulness here', questionVotes);
+      setQuestionHelpfulClicked(true);
+    })
+    .catch(err => console.log(err));
   }
-  // TODO: validate form input upon submission.
+
+  const [ questionReport, setQuestionReport ] = useState(props.reported);
+
+  function handleQuestionReport() {
+    const data = {
+      question_id: props.questionID,
+    };
+
+    axios.put('/reportQuestion', data)
+      .then((response) => {
+        console.log('PUT request for report a question, log response.data here', response.data);
+        setQuestionReport((prev) => {
+          return !questionReport;
+        });
+        props.fetchData();
+      })
+      .catch(err => console.log(err));
+  }
+
   const [ addAnswerClicked, setAddAnswer ] = useState(false);
+
   function handleAddAnswer () {
     console.log(`You just clicked Add Answer for question body: ${props.questionBody}`);
     setAddAnswer((prevVal) => {
@@ -16,20 +50,19 @@ function Sidebar(props) {
     });
   }
 
-  return (<div className="sidebar" style={{ fontSize: "0.7rem", display: "inline-flex",
-    opacity: props.questionAdded ? "0.2" : "1" }}>
-    <span style={{  margin: "0 5px", paddingLeft: "140px" }}>Helpful?</span>
-    <div style={{ textDecoration: "underline" }} onClick={handleHelpful}>Yes</div>
-    <div style={{  margin: "0 3px" }}>({votes})</div>
-    <span className="pipe-symbol" style={{ margin: "0 5px" }}>|</span>
+  return (<div className="sidebar"
+    style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}>
+    <span className="sidebar-helpful">Helpful?</span>
+    <button disabled={questionHelpfulClicked} className="sidebar-yes" onClick={handleQuestionHelpful}>Yes</button>
+    <div className="sidebar-votes">({questionVotes})</div>
+    <span className="pipe-symbol">|</span>
+    <span onClick={handleQuestionReport} className="question-report">Report</span>
+    <span className="pipe-symbol">|</span>
 
-    <div className="add-answer">
-      <span onClick={handleAddAnswer} style={{
-        paddingLeft: "10px", textDecoration: "underline", textAlign: "right"
-      }}>Add Answer</span>
-    </div>
-    <AddAnswerModal addAnswerButtonClicked={addAnswerClicked}
-    currentProductName={props.currentProductName} questionBody={props.questionBody}/>
+    <span className="add-answer" onClick={handleAddAnswer}>Add Answer</span>
+
+    <AddAnswerModal fetchData={props.fetchData} addAnswerButtonClicked={addAnswerClicked}
+    currentProductName={props.currentProductName} questionBody={props.questionBody} questionID={props.questionID}/>
 
   </div>);
 }

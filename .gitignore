@@ -103,5 +103,9 @@ dist
 # TernJS port file
 .tern-port
 
+# EC2 key
+helloWorld.pem
+=======
 # EC2
 *.pem
+

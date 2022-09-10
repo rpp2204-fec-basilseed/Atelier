@@ -4,6 +4,7 @@ import Answer from './Answer.jsx';
 
 function Question(props) {
   const answersData = Object.values(props.answers);
+
   const sellerAnswer = answersData.filter(elem => elem.answerer_name === 'Seller');
 
   const nonSellerAnswers =
@@ -11,6 +12,7 @@ function Question(props) {
     .sort((a, b) => b.helpfulness - a.helpfulness);
 
   const answersModified = [...sellerAnswer, ...nonSellerAnswers];
+
   const shortAnswers = answersModified.slice(0, 2);
 
   const [ clicked, setClicked ] = useState(false);
@@ -22,15 +24,21 @@ function Question(props) {
   }
 
   return (<div>
-    <div className="question-body" style={{ fontWeight: "bold", display: "inline-flex", opacity: props.questionAdded ? "0.2" : "1", zIndex: "1" }}>Q: {props.questionBody}</div>
-    <Sidebar questionAdded={props.questionAdded} helpful={props.questionHelpfulness}
-    questionBody={props.questionBody} currentProductName={props.currentProductName}/>
+    <div className="question-body"
+    style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}>
+    Q: {props.questionBody}</div>
+    <Sidebar fetchData={props.fetchData} questionSubmitted={props.questionSubmitted}
+    questionAdded={props.questionAdded} helpful={props.questionHelpfulness} reported={props.questionReported}
+    questionBody={props.questionBody} currentProductName={props.currentProductName} questionID={props.questionID}/>
 
     { !clicked && shortAnswers.map((elem) => {
       return (
         <Answer
+          fetchData={props.fetchData}
+          questionSubmitted={props.questionSubmitted}
           questionAdded={props.questionAdded}
           key={elem.id}
+          answerID={elem.id}
           answerBody={elem.body}
           answerer={elem.answerer_name}
           answered_date={elem.date}
@@ -43,8 +51,11 @@ function Question(props) {
     { clicked && answersModified.map((elem) => {
       return (
         <Answer
+          fetchData={props.fetchData}
+          questionSubmitted={props.questionSubmitted}
           questionAdded={props.questionAdded}
           key={elem.id}
+          answerID={elem.id}
           answerBody={elem.body}
           answerer={elem.answerer_name}
           answered_date={elem.date}
@@ -56,10 +67,9 @@ function Question(props) {
 
     { answersModified.length > 2 &&
       <button onClick={ toggleAnswers } className="see-more-answers"
-      style={{ opacity: props.questionAdded ? "0.2" : "1", zIndex: "1", border: "none", backgroundColor: "white", color: "#671ddf", marginLeft:"9px", fontWeight: "bold", fontSize: "0.7rem" }}
+      style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}
       >{ clicked? "COLLAPSE ANSWERS" : "SEE MORE ANSWERS" }</button>
     }
-
   </div>);
 }
 

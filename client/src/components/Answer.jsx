@@ -1,56 +1,53 @@
 import React, { useState } from 'react';
 import { parseJSON } from 'date-fns';
 import moment from 'moment';
+const axios = require('axios');
 
 function Answer(props) {
-  const [ answers_votes, setAnswersVotes ] = useState(props.answerHelpfulness);
+  const [ answerHelpfulClicked, setAnswerHelpfulClicked ] = useState(false);
+  const [ answersVotes, setAnswersVotes ] = useState(props.answerHelpfulness);
 
   function handleAnswerHelpful() {
-    setAnswersVotes(answers_votes + 1);
+    const data = {
+      answer_id: props.answerID,
+    };
+
+    axios.put('/answerHelpful', data)
+    .then((response) => {
+      console.log('PUT request for answer helpfulness, log response.data here', response.data);
+      setAnswersVotes((prev) => {
+        return answersVotes + 1;
+      });
+      setAnswerHelpfulClicked(true);
+      props.fetchData();
+    })
+    .catch(err => console.log(err));
   }
 
-  return (<div style={{opacity: props.questionAdded ? "0.2" : "1", zIndex: "1"}}>
-    <span style={{ fontWeight: "bold", display: "inline-flex" }}>A: </span>
-    <div className="answer-body" style={{ display: "inline-flex", marginLeft: "5px" }}>
-      {props.answerBody}
+  const [ report, setReport ] = useState(false);
+  function handleReport() {
+    setReport(true);
+  }
+
+  return (<div className="answers-feed"
+    style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}>
+    <span className="answers-feed-A">A: </span>
+    <div className="answer-body">{props.answerBody}</div>
+    {props.photos.map((photo, i) => {
+      return (<div><br/><img key={i} alt="image" width={"50px"} src={photo} /></div>);
+    })}
+    <div className="answer-by">by<div className="answerer"
+    style={{fontWeight: props.answerer === 'Seller' ? "bold" : "none"}}>{props.answerer},</div>
     </div>
 
-    {/* TODO: props.photos */}
-    {/* <div className="photos"></div> */}
-
-    <br />
-    <div className="answerer" style={{
-      color: "#404040", fontSize: "0.8rem", marginLeft: "15px", display: "inline-flex",
-      fontWeight: props.answerer === 'Seller' ? "bold" : "none"
-      }}>by {props.answerer},
-    </div>
-
-    <div className="date" style={{
-      color: "#404040", fontSize: "0.8rem", display: "inline-flex", marginLeft: "3px"
-      }}> {moment(props.answered_date).format('LL')}
-    </div>
-
-    <span className="pipe-symbol" style={{  margin: "0 5px" }}>|</span>
-    <span  style={{ color: "#404040", fontSize: "0.8rem", marginLeft: "10px", display: "inline-flex"
-      }}>Helpful?
-    </span>
-
-    <div onClick={handleAnswerHelpful} style={{
-      textDecoration: "underline", color: "#404040", fontSize: "0.8rem", marginLeft: "15px",
-      display: "inline-flex" }} >Yes
-    </div>
-
-    <div style={{
-      margin: "0 3px", color: "#404040", fontSize: "0.8rem", marginLeft: "5px",
-      display: "inline-flex" }}>({answers_votes})
-    </div>
-
-    <span className="pipe-symbol" style={{  margin: "0 5px" }}>|</span>
-
-    <span style={{
-        textDecoration: "underline",
-        color: "#404040", fontSize: "0.8rem", marginLeft: "5px", display: "inline-flex"
-      }}>Report</span>
+    <div className="answer-date"> {moment(props.answered_date).format('LL')}</div>
+    <span className="pipe-symbol">|</span>
+    <span className="answer-helpful">Helpful?</span>
+    <button disabled={answerHelpfulClicked} className="answer-yes" onClick={handleAnswerHelpful}>Yes</button>
+    <div className="answer-votes">({answersVotes})</div>
+    <span className="pipe-symbol">|</span>
+    { !report && <span onClick={handleReport} className="answer-report">Report</span> }
+    { report && <span className="answer-reported">Reported</span>}
 
   </div>);
 }
