@@ -5,13 +5,14 @@ function Search(props) {
   const [input, setInput] = useState('');
 
   function handleInput(event) {
+    event.preventDefault();
     const value = event.target.value;
     setInput(value);
   }
 
   function search(event) {
-    props.onSearch(event);
     event.preventDefault();
+    props.onSearch(event);
   }
 
   return (

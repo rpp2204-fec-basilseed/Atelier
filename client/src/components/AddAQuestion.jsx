@@ -10,6 +10,7 @@ function AddAQuestion(props) {
   });
 
   function handleChange(event) {
+    // event.preventDefault();
     const { name, value } = event.target;
     setInputQuestion((prevVal) => {
       return {
@@ -20,39 +21,40 @@ function AddAQuestion(props) {
   }
 
   function submitQuestion(event){
-  const { content, nickname, email } = event;
-  const data = {
-    'body': content,
-    'name': nickname,
-    'email': email,
-    'product_id': props.currentProductID,
-  };
+    // inputQuestion
+    const { content, nickname, email } = inputQuestion;
+    const data = {
+      'body': content,
+      'name': nickname,
+      'email': email,
+      'product_id': props.currentProductID,
+    };
 
-  let config = {
-    headers: {
-      contentType: 'application/json'
+    let config = {
+      headers: {
+        contentType: 'application/json'
+      }
+    };
+    let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if(content.length === 0 || nickname.length === 0 || email.length === 0 || !email.match(validRegex)) {
+      alert(`You must enter the following:`);
+    } else {
+      axios.post('/addQuestion', data, config)
+      .then((response) => {
+        console.log(response);
+        setInputQuestion({
+          content: content,
+          nickname: nickname,
+          email: email,
+        });
+        props.handleQuestionSubmitted();
+        props.addAQuestion();
+        props.fetchData();
+      })
+      .catch(err => console.log(err));
     }
-  };
-  let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-  if(content.length === 0 || nickname.length === 0 || email.length === 0 || !email.match(validRegex)) {
-    alert(`You must enter the following:`);
-  } else {
-    axios.post('/addQuestion', data, config)
-    .then((response) => {
-      console.log(response);
-      setInputQuestion({
-        content: '',
-        nickname: '',
-        email: ''
-      });
-      props.handleQuestionSubmitted();
-      props.addAQuestion();
-      props.fetchData();
-    })
-    .catch(err => console.log(err));
   }
-}
 
   return (<div>
       <button className="button-add-a-question" onClick={props.addAQuestion}
@@ -79,10 +81,7 @@ function AddAQuestion(props) {
         <br />
         <span>For authentication reasons, you will not be emailed</span>
         <br />
-        <button onClick={(event) => {
-          submitQuestion(inputQuestion);
-          event.preventDefault();
-        }} className="submit-button">Submit question</button>
+        <button onClick={submitQuestion} className="submit-button">Submit question</button>
       </div>
     </div>
   );

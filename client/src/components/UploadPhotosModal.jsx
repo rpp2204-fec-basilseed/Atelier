@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FaCameraRetro } from 'react-icons/fa';
-import camoOnesie from '../images/camoOnesie.png';
 
 function UploadPhotosModal(props) {
+
   const [ uploaded, setUploaded ] = useState(false);
+
   function handleUploadAllPhotos() {
     setUploaded(true);
   }
 
-return (<div style={{
-  display: props.uploadPhotosButtonClicked ? "block" : "none",
-  opacity: uploaded ? "0" : "1"
-}} className="modal-upload-photos">
+return (<div
+  style={{
+    display: props.addAnswerButtonClicked && props.uploadPhotosButtonClicked && !uploaded ? "block" : "none"
+  }}
+  className="modal-upload-photos">
   <FaCameraRetro style={{marginTop: "100px"}}size={55} />
   <h3>Upload your photos</h3>
 

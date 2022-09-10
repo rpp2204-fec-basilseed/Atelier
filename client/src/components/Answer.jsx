@@ -33,11 +33,9 @@ function Answer(props) {
     style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}>
     <span className="answers-feed-A">A: </span>
     <div className="answer-body">{props.answerBody}</div>
-
-    {/* TODO: props.photos */}
-    {/* <div className="photos"></div> */}
-
-    <br />
+    {props.photos.map((photo, i) => {
+      return (<div><br/><img key={i} alt="image" width={"50px"} src={photo} /></div>);
+    })}
     <div className="answer-by">by<div className="answerer"
     style={{fontWeight: props.answerer === 'Seller' ? "bold" : "none"}}>{props.answerer},</div>
     </div>

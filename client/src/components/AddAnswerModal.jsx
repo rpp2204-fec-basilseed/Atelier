@@ -9,10 +9,11 @@ function AddAnswerModal(props) {
     content: '',
     nickname: '',
     email: '',
-    // photos: [],
+    photos: [],
   });
 
   function handleNewAnswer(event) {
+    // event.preventDefault();
     const { name, value } = event.target;
     setNewAnswer((prevVal) => {
       return {
@@ -22,15 +23,40 @@ function AddAnswerModal(props) {
     });
   }
 
+  // Working on it!!
+  const [ uploadPhotos, setUploadPhotos ] = useState(false);
+
+  function handleUploadPhotos () {
+    setUploadPhotos((prev) => {
+      return !prev;
+    });
+  }
+
+  const [ allPhotos, setPhotos ] = useState(newAnswerInput.photos);
+
+  function addPhotos(event) {
+    // event.preventDefault();
+    const image = event.target.files[0] || null;
+    if (image !== null) {
+      setPhotos((prev) => {
+        return [...prev, image];
+      });
+    }
+    console.log('log event.target.files[0]', event.target.files[0]);
+  }
+
   const [ submitted, setSubmitted ] = useState(false);
 
   function handleSubmit(event) {
-    const { content, nickname, email } = event;
+    // event.preventDefault();
+    const { content, nickname, email } = newAnswerInput;
+    const photosURL = allPhotos.map((photo) => URL.createObjectURL(photo));
     const data = {
       'body': content,
       'name': nickname,
       'email': email,
       'question_id': props.questionID,
+      'photos': photosURL,
     };
 
     let config = {
@@ -50,6 +76,7 @@ function AddAnswerModal(props) {
           content: '',
           nickname: '',
           email: '',
+          photos: [],
         });
         setSubmitted((prevVal) => {
           return !prevVal;
@@ -59,28 +86,14 @@ function AddAnswerModal(props) {
       })
       .catch(err => console.log(err));
     }
-  }
-
-  // Working on it!!
-  const [ uploadPhotos, setUploadPhotos ] = useState(false);
-  function handleUploadPhotos () {
-    setUploadPhotos(true);
-  }
-
-  // newAnswerInput.photos
-  const [ allPhotos, setPhotos ] = useState([]);
-  function addPhotos(event) {
-    const image = event.target.files[0] || null;
-    if (image !== null) {
-      setPhotos((prev) => {
-        return [...prev, image];
-      });
-    }
+    console.log('testing submit button!! if you see me, that means i am working.');
   }
 
   return (<div>
     <div className="modal-add-answer"
-    style={{ display: props.addAnswerButtonClicked && !submitted ? "block" : "none" }}>
+      style={{ display: props.addAnswerButtonClicked && !submitted ? "block" : "none" }}
+
+    >
 
       <h3 className="heading-submit-your-answer">Submit your Answer</h3>
       <span>{props.currentProductName}: {props.questionBody}</span>
@@ -106,14 +119,13 @@ function AddAnswerModal(props) {
       })}
 
       <div className="modal-actions">
-          <button type="button" onClick={(event) => {
-            event.preventDefault();
-            handleSubmit(newAnswerInput);
-          }} className="submit-answer-button">Submit answer</button>
+          <button type="button" onClick={handleSubmit} className="submit-answer-button">Submit answer</button>
       </div>
       </div>
 
-      <UploadPhotosModal className="modal-upload-photos" addPhotos={addPhotos} uploadPhotosButtonClicked={uploadPhotos} allPhotos={allPhotos}/>
+      <UploadPhotosModal className="modal-upload-photos" addPhotos={addPhotos}
+        addAnswerButtonClicked={props.addAnswerButtonClicked}
+        uploadPhotosButtonClicked={uploadPhotos} allPhotos={allPhotos}/>
     </div>
   );
 }

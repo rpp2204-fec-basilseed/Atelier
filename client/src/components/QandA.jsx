@@ -17,9 +17,8 @@ function QandA (props) {
     }).then((result) => {
         setAllQuestions(() => {
           const questionsSorted =
-          [...result.data.results].filter((elem) => Object.keys(elem.answers).length >= 0)
+          [...result.data.results].filter((elem) => Object.keys(elem.answers).length > 0)
           .sort((a, b) => b.question_helpfulness - a.question_helpfulness);
-          console.log('result.data.results', result.data.results);
           return questionsSorted;
         });
       })
@@ -31,6 +30,7 @@ function QandA (props) {
   }, []);
 
   function handleSearch(event) {
+    event.preventDefault();
     let searchText = event.target.value;
     if (searchText.length > 2) {
       setAllQuestions(allQuestions.filter((elem) => {
