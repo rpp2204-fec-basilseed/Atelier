@@ -41,7 +41,7 @@ class Index extends React.Component {
     // location.assign(n_url);
   }
 
-  renderStarRating(productId, rating) {
+  renderStarRating(rating) {
 
     const stars = [];
 

@@ -41,33 +41,41 @@ export default function UploadPhotos({ photos }) {
   };
 
   const RenderThumbnails = ({ thumbnails }) => {
-    console.log(thumbnails)
-    var counter = 0;
+
+    var totalPending = -1;
 
     if (thumbnails) {
+
       return thumbnails.map((photo) => {
+        totalPending++;
+        console.log(totalPending)
         return (
           <div
-            key={`"${counter}"`}
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              flexDirection: "row",
-            }}
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            flexDirection: "row",
+          }}
           >
             <img
               src={URL.createObjectURL(photo)}
               width="50px"
               height="50px"
-            ></img>
-            <MdRemoveCircle
-              key={files.length}
-              style={{ color: "red" }}
-              onClick={() => {
-                setPending(pending - 1);
-                setFiles(files.splice(0, pending - 1))
-              }}
-            />
+              ></img>
+            <p
+              className={`${totalPending}`}
+              style={{ backgroundColor: "red", color: "white", height: "10px", width: "10px", display: "flex", alignItems: "center", justifyContent: "center"}}
+              onClick={(e) => {
+                let updatedFiles = [];
+                for (let i = 0; i < files.length; i++) {
+                  if(i !== parseInt(e.target.attributes[0].nodeValue)) {
+                    updatedFiles.push(files[i]);
+                  }
+                }
+                setFiles(updatedFiles);
+              }}>
+                x
+            </p>
           </div>
         );
       });

@@ -17,7 +17,7 @@ export default function DisplayReview({
         style={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
         <div style={{ display: "flex" }}>
-          <div>{renderStarRating(null, review.rating)}</div>
+          <div>{renderStarRating(review.rating)}</div>
           <div style={{ paddingLeft: "200px" }}>
             {review.reviewer_name}, {moment(review.date).format("LL")}
           </div>

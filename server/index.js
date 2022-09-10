@@ -19,7 +19,7 @@ let port = process.env.PORT;
 
 let apiKey = process.env.API_KEY;
 
-app.get('/products', (req, res) => {
+app.get("/products", (req, res) => {
   let url = `${process.env.URL}/products`;
 
   if (req.query.p_id) {
@@ -31,23 +31,22 @@ app.get('/products', (req, res) => {
   }
 
   axios({
-    method: 'get',
+    method: "get",
     url: url,
     data: null,
     headers: {
-      Authorization: process.env.API_KEY
-    }
+      Authorization: process.env.API_KEY,
+    },
   })
     .then((products) => {
-      console.log('PRODUCTS: ' + products);
+      console.log("PRODUCTS: " + products);
       return res.status(200).send(products.data);
     })
     .catch((err) => {
       throw new Error(err);
       return res.status(500);
-    })
-})
-
+    });
+});
 
 app.get("/review", (req, res) => {
   if (req.query.productId) {
@@ -58,17 +57,17 @@ app.get("/review", (req, res) => {
         req.query.productId +
         "&count=200",
       headers: {
-        Authorization : apiKey
-      }
-    }
+        Authorization: apiKey,
+      },
+    };
 
     axios(config)
-    .then((reviewData) => {
-      res.send(reviewData.data.results);
-    })
-    .catch((error) => {
-      throw error;
-    })
+      .then((reviewData) => {
+        res.send(reviewData.data.results);
+      })
+      .catch((error) => {
+        throw error;
+      });
   }
 });
 
@@ -84,7 +83,7 @@ app.get("/meta", (req, res) => {
       },
     };
 
-      axios(config)
+    axios(config)
       .then((metaData) => {
         res.send(metaData.data);
       })
@@ -107,7 +106,7 @@ app.put("/helpful", (req, res) => {
       },
     };
 
-      axios(config)
+    axios(config)
       .then((response) => {
         res.send();
       })
@@ -131,8 +130,7 @@ app.put("/report", (req, res) => {
       },
     };
 
-
-      axios(config)
+    axios(config)
       .then((response) => {
         console.log(response);
         res.send();
@@ -143,7 +141,6 @@ app.put("/report", (req, res) => {
       });
   }
 });
-
 
 app.post("/addReview", (req, res) => {
   console.log(req.body);
@@ -162,10 +159,10 @@ app.post("/addReview", (req, res) => {
 
   axios(config)
     .then((res) => {
-      res.status(200).send()
+      res.status(200).send();
     })
     .catch((err) => {
-      console.log('Could not add review: ', err);
+      console.log("Could not add review: ", err);
     });
 
   // var config = {
@@ -188,66 +185,99 @@ app.post("/addReview", (req, res) => {
   //   })
 });
 
-app.get('/questions', (req, res) => {
+app.get("/rating", (req, res) => {
+
+  if (req.query.productId) {
+    let config = {
+      method: "get",
+      url:
+        "https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=" +
+        req.query.productId,
+      headers: {
+        Authorization: apiKey,
+      },
+    };
+
+    axios(config)
+      .then((metaData) => {
+
+        var overall = 0;
+        var totalRatings = 0;
+
+        for (let rating in metaData.data.ratings) {
+          totalRatings += parseInt(metaData.data.ratings[rating]);
+          overall += parseInt(metaData.data.ratings[rating]) * parseInt(rating);
+        }
+
+        overall = (overall / totalRatings).toFixed(1);
+
+        res.send({
+          rating: overall
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+});
+
+app.get("/questions", (req, res) => {
   let config = {
-    headers: { 'Authorization' : process.env.API_KEY },
+    headers: { Authorization: process.env.API_KEY },
     params: {
-      product_id: req.query.product_id
+      product_id: req.query.product_id,
     },
   };
-  axios.get(`${process.env.URL}/qa/questions`, config)
+  axios
+    .get(`${process.env.URL}/qa/questions`, config)
     .then((result) => {
       res.status(200).send(result.data);
     })
     .catch((err) => console.log(err));
 });
 
-app.post('/addQuestion', (req, res) => {
+app.post("/addQuestion", (req, res) => {
   axios({
-    method: 'post',
+    method: "post",
     url: `${process.env.URL}/qa/questions`,
     headers: {
       Authorization: process.env.API_KEY,
-      contentType: 'application/json'
+      contentType: "application/json",
     },
     data: {
       body: req.body.body,
-      name:  req.body.name,
+      name: req.body.name,
       email: req.body.email,
       product_id: req.body.product_id,
-    }
+    },
   })
     .then((response) => {
-      console.log('log req body', req.body);
+      console.log("log req body", req.body);
       res.status(201).send(response.data);
     })
-    .catch(error =>
-      console.log(error)
-    );
+    .catch((error) => console.log(error));
 });
 
-app.post('/addAnswer', (req, res) => {
+app.post("/addAnswer", (req, res) => {
   axios({
-    method: 'post',
+    method: "post",
     url: `${process.env.URL}/qa/questions/${req.body.question_id}/answers`,
     headers: {
       Authorization: process.env.API_KEY,
-      contentType: 'application/json'
+      contentType: "application/json",
     },
     data: {
       body: req.body.body,
-      name:  req.body.name,
+      name: req.body.name,
       email: req.body.email,
       photos: req.body.photos,
-    }
+    },
   })
     .then((response) => {
-      console.log('post an answer---log req body', req.body);
+      console.log("post an answer---log req body", req.body);
       res.status(201).send(response.data);
     })
-    .catch(error =>
-      console.log(error)
-    );
+    .catch((error) => console.log(error));
 });
 
 app.post("/cart", (req, res) => {
@@ -275,30 +305,29 @@ app.post("/cart", (req, res) => {
     });
 });
 
-app.post('/interactions', (req, res) => {
+app.post("/interactions", (req, res) => {
   var config = {
-    method: 'post',
-    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/interactions',
+    method: "post",
+    url: "https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/interactions",
     headers: {
-      'Authorization': process.env.API_KEY,
-      'Content-Type': 'application/json'
+      Authorization: process.env.API_KEY,
+      "Content-Type": "application/json",
     },
-    data : req.body
+    data: req.body,
   };
 
-  console.log('WE INTERACTING');
+  console.log("WE INTERACTING");
 
   axios(config)
-  .then(function (response) {
-    // console.log(JSON.stringify(response.data));
-    res.sendStatus(response.status);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-
+    .then(function (response) {
+      // console.log(JSON.stringify(response.data));
+      res.sendStatus(response.status);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 });
 
-app.listen(port, function() {
+app.listen(port, function () {
   console.log(`listening on port ${port}`);
 });
