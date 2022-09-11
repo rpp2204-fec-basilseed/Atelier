@@ -97,7 +97,7 @@ class Overview extends React.Component {
     var currProdSizes = <div>Sizes</div>;
     var currProdCarousel = <div>Carousel</div>
     if (this.state.styleData.length !== 0) {
-      currProdImage = <img id="mainImg" src={this.state.selectedPhoto} alt="main product photo" />;
+      currProdImage = <img id="mainImg" src={this.state.selectedPhoto} height="475" width="360" alt="main product photo" />;
       currProdCategory = <h2 id="prodCategory">{this.state.prodData.category}</h2>
       currProdName = <h1 id="prodName">{this.state.prodData.name}</h1>
       currProdStyle = <h2 id="prodStyle">Style > {this.state.styleData[this.state.selectedStyle].name}</h2>
