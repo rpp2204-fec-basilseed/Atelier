@@ -10,6 +10,7 @@ function AddAQuestion(props) {
   });
 
   function handleChange(event) {
+    // event.preventDefault();
     const { name, value } = event.target;
     setInputQuestion((prevVal) => {
       return {
@@ -19,37 +20,56 @@ function AddAQuestion(props) {
     });
   }
 
-  function handleSubmit(event){
-    axios.post('/questions', );
-  }
-  // once the user clicks submit, it will check the input for validation.
-    // If input is invalid, send a warning message and prevent submitting.
-    // If input is valid, form will be submitted and posted, the Modal window will disappear
-       // and Modal container's opacity will go back to "1".
+  function submitQuestion(event){
+    // inputQuestion
+    const { content, nickname, email } = inputQuestion;
+    const data = {
+      'body': content,
+      'name': nickname,
+      'email': email,
+      'product_id': props.currentProductID,
+    };
 
-  return (<div className="modal-add-a-question">
-      <button className="toggle-button" id="add-a-question-toggle-button" onClick={props.addAQuestion} style={{
-        lineHeight: "3.5",
-        fontWeight: "bold",
-        height: "3rem",
-        backgroundColor: "white",
-        marginTop: "20px",
-        border: "1px solid grey",
-        opacity: props.questionAdded ? "0.2" : "1"
-        }}>ADD A QUESTION +
+    let config = {
+      headers: {
+        contentType: 'application/json'
+      }
+    };
+    let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if(content.length === 0 || nickname.length === 0 || email.length === 0 || !email.match(validRegex)) {
+      alert(`You must enter the following:`);
+    } else {
+      axios.post('/addQuestion', data, config)
+      .then((response) => {
+        console.log(response);
+        setInputQuestion({
+          content: content,
+          nickname: nickname,
+          email: email,
+        });
+        props.handleQuestionSubmitted();
+        props.addAQuestion();
+        props.fetchData();
+      })
+      .catch(err => console.log(err));
+    }
+  }
+
+  return (<div>
+      <button className="button-add-a-question" onClick={props.addAQuestion}
+        style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}>
+        ADD A QUESTION +
       </button>
 
-      <div className="modal" id="modal" style={{
-        display: props.questionAdded ? "block" : "none",
-        position: "fixed", zIndex: "2", opacity:"1", border: "solid grey",
-        top: "50%",left: "50%",transform: "translate(-50%, -50%)", float: "left", width: "40%",
-        backgroundColor: "ivory",
-        marginLeft: "5rem", padding: "5px 20px"}} >
-        <h3 style={{ marginBottom: "0" }}>Ask Your Question</h3>
+      <div className="modal-add-a-question" style={{
+        display: !props.questionAdded ? "none" : !props.questionSubmitted ? "block" : "none" }} >
+        <h3 className="modal-ask-your-question-field">Ask Your Question</h3>
         <span>About the {props.currentProductName}</span>
         <br />
         <span>Your Question *</span>
-        <input onChange={handleChange} value={inputQuestion.content} name="content" style={{ width: "98%", height: "15rem", margin: "5px 5px" }} type="text"
+        <input onChange={handleChange} className="modal-question-input" value={inputQuestion.content}
+        name="content" type="text"
         placeholder="Why did you like the product or not?"></input>
         <span>What is your nickname *</span>
         <input onChange={handleChange} value={inputQuestion.nickname} name="nickname" type="text" placeholder="Example: jackson11!"></input>
@@ -61,12 +81,10 @@ function AddAQuestion(props) {
         <br />
         <span>For authentication reasons, you will not be emailed</span>
         <br />
-        <button className="submit-button">Submit question</button>
-        {/* onClick={handleSubmit} */}
+        <button onClick={submitQuestion} className="submit-button">Submit question</button>
       </div>
     </div>
   );
 }
 
 export default AddAQuestion;
-

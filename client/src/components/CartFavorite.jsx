@@ -11,8 +11,6 @@ class CartFavorite extends React.Component {
   }
 
   handleAddToBag(e) {
-    console.log('Adding SKU to cart: ' + this.props.curr_sku_id);
-
     var data = JSON.stringify({
       "sku_id": this.props.curr_sku_id
     });

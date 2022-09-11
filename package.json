@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "server/index.js",
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "setupFiles": [
+      "/Users/jewellwilson/Desktop/hackreactor-rpp-2204/Atelier/client/src/components/__tests__/settings/localStorageMock.js"
+    ]
   },
   "scripts": {
     "server-dev": "npx nodemon --watch server server/index.js",
@@ -13,7 +16,7 @@
     "start": "node server/index.js",
     "test": "jest",
     "test-jsdom": "jest --env=jsdom",
-    "test-related": "npm test --relatedItemsAndOutfits.test.js --coverage",
+    "test-related": "npm test -- related-test.js --coverage",
     "test-overview": "npm test -- overview-test.js --coverage"
   },
   "dependencies": {

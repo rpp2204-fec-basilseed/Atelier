@@ -39,7 +39,6 @@ class OutfitCard extends React.Component {
   getItemStyles () {
     axios.get('/products', {params: { p_id: this.props.p_id, endpoint: 'styles' }})
       .then((res) => {
-        console.log(res.data)
         this.setState({
           price: res.data.results[0].original_price,
           salePrice: res.data.results[0].sale_price,
