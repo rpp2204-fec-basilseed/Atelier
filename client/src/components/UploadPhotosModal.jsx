@@ -19,7 +19,7 @@ return (<div
   <h3>Upload your photos</h3>
 
   {props.allPhotos.length > 0 && props.allPhotos.map((photo, i) => {
-    return <img key={i} alt={photo.name} width={"50px"} src={URL.createObjectURL(photo)}/>
+    return <img key={i} alt={photo.name} width={"50px"} height={"50px"} src={URL.createObjectURL(photo)}/>
   })}
 
   <input

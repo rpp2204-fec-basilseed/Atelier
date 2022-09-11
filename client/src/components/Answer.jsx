@@ -34,8 +34,9 @@ function Answer(props) {
     <span className="answers-feed-A">A: </span>
     <div className="answer-body">{props.answerBody}</div>
     {props.photos.map((photo, i) => {
-      return (<div><br/><img key={i} alt="image" width={"50px"} src={photo} /></div>);
+      return (<div key={i}><br/><img key={i} alt="image" width={"50px"} height={"50px"} src={photo} /></div>);
     })}
+    <br />
     <div className="answer-by">by<div className="answerer"
     style={{fontWeight: props.answerer === 'Seller' ? "bold" : "none"}}>{props.answerer},</div>
     </div>

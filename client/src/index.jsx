@@ -59,18 +59,6 @@ class Index extends React.Component {
     });
   }
 
-  componentDidMount() {
-    // console.log('a', window.location.pathname.split('/')[1])
-    // let u = parseInt(window.location.pathname.split('/')[1]);
-    // console.log('u', u)
-    // this.setState({
-    //   curr_product_id: u
-    // })
-    // setTimeout(() => {
-    //   console.log('new state', this.state)
-    // }, "1000")
-  }
-
   render() {
     const WrappedOverview = clickWrapper(Overview);
     const WrappedQandA = clickWrapper(QandA);
