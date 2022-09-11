@@ -22,7 +22,6 @@ class Overview extends React.Component {
   }
 
   handleStyleChange(style) {
-    console.log('STYLE CHANGE: ' + style);
     this.setState({
       selectedStyle: style,
       selectedSKU: '',
@@ -31,7 +30,6 @@ class Overview extends React.Component {
   }
 
   handleSizeChange(e) {
-    console.log('SIZE CHANGE SKU: ' + e.target.value);
     this.setState({selectedSKU: e.target.value});
   }
 
