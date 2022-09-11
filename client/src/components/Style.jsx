@@ -8,7 +8,9 @@ function Style(props){
   }
 
   return (
-    <img className="style" src={props.thumbURL} alt={props.name} onClick={handleStyleChange} />
+    <>
+      <img className="style" src={props.thumbURL} alt={props.name} onClick={handleStyleChange} />
+    </>
   );
 
 }

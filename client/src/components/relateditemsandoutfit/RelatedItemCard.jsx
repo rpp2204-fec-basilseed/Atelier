@@ -42,11 +42,10 @@ class RelatedItemCard extends React.Component {
   getItemStyles () {
     axios.get('/products', {params: { p_id: this.props.p_id, endpoint: 'styles' }})
       .then((res) => {
-        console.log(res.data)
         this.setState({
           price: res.data.results[0].original_price,
           salePrice: res.data.results[0].sale_price,
-          img: res.data.results[0].photos[0].url
+          img: res.data.results[0].photos[0].url ? res.data.results[0].photos[0].url : '/No_image_available.svg.png'
         });
       })
       .catch((err) => {
@@ -70,10 +69,10 @@ class RelatedItemCard extends React.Component {
   render() {
     return (
       <>
-        <div className="related-items card">
+        <div className="related-items card" data-testid="r-card">
           <div className="card-img-container">
             <span onClick={this.openModal} className='related-products-tracker card-icon'><FaRegStar size={32}/></span>
-            <img className="related-img" src={this.state.img}  alt="picture of item" />
+            <img onClick={() => this.props.updateCurrentProduct(this.props.p_id)} className="related-img" src={this.state.img}  alt={this.state.name}/>
           </div>
           <div className="card-body-container">
             <h4 className="card-category">{this.state.category}</h4>

@@ -8,7 +8,7 @@ import CartFavorite from '../CartFavorite.jsx';
 import ImgCarousel from '../ImgCarousel.jsx';
 import ImgSlide from '../ImgSlide.jsx';
 
-afterEach(cleanup);
+// afterEach(cleanup);
 
 test("Style should be rendered", () => {
   render(<Overview />);
@@ -41,4 +41,3 @@ test("ImgSlide should be rendered", () => {
   render(<ImgSlide />);
   expect(screen.queryByText(/ImgSlide/i)).toBeInTheDocument();
 });
-
