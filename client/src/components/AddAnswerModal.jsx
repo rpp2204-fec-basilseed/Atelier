@@ -54,6 +54,9 @@ function AddAnswerModal(props) {
       'question_id': props.questionID,
       'photos': photosURL,
     };
+    // working on it!
+    // 'photos': photosURL,
+
 
     let config = {
       headers: {
@@ -74,6 +77,7 @@ function AddAnswerModal(props) {
           email: email,
           photos: photosURL,
         });
+
         setSubmitted((prevVal) => {
           return !prevVal;
         });

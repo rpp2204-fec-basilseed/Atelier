@@ -49,6 +49,7 @@ function Answer(props) {
     <span className="pipe-symbol">|</span>
     { !report && <span onClick={handleReport} className="answer-report">Report</span> }
     { report && <span className="answer-reported">Reported</span>}
+    <hr />
 
   </div>);
 }
