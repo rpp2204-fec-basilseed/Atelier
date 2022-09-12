@@ -20,7 +20,7 @@ export default function ReviewScore ({ recommended, ratings, starRender }) {
     {(overall / totalRatings).toFixed(1)}
   <p style={{fontSize: "30px", margin: "10px 20px 5px 15px"}}>{starRender(overall / totalRatings)}</p>
   </div>
-  <p>{Math.floor(totalTrue / totalRecommends * 100)}% of reviews recommend this product{starRender(score)}</p>
+  <p>{Math.floor(totalTrue / totalRecommends * 100)}% of reviews recommend this product</p>
   </>
   )
 };
