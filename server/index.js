@@ -6,6 +6,9 @@ const cors = require("cors");
 const axios = require("axios");
 const compression = require('compression');
 const querystring = require('querystring');
+// const upload = require('./multer');
+// const cloudinary = require('./cloudinary');
+// const fs = require('fs');
 
 const app = express();
 // Compress all HTTP responses
@@ -169,6 +172,33 @@ app.post("/addReview", (req, res) => {
 
   res.send("okay");
 });
+
+// Q & A widget
+
+// working on it: upload pictures to cloudinary
+// app.use('/upload-images', upload.array('image'), async(req, res) => {
+//   const uploader = async (path) => await cloudinary.uploads(path, 'Images');
+//   if(req.method === 'POST') {
+//     const urls = [];
+//     const files = req.files;
+
+//     for (const file of files) {
+//       const {path} = file;
+//       const newPath = await uploader(path);
+//       urls.push(newPath);
+//       fs.unlinkSync(path);
+//     }
+
+//     res.status(200).json({
+//       message: 'Images Uploaded Successfully',
+//       data: urls
+//     });
+//   } else {
+//     res.status(405).json({
+//       err: 'Images not uploaded successfully'
+//     });
+//   }
+// });
 
 app.get('/questions', (req, res) => {
   let config = {
