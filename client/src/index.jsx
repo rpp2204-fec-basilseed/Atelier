@@ -9,6 +9,7 @@ import QandA from "./components/QandA.jsx";
 import RelatedItemsAndOutfits from "./components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx";
 import clickWrapper from "./ClickWrapper.jsx";
 
+
 class Index extends React.Component {
   constructor(props) {
     super(props);
@@ -42,13 +43,14 @@ class Index extends React.Component {
   }
 
   renderStarRating(rating) {
+
     const stars = [];
 
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
         stars.push(<FaStar key={i} />);
       } else if (rating < i && rating > i - 1) {
-        stars.push(<FaStarHalfAlt key={i} />)
+        stars.push(<FaStarHalfAlt className="reviews-halfstar" key={i} />)
       } else {
         stars.push(<FaRegStar key={i} />);
       }
@@ -58,6 +60,7 @@ class Index extends React.Component {
       return star;
     });
   }
+
 
   componentDidMount() {
     // console.log('a', window.location.pathname.split('/')[1])

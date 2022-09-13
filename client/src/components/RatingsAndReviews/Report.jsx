@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 const axios = require("axios");
 
 function reportReview(id) {
@@ -10,9 +10,12 @@ function reportReview(id) {
 }
 
 export default function Report({ review_id }) {
+
+  const [reported, setReported] = useState(false);
   return (
     <div
       id={review_id}
+      style={{textDecoration: "underline"}}
       onClick={(e) => {
         axios({
           method: "put",
@@ -22,6 +25,7 @@ export default function Report({ review_id }) {
           },
         })
           .then(() => {
+            setReported(true)
             return;
           })
           .catch((error) => {
@@ -29,7 +33,7 @@ export default function Report({ review_id }) {
           });
       }}
     >
-      Report
+      {reported ? 'Reported Successfully' : 'Report'}
     </div>
   );
 }
