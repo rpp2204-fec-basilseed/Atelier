@@ -165,24 +165,6 @@ app.post("/addReview", (req, res) => {
       console.log("Could not add review: ", err);
     });
 
-  // var config = {
-  //   method: 'post',
-  //   url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
-  //   headers: {
-  //     'Authorization': apiKey,
-  //     'Content-Type': 'text/plain'
-  //   },
-  //   data : data
-  // };
-
-  // axios(config)
-  // .then(function (response) {
-  //   console.log(JSON.stringify(response.data));
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
-  //   })
 });
 
 app.get("/rating", (req, res) => {
@@ -314,11 +296,8 @@ app.post("/interactions", (req, res) => {
     data: req.body,
   };
 
-  console.log("WE INTERACTING");
-
   axios(config)
     .then(function (response) {
-      // console.log(JSON.stringify(response.data));
       res.sendStatus(response.status);
     })
     .catch(function (error) {
