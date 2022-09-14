@@ -10,7 +10,6 @@ function AddAQuestion(props) {
   });
 
   function handleChange(event) {
-    // event.preventDefault();
     const { name, value } = event.target;
     setInputQuestion((prevVal) => {
       return {
@@ -21,7 +20,6 @@ function AddAQuestion(props) {
   }
 
   function submitQuestion(event){
-    // inputQuestion
     const { content, nickname, email } = inputQuestion;
     const data = {
       'body': content,

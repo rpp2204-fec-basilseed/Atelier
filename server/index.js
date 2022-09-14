@@ -5,10 +5,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const axios = require("axios");
 const compression = require('compression');
-
-// axios.defaults.baseURL = process.env.URL;
-// const baseURL = process.env.URL;
-// axios.default.headers.common['Authorization'] = process.env.API_KEY;
+const querystring = require('querystring');
+// const upload = require('./multer');
+// const cloudinary = require('./cloudinary');
+// const fs = require('fs');
 
 const app = express();
 // Compress all HTTP responses
@@ -164,25 +164,7 @@ app.post("/addReview", (req, res) => {
     .catch((err) => {
       console.log("Could not add review: ", err);
     });
-
-  // var config = {
-  //   method: 'post',
-  //   url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
-  //   headers: {
-  //     'Authorization': apiKey,
-  //     'Content-Type': 'text/plain'
-  //   },
-  //   data : data
-  // };
-
-  // axios(config)
-  // .then(function (response) {
-  //   console.log(JSON.stringify(response.data));
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
-  //   })
+  res.send("okay");
 });
 
 app.get("/rating", (req, res) => {
@@ -276,6 +258,51 @@ app.post("/addAnswer", (req, res) => {
       res.status(201).send(response.data);
     })
     .catch((error) => console.log(error));
+});
+
+app.put('/reportQuestion', (req, res) => {
+  axios({
+    method: 'put',
+    url: `${process.env.URL}/qa/questions/${req.body.question_id}/report`,
+    headers: {
+      Authorization: process.env.API_KEY,
+      contentType: 'application/json'
+    },
+  })
+    .then((response) => {
+      res.status(204).send(response.data);
+    })
+    .catch(err => console.log(err));
+});
+
+app.put('/questionHelpful', (req, res) => {
+  axios({
+    method: 'put',
+    url: `${process.env.URL}/qa/questions/${req.body.question_id}/helpful`,
+    headers: {
+      Authorization: process.env.API_KEY,
+      contentType: 'application/json'
+    },
+  })
+    .then((response) => {
+      res.status(204).send(response.data);
+    })
+    .catch(err => console.log(err));
+});
+
+app.put('/answerHelpful', (req, res) => {
+  axios({
+    method: 'put',
+    url: `${process.env.URL}/qa/answers/${req.body.answer_id}/helpful`,
+    headers: {
+      Authorization: process.env.API_KEY,
+      contentType: 'application/json'
+    },
+  })
+    .then((response) => {
+      res.status(204).send(response.data);
+    })
+    .catch(err => console.log(err));
 });
 
 app.post("/cart", (req, res) => {

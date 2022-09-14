@@ -13,7 +13,6 @@ function AddAnswerModal(props) {
   });
 
   function handleNewAnswer(event) {
-    // event.preventDefault();
     const { name, value } = event.target;
     setNewAnswer((prevVal) => {
       return {
@@ -23,7 +22,6 @@ function AddAnswerModal(props) {
     });
   }
 
-  // Working on it!!
   const [ uploadPhotos, setUploadPhotos ] = useState(false);
 
   function handleUploadPhotos () {
@@ -35,7 +33,6 @@ function AddAnswerModal(props) {
   const [ allPhotos, setPhotos ] = useState(newAnswerInput.photos);
 
   function addPhotos(event) {
-    // event.preventDefault();
     const image = event.target.files[0] || null;
     if (image !== null) {
       setPhotos((prev) => {
@@ -48,7 +45,6 @@ function AddAnswerModal(props) {
   const [ submitted, setSubmitted ] = useState(false);
 
   function handleSubmit(event) {
-    // event.preventDefault();
     const { content, nickname, email } = newAnswerInput;
     const photosURL = allPhotos.map((photo) => URL.createObjectURL(photo));
     const data = {
@@ -58,6 +54,9 @@ function AddAnswerModal(props) {
       'question_id': props.questionID,
       'photos': photosURL,
     };
+    // working on it!
+    // 'photos': photosURL,
+
 
     let config = {
       headers: {
@@ -73,11 +72,12 @@ function AddAnswerModal(props) {
       .then((response) => {
         console.log(response);
         setNewAnswer({
-          content: '',
-          nickname: '',
-          email: '',
-          photos: [],
+          content: content,
+          nickname: nickname,
+          email: email,
+          photos: photosURL,
         });
+
         setSubmitted((prevVal) => {
           return !prevVal;
         });
