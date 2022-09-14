@@ -17,7 +17,7 @@ class Index extends React.Component {
     this.state = {
       curr_product_id: 71719,
       curr_product_name: "Slacker's Slacks",
-      url_path: "/71719"
+      url_path: "/71719",
     };
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
@@ -93,6 +93,7 @@ class Index extends React.Component {
               value: "Double Stitch",
             },
           ]}
+          renderStarRating={this.renderStarRating}
         />
       </div>
     );

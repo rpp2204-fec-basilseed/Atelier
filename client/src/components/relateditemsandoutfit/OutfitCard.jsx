@@ -81,7 +81,7 @@ class OutfitCard extends React.Component {
         <h3 className="card-title">{this.state.name}</h3>
         <h4 className="card-price">${this.state.salePrice ? this.state.salePrice : this.state.price}</h4>
         <div className="rating-container">
-          <div className="rating">{this.state.stars}</div>
+          <div className="rating">{!isNaN(this.state.stars) ? this.props.renderStarRating(this.state.stars) : <span className="no-reviews">There are no reviews yet.</span>}</div>
         </div>
       </div>
     </div>
