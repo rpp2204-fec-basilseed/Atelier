@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "main": "server/index.js",
   "jest": {
-    "testEnvironment": "jsdom",
-    "setupFiles": [
-      "/Users/jewellwilson/Desktop/hackreactor-rpp-2204/Atelier/client/src/components/__tests__/settings/localStorageMock.js"
-    ]
+    "testEnvironment": "jsdom"
   },
   "scripts": {
     "server-dev": "npx nodemon --watch server server/index.js",
@@ -14,10 +11,11 @@
     "react-dev": "webpack --watch",
     "build": "npx webpack",
     "start": "node server/index.js",
-    "test": "jest",
+    "test": "jest --coverage",
     "test-jsdom": "jest --env=jsdom",
     "test-related": "npm test -- related-test.js --coverage",
-    "test-overview": "npm test -- overview-test.js --coverage"
+    "test-overview": "npm test -- overview-test.js --coverage",
+    "test-ratings": "npm test --Ratings.test.js --coverage"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.2",

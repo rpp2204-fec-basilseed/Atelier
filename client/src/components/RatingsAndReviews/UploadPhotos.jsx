@@ -39,39 +39,47 @@ export default function UploadPhotos({ photos }) {
   };
 
   const RenderThumbnails = ({ thumbnails }) => {
-
     var totalPending = -1;
 
     if (thumbnails) {
-
       return thumbnails.map((photo) => {
         totalPending++;
         return (
           <div
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-            flexDirection: "row",
-          }}
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              flexDirection: "row",
+            }}
           >
             <img
               src={URL.createObjectURL(photo)}
               width="50px"
               height="50px"
-              ></img>
+            ></img>
             <p
               className={`${totalPending}`}
-              style={{ backgroundColor: "red", color: "white", height: "10px", width: "10px", display: "flex", alignItems: "center", justifyContent: "center"}}
+              style={{
+                backgroundColor: "red",
+                color: "white",
+                height: "10px",
+                width: "10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
               onClick={(e) => {
                 let updatedFiles = [];
                 for (let i = 0; i < files.length; i++) {
-                  if(i !== parseInt(e.target.attributes[0].nodeValue)) {
+                  if (i !== parseInt(e.target.attributes[0].nodeValue)) {
                     updatedFiles.push(files[i]);
                   }
                 }
-                setFiles(updatedFiles);
-              }}>
-                x
+                setFiles(updatedFiles)
+                setPending(pending - 1)
+              }}
+            >
+              x
             </p>
           </div>
         );
@@ -101,22 +109,24 @@ export default function UploadPhotos({ photos }) {
           padding: "10px",
         }}
       >
-        <input
-          type="file"
-          name="photo"
-          style={{
-            paddingRight: "0px",
-            width: "200px",
-            display: "flex",
-            flexDirection: "row",
-          }}
-          onChange={(e) => {
-            if (e.target.files) {
-              setFiles(files.concat(e.target.files[0]));
-              setPending(pending + 1);
-            }
-          }}
-        ></input>
+        {pending <= 4 ? (
+          <input
+            type="file"
+            name="photo"
+            style={{
+              paddingRight: "0px",
+              width: "200px",
+              display: "flex",
+              flexDirection: "row",
+            }}
+            onChange={(e) => {
+              if (e.target.files) {
+                setFiles(files.concat(e.target.files[0]));
+                setPending(pending + 1);
+              }
+            }}
+          ></input>
+        ) : null}
         <div
           style={{
             fontSize: "12px",

@@ -4,8 +4,9 @@ import DisplayReview from "./DisplayReview.jsx";
 import RatingBar from "./RatingBar.jsx";
 import ReviewScore from "./ReviewScore.jsx";
 const axios = require("axios");
+// import Star from "./CustomStar.jsx";
 
-export default function Reviews({ currProduct, renderStarRating }) {
+export default function Reviews({ currProduct, renderStarRating, productName, numReviews }) {
   const starPercentage = (rating, total) => {
     let totalReviews = 0;
 
@@ -215,6 +216,7 @@ export default function Reviews({ currProduct, renderStarRating }) {
                 toggleShowReview={toggleShowReview}
                 metaData={metaData}
                 getReviews={getReviews}
+                productName={productName}
               />
             ) : null}
           </div>

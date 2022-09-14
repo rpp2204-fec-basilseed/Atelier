@@ -17,6 +17,7 @@ class Index extends React.Component {
     this.state = {
       curr_product_id: 71701,
       curr_product_name: "Slacker's Slacks",
+      numReviews: 0
     };
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
@@ -82,19 +83,21 @@ class Index extends React.Component {
 
     return (
       <div>
-        <WrappedOverview
+        {/* <WrappedOverview
           curr_product_id={this.state.curr_product_id}
           renderStars={this.renderStarRating}
         />
         <WrappedQandA
           curr_product_id={this.state.curr_product_id}
           curr_product_name={this.state.curr_product_name}
-        />
+        /> */}
           <WrappedReview
             currProduct={this.state.curr_product_id}
             renderStarRating={this.renderStarRating}
+            productName={this.state.curr_product_name}
+            numReviews={this.state.numReviews}
           />
-        <WrappedRelatedItemsAndOutfits
+        {/* <WrappedRelatedItemsAndOutfits
           updateCurrentProduct={this.updateCurrentProduct}
           p_id={this.state.curr_product_id}
           currentProduct={this.state.curr_product_name}
@@ -112,7 +115,7 @@ class Index extends React.Component {
               value: "Double Stitch",
             },
           ]}
-        />
+        /> */}
       </div>
     );
   }

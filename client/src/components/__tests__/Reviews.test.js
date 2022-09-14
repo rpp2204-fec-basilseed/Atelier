@@ -2,6 +2,8 @@ import { render, screen } from "@testing-library/react";
 import Reviews from "../RatingsAndReviews/Reviews";
 import DisplayReview from "../RatingsAndReviews/DisplayReview";
 import AddReview from "../RatingsAndReviews/AddReview";
+import RatingBar from "../RatingsAndReviews/RatingBar";
+import ReviewScore from "../RatingsAndReviews/ReviewScore";
 
 it("should render Reviews component", () => {
   render(<Reviews />);
@@ -72,3 +74,62 @@ it("should render an add review component", () => {
 
   render(<AddReview metaData={data} />);
 });
+
+it("should render a rating bar based on metadata", () => {
+  const metaData = {
+    Size: {
+      id: 240595,
+      value: "2.8627450980392157",
+    },
+    Width: {
+      id: 240596,
+      value: "2.6595744680851064",
+    },
+    Comfort: {
+      id: 240597,
+      value: "3.1666666666666667",
+    },
+    Quality: {
+      id: 240598,
+      value: "3.4807692307692308",
+    },
+  };
+
+  render(<RatingBar metaData={metaData} />);
+});
+
+it("should render rating info when proper data is passed in", () => {
+  const data = {
+      "product_id": "71701",
+      "ratings": {
+          "1": "8",
+          "2": "16",
+          "3": "23",
+          "4": "14",
+          "5": "25"
+      },
+      "recommended": {
+          "false": "40",
+          "true": "46"
+      },
+      "characteristics": {
+          "Size": {
+              "id": 240595,
+              "value": "2.8627450980392157"
+          },
+          "Width": {
+              "id": 240596,
+              "value": "2.6595744680851064"
+          },
+          "Comfort": {
+              "id": 240597,
+              "value": "3.1666666666666667"
+          },
+          "Quality": {
+              "id": 240598,
+              "value": "3.4807692307692308"
+          }
+      }
+  }
+  render(<ReviewScore recommended={data.recommended} ratings={data.ratings} starRender={() => {}}/>);
+})
