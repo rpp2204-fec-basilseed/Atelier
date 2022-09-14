@@ -169,7 +169,7 @@ app.post("/addReview", (req, res) => {
     .catch((err) => {
       console.log("Could not add review: ", err);
     });
-  res.send("okay");
+
 });
 
 app.get("/rating", (req, res) => {
@@ -346,11 +346,8 @@ app.post("/interactions", (req, res) => {
     data: req.body,
   };
 
-  console.log("WE INTERACTING");
-
   axios(config)
     .then(function (response) {
-      // console.log(JSON.stringify(response.data));
       res.sendStatus(response.status);
     })
     .catch(function (error) {
