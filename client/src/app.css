@@ -274,6 +274,8 @@ td {
   margin: 0 15rem;
   padding: 50px 0;
   line-height: 2;
+  max-height: 700px;
+  overflow-y: auto;
 }
 
 .QandA-heading {
@@ -281,7 +283,7 @@ td {
 }
 
 .QandA-search-box {
-  width: 100%;
+  width: 98%;
   height: 3rem;
   margin: 15px 0;
   z-index: 1;
@@ -337,6 +339,8 @@ td {
   font-weight: bold;
   display: inline-flex;
   z-index: 1;
+  align-items: left;
+  justify-content: space-evenly;
 }
 
 .see-more-answers {
@@ -351,7 +355,11 @@ td {
 
 .sidebar {
   font-size: 0.7rem;
-  display: inline-flex;
+  display: flex;
+  align-items: right;
+  justify-content: right;
+  flex-wrap: wrap;
+  padding-right: 10px;
 }
 
 .sidebar-helpful {
@@ -385,6 +393,11 @@ td {
   padding-left: 10px;
   text-decoration: underline;
   text-align: right;
+}
+
+.feed-container {
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .answers-feed {
@@ -500,4 +513,8 @@ td {
   margin-left: -10rem;
   padding: 5px 20px;
   text-align: center;
+}
+
+hr {
+  border-top: 1px dotted black;
 }
