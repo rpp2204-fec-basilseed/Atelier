@@ -326,6 +326,10 @@ app.post("/interactions", (req, res) => {
     });
 });
 
+app.get("/[0-9]{0,5}$", (req, res) => {
+  res.sendFile('index.html', { root: './client/dist/' })
+})
+
 app.listen(port, function () {
   console.log(`listening on port ${port}`);
 });
