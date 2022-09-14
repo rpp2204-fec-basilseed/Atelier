@@ -9,46 +9,37 @@ import QandA from "./components/QandA.jsx";
 import RelatedItemsAndOutfits from "./components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx";
 import clickWrapper from "./ClickWrapper.jsx";
 
+
 class Index extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      curr_product_id: 71701,
+      curr_product_id: 71719,
       curr_product_name: "Slacker's Slacks",
+      url_path: "/71719",
     };
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
   }
 
-  // updateCurrentProduct(e) {
-  //   this.setState({curr_product_id: e.event.product_id});
-  // };
-
   updateCurrentProduct(p_id) {
-    // let n_url = this.state.c_url.slice(0, -5) + p_id;
-    // console.log('pid', p_id)
-    console.log("o state", this.state.curr_product_id);
     this.setState({
-      // c_url: n_url,
+      url_path: p_id,
       curr_product_id: p_id,
     });
-    setTimeout(() => {
-      console.log("n state", this.state);
-    }, "1000");
-
-    // console.log('pid2',this.state.curr_product_id)
-    // location.assign(n_url);
+    window.history.pushState('', 'Atelier', this.state.url_path);
   }
 
   renderStarRating(rating) {
+
     const stars = [];
 
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
         stars.push(<FaStar key={i} />);
       } else if (rating < i && rating > i - 1) {
-        stars.push(<FaStarHalfAlt key={i} />)
+        stars.push(<FaStarHalfAlt className="reviews-halfstar" key={i} />)
       } else {
         stars.push(<FaRegStar key={i} />);
       }
@@ -57,6 +48,11 @@ class Index extends React.Component {
     return stars.map((star) => {
       return star;
     });
+  }
+
+
+  componentDidMount() {
+    window.history.pushState('', 'Atelier', this.state.url_path);
   }
 
   render() {
@@ -97,6 +93,7 @@ class Index extends React.Component {
               value: "Double Stitch",
             },
           ]}
+          renderStarRating={this.renderStarRating}
         />
       </div>
     );

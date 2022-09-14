@@ -14,10 +14,12 @@ class OutfitCard extends React.Component {
       features: '',
       price: '',
       salePrice: '',
+      stars: '',
       img: ''
     }
     this.getItemDetails = this.getItemDetails.bind(this);
     this.getItemStyles = this.getItemStyles.bind(this);
+    this.getStarCount = this.getStarCount.bind(this);
   }
 
   getItemDetails () {
@@ -50,16 +52,23 @@ class OutfitCard extends React.Component {
       });
   }
 
+  getStarCount () {
+    axios.get('/rating', {params: { productId: this.props.p_id}})
+      .then((res) => {
+        this.setState({stars: res.data.rating});
+        console.log('keenan', res.data.rating);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
   componentDidMount () {
     this.getItemDetails()
     this.getItemStyles()
+    this.getStarCount()
   }
 
-  // componentDidMount () {
-  //   this.setState({
-  //     relatedItems: 'results from api call'
-  //   })
-  // }
   render() {
     return (
     <div className="related-items card" data-testid="r-card">
@@ -72,7 +81,7 @@ class OutfitCard extends React.Component {
         <h3 className="card-title">{this.state.name}</h3>
         <h4 className="card-price">${this.state.salePrice ? this.state.salePrice : this.state.price}</h4>
         <div className="rating-container">
-          {/* insert star component */}
+          <div className="rating">{!isNaN(this.state.stars) ? this.props.renderStarRating(this.state.stars) : <span className="no-reviews">There are no reviews yet.</span>}</div>
         </div>
       </div>
     </div>
