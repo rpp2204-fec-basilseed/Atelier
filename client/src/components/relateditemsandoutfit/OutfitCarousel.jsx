@@ -60,7 +60,12 @@ class OutfitCarousel extends React.Component {
               </div>
             </div>
             {this.props.outfitItems.map(item => (
-              <OutfitCard key={item} p_id={item} removeFromOutfit={this.removeFromOutfit} />
+              <OutfitCard
+                key={item}
+                p_id={item}
+                removeFromOutfit={this.removeFromOutfit}
+                renderStarRating={this.props.renderStarRating}
+              />
             ))}
         </div>
       </div>

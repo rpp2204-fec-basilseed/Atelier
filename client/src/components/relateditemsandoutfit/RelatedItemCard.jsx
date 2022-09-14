@@ -93,7 +93,7 @@ class RelatedItemCard extends React.Component {
             <h3 className="card-title">{this.state.name}</h3>
             <h4 className="card-price">{this.state.salePrice ? <div className="sale-container"><span className="sale-price">${this.state.salePrice}</span><span className="original-price">${this.state.price}</span></div> : <div className="default">${this.state.price}</div>}</h4>
             <div className="rating-container">
-              <div className="rating">{!isNaN(this.state.stars) ? this.state.stars : <span className="no-reviews">There are no reviews yet.</span>}</div>
+              <div className="rating">{!isNaN(this.state.stars) ? this.props.renderStarRating(this.state.stars) : <span className="no-reviews">There are no reviews yet.</span>}</div>
             </div>
           </div>
         </div>
