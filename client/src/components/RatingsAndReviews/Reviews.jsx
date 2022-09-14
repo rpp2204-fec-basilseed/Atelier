@@ -1,24 +1,45 @@
 import React, { useState, useEffect } from "react";
-import DisplayReview from "./DisplayReview.jsx";
 import AddReview from "./AddReview.jsx";
+import DisplayReview from "./DisplayReview.jsx";
+import RatingBar from "./RatingBar.jsx";
+import ReviewScore from "./ReviewScore.jsx";
 const axios = require("axios");
 
-export default function Reviews({ currProduct, renderStarRating, sendReview }) {
-  console.log('prod: ', currProduct)
-  const starPercentage = (rating) => {
-    let totalStars = 0;
-    for (let currentRating in metaData.ratings) {
-      totalStars += parseInt(metaData.ratings[currentRating]);
+export default function Reviews({ currProduct, renderStarRating }) {
+  const starPercentage = (rating, total) => {
+    let totalReviews = 0;
+
+    for (let currentRating in total) {
+      totalReviews += parseInt(total[currentRating]);
     }
-    let barLength = Math.floor((rating / totalStars) * 100);
+
+    let barLength = Math.floor((total[rating] / totalReviews) * 200);
+
     return (
       <div
-        style={{ border: "solid black 5px", width: `${barLength + "px"}` }}
-      ></div>
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          margin: "0",
+          height: "10px",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{ border: "solid green 5px", width: `${barLength + "px"}` }}
+        ></div>
+        <div
+          style={{
+            border: "solid gray 5px",
+            width: `${200 - barLength + "px"}`,
+          }}
+        ></div>
+        <p style={{ paddingLeft: "5px" }}>({total[rating]})</p>
+      </div>
     );
   };
 
-  const [displayedReviews, setDisplayedReviews] = useState(4);
+  const [displayedReviews, setDisplayedReviews] = useState(2);
 
   const [metaData, setMetaData] = useState({});
 
@@ -28,8 +49,10 @@ export default function Reviews({ currProduct, renderStarRating, sendReview }) {
 
   const [filter, updateFilter] = useState("helpful");
 
+
   const getReviews = (newFilter) => {
     updateFilter(newFilter);
+    console.log(newFilter)
 
     axios
       .get("/review", {
@@ -103,65 +126,73 @@ export default function Reviews({ currProduct, renderStarRating, sendReview }) {
   }
 
   return (
-    <div style={{ marginLeft: "10px" }}>
-      <h2>Ratings and Reviews</h2>
+    <div style={{ margin: "10px 10px 10px 50px" }}>
+      <h2>RATINGS AND REVIEWS</h2>
       <div className="main" style={{ display: "flex" }}>
         <div className="ratings">
-          <div className="review-score" style={{ fontSize: "36px" }}>
-            {metaData.ratings
-              ? renderStarRating(metaData.characteristics.Quality.value)
-              : null}
-          </div>
-          {/* <div className='stars'>{metaData.ratings ? renderStarRating(totalScore(metaData.ratings)) : null}</div> */}
+          {metaData.ratings ? <ReviewScore ratings={metaData.ratings} recommended={metaData.recommended}starRender={renderStarRating}/> : null}
           <div>
             5 star reviews:{" "}
-            {metaData.ratings ? starPercentage(metaData.ratings[5]) : null}
+            {metaData.ratings ? starPercentage(5, metaData.ratings) : null}
           </div>
           <div>
             4 star reviews:{" "}
-            {metaData.ratings ? starPercentage(metaData.ratings[4]) : null}
+            {metaData.ratings ? starPercentage(4, metaData.ratings) : null}
           </div>
           <div>
             3 star reviews:{" "}
-            {metaData.ratings ? starPercentage(metaData.ratings[3]) : null}
+            {metaData.ratings ? starPercentage(3, metaData.ratings) : null}
           </div>
           <div>
             2 star reviews:{" "}
-            {metaData.ratings ? starPercentage(metaData.ratings[2]) : null}
+            {metaData.ratings ? starPercentage(2, metaData.ratings) : null}
           </div>
           <div>
             1 star reviews:{" "}
-            {metaData.ratings ? starPercentage(metaData.ratings[1]) : null}
+            {metaData.ratings ? starPercentage(1, metaData.ratings) : null}
           </div>
-          <div className="size-rating-slide">Size rating goes here</div>
-          <div className="comfort-rating-slide">Comfort rating goes here</div>
+          {metaData.characteristics ? (
+            <RatingBar metaData={metaData.characteristics} />
+          ) : null}
         </div>
-        <div className="reviews" style={{ paddingLeft: "20px" }}>
-          <div className="total-reviews">{`${currReviews.length} Reviews`}</div>
-          <label form="filter">Show reviews by:</label>
-          <select
-            name="filter"
-            id="filters"
-            onChange={(e) => {
-              getReviews(e.target.value);
-            }}
+        <div className="reviews" style={{ paddingLeft: "50px" }}>
+          <div
+            className="total-reviews"
+            style={{ display: "flex", flexDirection: "row" }}
           >
-            <option value="helpful">Helpful</option>
-            <option value="newest">Newest</option>
-            <option value="relevant">Relevant</option>
-          </select>
+            {`${currReviews.length} reviews, sorted by:`}
+            {/* <label form="filter" style={{marginRight: "10px"}}>sorted by:</label> */}
+            <select
+              name="filter"
+              id="filters"
+              style={{ marginLeft: "10px" }}
+              onChange={(e) => {
+                getReviews(e.target.value);
+              }}
+            >
+              <option value="helpful">Helpful</option>
+              <option value="newest">Newest</option>
+              <option value="relevant">Relevant</option>
+            </select>
+          </div>
           <DisplayReview
             reviewsList={currReviews}
             displayedReviews={displayedReviews}
             renderStarRating={renderStarRating}
           />
           <div className="more-and-add-review" style={{ display: "flex" }}>
-            <div
-              style={{ border: "solid black 3px", padding: "20px" }}
-              onClick={increaseDisplayedReviews}
-            >
-              More Reviews
-            </div>
+            {currReviews.length > 0 ? (
+              <div
+                style={{ border: "solid black 3px", padding: "20px" }}
+                onClick={increaseDisplayedReviews}
+                onMouseEnter={(e) =>
+                  (e.target.style.backgroundColor = "lightgray")
+                }
+                onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}
+              >
+                MORE REVIEWS
+              </div>
+            ) : null}
             <div
               onClick={toggleShowReview}
               style={{
@@ -169,8 +200,12 @@ export default function Reviews({ currProduct, renderStarRating, sendReview }) {
                 padding: "20px",
                 marginLeft: "40px",
               }}
+              onMouseEnter={(e) =>
+                (e.target.style.backgroundColor = "lightgray")
+              }
+              onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}
             >
-              Add Review
+              ADD REVIEW
             </div>
           </div>
           <div>
@@ -179,6 +214,7 @@ export default function Reviews({ currProduct, renderStarRating, sendReview }) {
                 productId={currProduct}
                 toggleShowReview={toggleShowReview}
                 metaData={metaData}
+                getReviews={getReviews}
               />
             ) : null}
           </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import Helpful from "./Helpful.jsx";
 import Report from "./Report.jsx";
+import { AiOutlineCheck } from "react-icons/ai";
 const moment = require("moment");
 
 export default function DisplayReview({
@@ -21,19 +22,38 @@ export default function DisplayReview({
             {review.reviewer_name}, {moment(review.date).format("LL")}
           </div>
         </div>
-        <div style={{ fontWeight: "bold" }}>{review.summary}</div>
+        <div style={{ fontWeight: "bold", padding: "10px 0px" }}>{review.summary}</div>
         <div
           style={{
             width: "500px",
             whiteSpace: "pre-wrap",
             overflowWrap: "break-word",
+            padding: "10px 0px"
           }}
         >
           {review.body}
         </div>
         <div className="review-photo">
-          {review.photos.length > 0 ? (
-            <img src={`${review.photos[0].url}`} width="50px"></img>
+          {review.photos.length > 0
+            ? review.photos.map((photo) => (
+                <img
+                  src={`${photo.url}`}
+                  alt=""
+                  width="50px"
+                  style={{ padding: "5px" }}
+                  key={photo.url}
+                  onMouseEnter={(e) => (e.target.width = 200)}
+                  onMouseLeave={(e) => (e.target.width = 50)}
+                ></img>
+              ))
+            : null}
+        </div>
+        <div className="review-recommended">
+          {review.recommend ? (
+            <p>
+              <AiOutlineCheck style={{ marginRight: "5px" }} />I recommend this
+              product!{" "}
+            </p>
           ) : null}
         </div>
         <div
@@ -53,6 +73,7 @@ export default function DisplayReview({
           </div>
           <Report review_id={review.review_id} />
         </div>
+        <hr></hr>
       </div>
     );
   });

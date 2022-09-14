@@ -26,7 +26,9 @@ function clickWrapper (WrappedComponent) {
 
       axios(config)
       .then(function (response) {
-        console.log(response.status);
+        // console.log(response.status);
+        /* by uncommenting the log above- you will will log the status code '201' if the interaction was successful
+        */
       })
       .catch(function (error) {
         console.log(error);
