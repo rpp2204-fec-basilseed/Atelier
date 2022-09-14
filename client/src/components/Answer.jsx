@@ -33,7 +33,7 @@ function Answer(props) {
     style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}>
     <span className="answers-feed-A">A: </span>
     <div className="answer-body">{props.answerBody}</div>
-    {props.photos.map((photo, i) => {
+    {props.photos && props.photos.map((photo, i) => {
       return (<div key={i}><br/><img key={i} alt="image" width={"50px"} height={"50px"} src={photo} /></div>);
     })}
     <br />

@@ -18,7 +18,7 @@ return (<div
   <FaCameraRetro style={{marginTop: "100px"}}size={55} />
   <h3>Upload your photos</h3>
 
-  {props.allPhotos.length > 0 && props.allPhotos.map((photo, i) => {
+  {props.allPhotos && props.allPhotos.map((photo, i) => {
     return <img key={i} alt={photo.name} width={"50px"} height={"50px"} src={URL.createObjectURL(photo)}/>
   })}
 
@@ -26,7 +26,7 @@ return (<div
     type="file"
     className="myImage"
     onChange={props.addPhotos}
-    disabled={props.allPhotos.length > 4}
+    disabled={props.allPhotos && props.allPhotos.length > 4}
   />
   <br />
   {/*Working on it!! onSubmit={doSomething} the upload photos modal will disappear,

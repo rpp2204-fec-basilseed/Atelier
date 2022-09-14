@@ -11,6 +11,7 @@ import Sidebar from '../Sidebar.jsx';
 import AddAQuestion from '../AddAQuestion.jsx';
 import AddAnswerModal from '../AddAnswerModal.jsx';
 import Question from '../Question.jsx';
+import UploadPhotosModal from '../UploadPhotosModal.jsx';
 
 
 afterEach(cleanup);
@@ -137,4 +138,25 @@ test("submit button invokes handleSubmit function", async () => {
   const { getByText, getByTestId } = render(<AddAnswerModal onSubmit={handleSubmit()}/>);
   fireEvent.click(await getByText("Submit answer"));
   expect(handleSubmit).toHaveBeenCalled();
+});
+
+// <UploadPhotosModal />
+// test("Upload button invokes handleUploadAllPhotos function", async () => {
+//   const handleUploadAllPhotos = jest.fn();
+
+//   const { getByText, getByTestId } = render(<UploadPhotosModal onClick={handleUploadAllPhotos}/>);
+//   fireEvent.click(await getByText("Upload"));
+//   expect(handleUploadAllPhotos).toHaveBeenCalled();
+// });
+test("UploadPhotosModal has correct 'You may upload up to 5 photos.' text", () => {
+  render(<UploadPhotosModal />);
+  const componentText = screen.queryByText(/You may upload up to 5 photos/i);
+  expect(componentText).toBeInTheDocument();
+});
+
+// <Search />
+test("Search has correct 'HAVE A QUESTION?' placeholder text", () => {
+  render(<Search />);
+  const componentText = screen.getByPlaceholderText(/HAVE A QUESTION?/i);
+  expect(componentText).toBeInTheDocument();
 });
