@@ -86,7 +86,7 @@ class RelatedItemCard extends React.Component {
         <div className="related-items card" data-testid="r-card">
           <div className="card-img-container">
             <span onClick={this.openModal} className='related-products-tracker card-icon'><FaStar size={32}/></span>
-            <img onClick={() => this.props.updateCurrentProduct(this.props.p_id)} className="related-img" src={this.state.img}  alt={this.state.name}/>
+            <img onClick={() => this.props.updateCurrentProduct(this.props.p_id)} className="related-img" max-width="300px" max-height="300px" src={this.state.img}  alt={this.state.name}/>
           </div>
           <div className="card-body-container">
             <h4 className="card-category">{this.state.category}</h4>
