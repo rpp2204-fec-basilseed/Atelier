@@ -5,7 +5,8 @@ import RatingBar from "./RatingBar.jsx";
 import ReviewScore from "./ReviewScore.jsx";
 const axios = require("axios");
 
-export default function Reviews({ currProduct, renderStarRating }) {
+
+export default function Reviews({ currProduct, renderStarRating, productName, updateNum, updateNumReviews }) {
   const starPercentage = (rating, total) => {
     let totalReviews = 0;
 
@@ -47,12 +48,11 @@ export default function Reviews({ currProduct, renderStarRating }) {
 
   const [showReview, setShowReview] = useState(false);
 
-  const [filter, updateFilter] = useState("helpful");
+  const [filter, updateFilter] = useState("relevance");
 
 
   const getReviews = (newFilter) => {
     updateFilter(newFilter);
-    console.log(newFilter)
 
     axios
       .get("/review", {
@@ -62,6 +62,7 @@ export default function Reviews({ currProduct, renderStarRating }) {
       })
       .then((reviewData) => {
         setCurrReviews((priorReviews) => reviewData.data);
+        updateNumReviews(numReviews = reviewData.data.length)
       })
       .then(() => {
         axios
@@ -94,6 +95,7 @@ export default function Reviews({ currProduct, renderStarRating }) {
       })
       .then((reviewData) => {
         setCurrReviews(reviewData.data);
+        (reviewData.data.length);
       })
       .then(() => {
         axios
@@ -118,7 +120,7 @@ export default function Reviews({ currProduct, renderStarRating }) {
   }, []);
 
   function increaseDisplayedReviews() {
-    setDisplayedReviews((previousDisplayed) => previousDisplayed + 4);
+    setDisplayedReviews((previousDisplayed) => previousDisplayed + 2);
   }
 
   function toggleShowReview() {
@@ -126,7 +128,7 @@ export default function Reviews({ currProduct, renderStarRating }) {
   }
 
   return (
-    <div style={{ margin: "10px 10px 10px 50px" }}>
+    <div style={{ margin: "10px 10px 10px 50px", padding: "0 3vw" }}>
       <h2>RATINGS AND REVIEWS</h2>
       <div className="main" style={{ display: "flex" }}>
         <div className="ratings">
@@ -155,7 +157,7 @@ export default function Reviews({ currProduct, renderStarRating }) {
             <RatingBar metaData={metaData.characteristics} />
           ) : null}
         </div>
-        <div className="reviews" style={{ paddingLeft: "50px" }}>
+        <div className="reviews" style={{ paddingLeft: "50px", overflowY: "auto", maxHeight: "800px" }}>
           <div
             className="total-reviews"
             style={{ display: "flex", flexDirection: "row" }}
@@ -170,9 +172,9 @@ export default function Reviews({ currProduct, renderStarRating }) {
                 getReviews(e.target.value);
               }}
             >
+              <option value="relevant">Relevance</option>
               <option value="helpful">Helpful</option>
               <option value="newest">Newest</option>
-              <option value="relevant">Relevant</option>
             </select>
           </div>
           <DisplayReview
@@ -186,9 +188,9 @@ export default function Reviews({ currProduct, renderStarRating }) {
                 style={{ border: "solid black 3px", padding: "20px" }}
                 onClick={increaseDisplayedReviews}
                 onMouseEnter={(e) =>
-                  (e.target.style.backgroundColor = "lightgray")
+                  (e.target.style.backgroundColor = "lightgray", e.target.style.color = "white")
                 }
-                onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}
+                onMouseLeave={(e) => (e.target.style.backgroundColor = "white", e.target.style.color = "black")}
               >
                 MORE REVIEWS
               </div>
@@ -201,9 +203,9 @@ export default function Reviews({ currProduct, renderStarRating }) {
                 marginLeft: "40px",
               }}
               onMouseEnter={(e) =>
-                (e.target.style.backgroundColor = "lightgray")
-              }
-              onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}
+                (e.target.style.backgroundColor = "lightgray", e.target.style.color = "white")
+                }
+                onMouseLeave={(e) => (e.target.style.backgroundColor = "white", e.target.style.color = "black")}
             >
               ADD REVIEW
             </div>
@@ -215,6 +217,7 @@ export default function Reviews({ currProduct, renderStarRating }) {
                 toggleShowReview={toggleShowReview}
                 metaData={metaData}
                 getReviews={getReviews}
+                productName={productName}
               />
             ) : null}
           </div>

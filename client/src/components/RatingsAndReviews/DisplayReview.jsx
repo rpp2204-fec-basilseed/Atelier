@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Helpful from "./Helpful.jsx";
 import Report from "./Report.jsx";
 import { AiOutlineCheck } from "react-icons/ai";
+import DisplayPhotos from "./DisplayPhotos.jsx";
+
 const moment = require("moment");
 
 export default function DisplayReview({
@@ -10,25 +12,37 @@ export default function DisplayReview({
   renderStarRating,
   reviewWasHelpful,
 }) {
+  const [displayPhoto, showPhoto] = useState(false);
+  const [photoUrl, updatePhotoUrl] = useState("");
+
+  function toggleDisplayPhoto() {
+    showPhoto(!displayPhoto);
+  }
+
   return reviewsList.slice(0, displayedReviews).map((review) => {
     return (
+      <>
+      {displayPhoto ? <DisplayPhotos photo={photoUrl} toggleDisplayPhoto={toggleDisplayPhoto}/> : null}
       <div
         key={review.review_id}
         style={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
         <div style={{ display: "flex" }}>
-          <div>{renderStarRating(review.rating)}</div>
+          {renderStarRating(review.rating)}
           <div style={{ paddingLeft: "200px" }}>
             {review.reviewer_name}, {moment(review.date).format("LL")}
+            {review.response ? <p>review.response</p> : null}
           </div>
         </div>
-        <div style={{ fontWeight: "bold", padding: "10px 0px" }}>{review.summary}</div>
+        <div style={{ fontWeight: "bold", padding: "10px 0px" }}>
+          {review.summary}
+        </div>
         <div
           style={{
             width: "500px",
             whiteSpace: "pre-wrap",
             overflowWrap: "break-word",
-            padding: "10px 0px"
+            padding: "10px 0px",
           }}
         >
           {review.body}
@@ -39,11 +53,16 @@ export default function DisplayReview({
                 <img
                   src={`${photo.url}`}
                   alt=""
-                  width="50px"
-                  style={{ padding: "5px" }}
+                  style={{
+                    padding: "5px",
+                    maxWidth: "50px",
+                    maxHeight: "50px",
+                  }}
                   key={photo.url}
-                  onMouseEnter={(e) => (e.target.width = 200)}
-                  onMouseLeave={(e) => (e.target.width = 50)}
+                  onClick={(e) => {
+                    toggleDisplayPhoto(!displayPhoto)
+                    updatePhotoUrl(e.target.src)
+                  }}
                 ></img>
               ))
             : null}
@@ -75,6 +94,7 @@ export default function DisplayReview({
         </div>
         <hr></hr>
       </div>
+      </>
     );
   });
 }
