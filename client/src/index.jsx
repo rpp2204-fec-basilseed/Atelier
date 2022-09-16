@@ -116,6 +116,7 @@ class Index extends React.Component {
         <WrappedReview
           currProduct={this.state.curr_product_id}
           renderStarRating={this.renderStarRating}
+          productName={this.state.curr_product_name}
         />
       </div>
     );
