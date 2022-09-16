@@ -23,7 +23,7 @@ function Question(props) {
     });
   }
 
-  return (<div>
+  return (<div className="feed-container">
     <div className="question-body"
     style={{ opacity: !props.questionAdded ? "1" : !props.questionSubmitted ? "0.2" : "1" }}>
     Q: {props.questionBody}</div>
