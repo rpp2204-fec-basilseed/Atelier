@@ -169,7 +169,6 @@ app.post("/addReview", (req, res) => {
     .catch((err) => {
       console.log("Could not add review: ", err);
     });
-  res.send("okay");
 });
 
 app.get("/rating", (req, res) => {
@@ -196,7 +195,7 @@ app.get("/rating", (req, res) => {
           overall += parseInt(metaData.data.ratings[rating]) * parseInt(rating);
         }
 
-        overall = (overall / totalRatings).toFixed(1);
+        overall = overall / totalRatings;
 
         res.send({
           rating: overall
