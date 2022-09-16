@@ -36,20 +36,17 @@ class OutfitCarousel extends React.Component {
     const carouselSelector = document.querySelector('.outfit.carousel-cards');
     let carouselWidth = carouselSelector.clientWidth;
     carouselSelector.scrollLeft -= 350;
-    console.log(carouselSelector.scrollLeft)
   }
 
   clickNext () {
     const carouselSelector = document.querySelector('.outfit.carousel-cards');
     let carouselWidth = carouselSelector.clientWidth;
     carouselSelector.scrollLeft += 350;
-    console.log(carouselSelector.scrollLeft)
   }
 
   render () {
     return (
       <div className='outfit carousel-container'>
-        {console.log(this.props)}
         {this.state.displayLeftBtn ? <button data-testid="c-prev" aria-labelledby="previous" className='prev-btn' onClick={this.clickPrev}><FaAngleLeft size={32} /></button> : <div></div>}
         {this.state.displayRightBtn ? <button data-testid="c-next" aria-labelledby="next" className='next-btn' onClick={this.clickNext}><FaAngleRight size={32} /></button> : <div></div>}
           <div className='outfit carousel-cards'>
@@ -65,6 +62,7 @@ class OutfitCarousel extends React.Component {
                 p_id={item}
                 removeFromOutfit={this.removeFromOutfit}
                 renderStarRating={this.props.renderStarRating}
+                updateCurrentProduct={this.props.updateCurrentProduct}
               />
             ))}
         </div>

@@ -24,7 +24,7 @@ class RelatedCarousel extends React.Component {
   clickNext () {
     const carouselSelector = document.querySelector('.carousel-cards');
     let carouselWidth = carouselSelector.clientWidth;
-    carouselSelector.scrollLeft += 356;
+    carouselSelector.scrollLeft += 350;
     this.setState({carouselPosition: carouselSelector.scrollLeft})
   }
 
