@@ -8,6 +8,8 @@ import Overview from "./components/Overview.jsx";
 import QandA from "./components/QandA.jsx";
 import RelatedItemsAndOutfits from "./components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx";
 import clickWrapper from "./ClickWrapper.jsx";
+import QuarterStar from "./components/RatingsAndReviews/QuarterStar.js";
+import ThreeQuarterStar from "./components/RatingsAndReviews/ThreeQuarterStar.js";
 
 
 class Index extends React.Component {
@@ -58,14 +60,20 @@ class Index extends React.Component {
   }
 
   renderStarRating(rating) {
-
     const stars = [];
 
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
         stars.push(<FaStar key={i} />);
-      } else if (rating < i && rating > i - 1) {
-        stars.push(<FaStarHalfAlt className="reviews-halfstar" key={i} />)
+      } else if (i > rating && rating + 1 > i) {
+        var ratingDifference = i - rating;
+        if(ratingDifference < 0.5){
+          stars.push(<ThreeQuarterStar className="reviews-QuarterStar" key={i} />);
+        } else if (ratingDifference >= 0.75) {
+          stars.push(<QuarterStar className="reviews-ThreeQuarterStar" key={i} />);
+        } else {
+          stars.push(<FaStarHalfAlt className="reviews-halfStar" key={i} />) ;
+        }
       } else {
         stars.push(<FaRegStar key={i} />);
       }
