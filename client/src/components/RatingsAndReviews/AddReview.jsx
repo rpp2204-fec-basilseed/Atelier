@@ -4,7 +4,7 @@ import OverallRating from "./OverallRating.jsx";
 import UploadPhotos from "./UploadPhotos.jsx";
 const axios = require("axios");
 
-export default function AddReview({ productId, toggleShowReview, metaData, getReviews }) {
+export default function AddReview({ productId, toggleShowReview, metaData, getReviews, productName }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [summary, setSummary] = useState("");
@@ -34,8 +34,8 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
   const formStyling = {
     display: "flex",
     flexDirection: "column",
-    height: "70vh",
-    width: "45vw",
+    height: "80vh",
+    width: "50vw",
     backgroundColor: "white",
     position: "fixed",
     paddingTop: "40px"
@@ -56,38 +56,62 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
 
   function sendReview(e) {
       e.preventDefault();
-      toggleShowReview();
-      axios.post('/addReview', reviewData)
-      .then((res) => {
-        getReviews('newest');
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+      var fieldsComplete = true;
+
+      if(reviewData.body.length < 50 || reviewData.body.length > 1000) {
+        alert("Review body must be between 50 and 1000 characters in length");
+      }
+
+        for (let field in reviewData) {
+          if(typeof reviewData[field] === "string") {
+            if(reviewData[field] === "") {
+              alert("Please ensure " + field + " is entered properly");
+              fieldsComplete=false;
+            }
+          }
+        }
+
+      if(fieldsComplete){
+        toggleShowReview();
+        axios.post('/addReview', reviewData)
+        .then((res) => {
+          getReviews('newest');
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      }
   };
 
   return (
     <form style={backgroundStyling}>
       <div style={formStyling}>
         <p style={{position: "absolute", top: "0px", right: "20px"}} onClick={() => {toggleShowReview()}}>X</p>
-        <h2 style={{position: "absolute", top: "0px", left: "50px"}}>Write Your Review</h2>
-        <div className="review-form-fields" style={{display: "flex", flexDirection: "column", alignItems: "flex-start", marginTop: "30px", width: "300px"}}>
+        <h2 style={{position: "absolute", top: "0px", left: "20px"}}>Write Your Review</h2>
+        <h3 style={{marginLeft: "20px", marginBottom: "0"}}>About the {productName}</h3>
+        <div className="review-form-fields" style={{display: "flex", flexDirection: "column", alignItems: "flex-start", marginTop: "30px", width: "500px"}}>
         <div className="review-nickname" style={{display: "flex", flexDirection: "row", padding: "5px 25px"}}>
         <label style={{paddingRight: "3px"}}>Nickname: </label>
         <input
           type="text"
+          placeholder="Example: jackson11!"
           value={name}
+          maxLength="60"
           onChange={(e) => setName(e.target.value)}
         ></input>
         </div>
+        <p style={{marginLeft: "25px"}}>For privacy reasons, do not use your full name or email address</p>
         <div className="review-email" style={{display: "flex", flexDirection: "row", padding: "5px 25px"}}>
         <label style={{paddingRight: "3px"}}>Email: </label>
         <input
           type="email"
+          placeholder="Example: jackson11@email.com"
           value={email}
+          maxLength="60"
           onChange={(e) => setEmail(e.target.value)}
         ></input>
         </div>
+        <p style={{marginLeft: "25px"}}>For authentication reasons, you will not be emailed</p>
         <div className="review-summary" style={{display: "flex", flexDirection: "row", padding: "5px 25px"}}>
         <label style={{paddingRight: "3px"}}>Summary: </label>
         <input
