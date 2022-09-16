@@ -11,7 +11,7 @@ function Style(props){
     return (
       <>
         <img className="style" src={props.thumbURL} height="50" width="50" alt={props.name} onClick={handleStyleChange} />
-        <FaCheck />
+        <FaCheck id="checkStyle"/>
       </>
     );
   } else {

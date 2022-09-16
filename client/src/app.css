@@ -1,7 +1,25 @@
+.overview-container {
+  padding: 0px 5vw;
+}
+
+.details-container {
+  flex-direction: row;
+  display: flex;
+  margin: 0 50px;
+  padding: 30px 0;
+  line-height: 2;
+}
+
+#checkStyle {
+  position: relative;
+  top: -40px;
+  right: 10px;
+  z-index: 10;
+}
+
 .wrapper {
   display: inline-flex;
   flex-direction: row;
-  /* border: 1px solid black; */
 }
 
 .overviewImages-container {
@@ -24,6 +42,9 @@
 
 #salePrice {
   color: red;
+}
+
+#oldPrice {
   text-decoration: line-through;
 }
 
@@ -50,30 +71,6 @@ img {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
-}
-
-.container {
-  /* display: "flex"; */
-  flex-direction: row;
-  flex-wrap: wrap;
-  display: inline-block;
-  align-content: flex-start;
-  /* border: 3px solid black; */
-  padding: 10px 10px 10px 10px;
-}
-
-.container-child {
-  flex: 1;
-  display: flex;
-}
-
-.container-child:first-child {
-  margin-right: 10px;
-}
-
-.details-container {
-  flex-direction: row;
-  display: flex;
 }
 
 .text-container {
@@ -104,6 +101,10 @@ ul {
   list-style: none;
 }
 
+.related-items-and-outfit-container {
+  padding: 0px 5vw;
+}
+
 .card {
   min-width: 300px;
   max-width: 300px;
@@ -128,6 +129,15 @@ ul {
   padding: 10px 30px;
 }
 
+.sale-price {
+  color: red;
+  padding-right: 10px;
+}
+
+.original-price {
+  text-decoration: line-through;
+}
+
 .prev-btn {
   left: 0;
 }
@@ -148,18 +158,17 @@ ul {
   z-index: 20;
 }
 
-.related-items-container {
-  min-height: 440px;
-  height: 440px;
-  max-height: 440px;
-}
-
 .related-img {
   width:100%;
   height:100%;
   object-fit: cover;
   border-radius: 8px;
   display: block;
+}
+
+.card-title {
+  padding: 5px 0;
+  margin: 5px 0;
 }
 
 .card-img-container {
@@ -180,6 +189,8 @@ ul {
   font-size: 13px;
   font-weight: 300;
   text-transform: uppercase;
+  padding: 5px 0;
+  margin: 5px 0;
 }
 
 .card-icon {
@@ -250,16 +261,6 @@ td.right {
   width: 30%;
 }
 
-/* td.title-left {
-  text-align: left;
-  width: 30%;
-}
-
-td.title-right {
-  text-align: right;
-  width: 30%;
-} */
-
 td.center {
   width: 40%;
   text-align: center;
@@ -276,7 +277,7 @@ td {
 
 /* Q&A starts here */
 .QandA-container {
-  margin: 0 15rem;
+  margin: 0 15vw;
   padding: 50px 0;
   line-height: 2;
   max-height: 700px;
@@ -285,6 +286,8 @@ td {
 
 .QandA-heading {
   z-index: 1;
+  font-weight: bold;
+  font-size: x-large;
 }
 
 .QandA-search-box {

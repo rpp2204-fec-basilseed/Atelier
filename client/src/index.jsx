@@ -17,10 +17,25 @@ class Index extends React.Component {
     this.state = {
       curr_product_id: 71700,
       curr_product_name: "Slacker's Slacks",
+      curr_product_features: "",
       url_path: "/71700",
     };
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
+    this.getProductFeatures = this.getProductFeatures.bind(this);
+  }
+
+  getProductFeatures () {
+    Axios.get('/products', {params: { p_id: this.state.curr_product_id }})
+      .then((res) => {
+        this.setState({
+          curr_product_name: res.data.name,
+          curr_product_features: res.data.features
+        });
+      })
+      .catch((err) => {
+      console.log(err);
+      });
   }
 
   updateCurrentProduct(p_id) {
@@ -28,7 +43,18 @@ class Index extends React.Component {
       url_path: p_id,
       curr_product_id: p_id,
     });
-    window.history.pushState('', 'Atelier', this.state.url_path);
+    window.history.pushState('', 'Atelier', p_id);
+
+    Axios.get('/products', {params: { p_id: this.state.curr_product_id }})
+      .then((res) => {
+        this.setState({
+          curr_product_name: res.data.name,
+          curr_product_features: res.data.features
+        });
+      })
+      .catch((err) => {
+      console.log(err);
+    });
   }
 
   renderStarRating(rating) {
@@ -53,6 +79,7 @@ class Index extends React.Component {
 
   componentDidMount() {
     window.history.pushState('', 'Atelier', this.state.url_path);
+    this.getProductFeatures();
   }
 
   render() {
@@ -67,32 +94,19 @@ class Index extends React.Component {
           curr_product_id={this.state.curr_product_id}
           renderStars={this.renderStarRating}
         />
-        <WrappedQandA
-          curr_product_id={this.state.curr_product_id}
-          curr_product_name={this.state.curr_product_name}
-        />
-          <WrappedReview
-            currProduct={this.state.curr_product_id}
-            renderStarRating={this.renderStarRating}
-          />
         <WrappedRelatedItemsAndOutfits
           updateCurrentProduct={this.updateCurrentProduct}
           p_id={this.state.curr_product_id}
           currentProduct={this.state.curr_product_name}
-          currentFeatures={[
-            {
-              feature: "Sole",
-              value: "Rubber",
-            },
-            {
-              feature: "Material",
-              value: "FullControlSkin",
-            },
-            {
-              feature: "Stitching",
-              value: "Double Stitch",
-            },
-          ]}
+          currentFeatures={this.state.curr_product_features}
+          renderStarRating={this.renderStarRating}
+        />
+        <WrappedQandA
+          curr_product_id={this.state.curr_product_id}
+          curr_product_name={this.state.curr_product_name}
+        />
+        <WrappedReview
+          currProduct={this.state.curr_product_id}
           renderStarRating={this.renderStarRating}
         />
       </div>
