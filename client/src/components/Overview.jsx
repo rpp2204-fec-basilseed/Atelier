@@ -13,7 +13,10 @@ class Overview extends React.Component {
       styleData: [],
       selectedStyle: '',
       selectedSKU: '',
-      selectedPhoto: ''
+      selectedPhoto: '',
+      prodRating: '',
+      numReviews: '',
+      quantity: 0
     }
 
     this.handleStyleChange = this.handleStyleChange.bind(this);
@@ -24,13 +27,15 @@ class Overview extends React.Component {
   handleStyleChange(style) {
     this.setState({
       selectedStyle: style,
-      selectedSKU: '',
       selectedPhoto: this.state.styleData[style].photos[0].url
     });
   }
 
   handleSizeChange(e) {
-    this.setState({selectedSKU: e.target.value});
+    this.setState({
+      selectedSKU: e.target.value,
+      quantity: this.state.styleData[this.state.selectedStyle].skus[e.target.value].quantity
+    });
   }
 
   componentDidMount() {
@@ -69,17 +74,21 @@ class Overview extends React.Component {
     .catch((error) => {
       console.log(error);
     });
-  }
 
-  getSizes() {
-    var sizes = Object.keys(this.state.styleData[this.state.selectedStyle].skus)
-    var sizesDiv = sizes.map((key) => {
-      return <option value={key} key={key}>
-          {this.state.styleData[this.state.selectedStyle].skus[key].size}</option>
+    //Ratings
+    axios.get('/rating', {
+      params: {
+        productId: this.props.curr_product_id
+      }
+    })
+    .then((response) => {
+      this.setState({
+        prodRating: response.data.rating
+      });
+    })
+    .catch((error) => {
+      console.log(error);
     });
-    sizesDiv.unshift(<option defaultValue="SELECT SIZE" key="select size">SELECT SIZE</option>);
-
-    return sizesDiv;
   }
 
   onPhotoClick(fullURL) {
@@ -95,12 +104,11 @@ class Overview extends React.Component {
     var currProdSizes = <div>Sizes</div>;
     var currProdCarousel = <div>Carousel</div>
     if (this.state.styleData.length !== 0) {
-      currProdImage = <img id="mainImg" src={this.state.selectedPhoto} alt="main product photo" />;
+      currProdImage = <img id="mainImg" src={this.state.selectedPhoto} height="475" width="360" alt="main product photo" />;
       currProdCategory = <h2 id="prodCategory">{this.state.prodData.category}</h2>
       currProdName = <h1 id="prodName">{this.state.prodData.name}</h1>
       currProdStyle = <h2 id="prodStyle">Style > {this.state.styleData[this.state.selectedStyle].name}</h2>
-      currProdPrice = <h2 id="prodPrice">${this.state.styleData[this.state.selectedStyle].original_price}</h2>
-      currProdSizes = <select name="SELECT SIZE" onChange={this.handleSizeChange}>{this.getSizes()}</select>
+      currProdPrice = this.state.styleData[this.state.selectedStyle].sale_price ? <h2 id="prodPrice"><span id="salePrice">${this.state.styleData[this.state.selectedStyle].sale_price}</span> ${this.state.styleData[this.state.selectedStyle].original_price}</h2> : <h2 id="prodPrice">${this.state.styleData[this.state.selectedStyle].original_price}</h2>
       currProdCarousel = <ImgCarousel photos={this.state.styleData[this.state.selectedStyle].photos} onPhotoClick={this.onPhotoClick} />
     }
     return (
@@ -113,6 +121,7 @@ class Overview extends React.Component {
           </div>
           <div className="productInfoCart-container">
             <div className="container">
+              {this.props.renderStars(this.state.prodRating)}
               {currProdCategory}
               {currProdName}
               {currProdStyle}
@@ -123,12 +132,7 @@ class Overview extends React.Component {
               <Styles stylesData={this.state.styleData} selectedStyle={this.state.selectedStyle} handleStyleChange={this.handleStyleChange} />
             </div>
             <br></br>
-            <div className="size-container">
-              {currProdSizes}
-            </div>
-            <div>
-              <CartFavorite curr_product_id={this.props.curr_product_id} curr_sku_id={this.state.selectedSKU}/>
-            </div>
+            <CartFavorite curr_product_id={this.props.curr_product_id} curr_sku_id={this.state.selectedSKU} styleData={this.state.styleData} selectedStyle={this.state.selectedStyle} handleSizeChange={this.handleSizeChange} quantity={this.state.quantity}/>
           </div>
         </div>
         <br></br>

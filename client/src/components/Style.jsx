@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { FaCheck } from 'react-icons/fa';
 
 function Style(props){
 
@@ -7,11 +7,20 @@ function Style(props){
     props.handleStyleChange(props.styleNum);
   }
 
-  return (
-    <>
-      <img className="style" src={props.thumbURL} alt={props.name} onClick={handleStyleChange} />
-    </>
-  );
+  if (props.selected === "True") {
+    return (
+      <>
+        <img className="style" src={props.thumbURL} height="50" width="50" alt={props.name} onClick={handleStyleChange} />
+        <FaCheck />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <img className="style" src={props.thumbURL} height="50" width="50" alt={props.name} onClick={handleStyleChange} />
+      </>
+    );
+  }
 
 }
 

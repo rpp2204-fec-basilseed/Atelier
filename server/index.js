@@ -311,9 +311,8 @@ app.put('/answerHelpful', (req, res) => {
 });
 
 app.post("/cart", (req, res) => {
-  var data = JSON.stringify({
-    sku_id: req.body.sku_id,
-  });
+
+  console.log(req.body);
 
   var config = {
     method: "post",
@@ -322,12 +321,12 @@ app.post("/cart", (req, res) => {
       Authorization: process.env.API_KEY,
       "Content-Type": "application/json",
     },
-    data: data,
+    data: req.body,
   };
 
   axios(config)
     .then(function (response) {
-      res.status(200);
+      res.send(201);
     })
     .catch(function (error) {
       console.log(error);
@@ -346,11 +345,8 @@ app.post("/interactions", (req, res) => {
     data: req.body,
   };
 
-  console.log("WE INTERACTING");
-
   axios(config)
     .then(function (response) {
-      // console.log(JSON.stringify(response.data));
       res.sendStatus(response.status);
     })
     .catch(function (error) {
