@@ -4,9 +4,9 @@ import DisplayReview from "./DisplayReview.jsx";
 import RatingBar from "./RatingBar.jsx";
 import ReviewScore from "./ReviewScore.jsx";
 const axios = require("axios");
-// import Star from "./CustomStar.jsx";
 
-export default function Reviews({ currProduct, renderStarRating, productName, updateNum }) {
+
+export default function Reviews({ currProduct, renderStarRating, productName, updateNum, updateNumReviews }) {
   const starPercentage = (rating, total) => {
     let totalReviews = 0;
 
@@ -62,6 +62,7 @@ export default function Reviews({ currProduct, renderStarRating, productName, up
       })
       .then((reviewData) => {
         setCurrReviews((priorReviews) => reviewData.data);
+        updateNumReviews(numReviews = reviewData.data.length)
       })
       .then(() => {
         axios
@@ -94,7 +95,7 @@ export default function Reviews({ currProduct, renderStarRating, productName, up
       })
       .then((reviewData) => {
         setCurrReviews(reviewData.data);
-        console.log(reviewData.data.length);
+        (reviewData.data.length);
       })
       .then(() => {
         axios

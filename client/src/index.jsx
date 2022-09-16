@@ -8,6 +8,8 @@ import Overview from "./components/Overview.jsx";
 import QandA from "./components/QandA.jsx";
 import RelatedItemsAndOutfits from "./components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx";
 import clickWrapper from "./ClickWrapper.jsx";
+import QuarterStar from "./components/RatingsAndReviews/QuarterStar.js";
+import ThreeQuarterStar from "./components/RatingsAndReviews/ThreeQuarterStar.js";
 
 class Index extends React.Component {
   constructor(props) {
@@ -42,8 +44,16 @@ class Index extends React.Component {
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
         stars.push(<FaStar key={i} />);
-      } else if (rating < i && rating > i - 1) {
-        stars.push(<FaStarHalfAlt className="reviews-halfstar" key={i} />);
+      } else if (i > rating && rating + 1 > i) {
+        var ratingDifference = i - rating;
+        if(ratingDifference < 0.5){
+          stars.push(<QuarterStar className="reviews-QuarterStar" key={i} />);
+        } else if (ratingDifference >= 0.75) {
+          stars.push(<ThreeQuarterStar className="reviews-ThreeQuarterStar" key={i} />);
+          console.log(ratingDifference)
+        } else {
+          stars.push(<FaStarHalfAlt className="reviews-halfStar" key={i} />) ;
+        }
       } else {
         stars.push(<FaRegStar key={i} />);
       }
@@ -66,14 +76,14 @@ class Index extends React.Component {
 
     return (
       <div>
-        {/* <WrappedOverview
+        <WrappedOverview
           curr_product_id={this.state.curr_product_id}
           renderStars={this.renderStarRating}
         />
         <WrappedQandA
           curr_product_id={this.state.curr_product_id}
           curr_product_name={this.state.curr_product_name}
-        /> */}
+        />
         <WrappedReview
           currProduct={this.state.curr_product_id}
           renderStarRating={this.renderStarRating}
@@ -81,7 +91,8 @@ class Index extends React.Component {
           updateNum={this.updateNumReviews}
           numReviews={this.state.numReviews}
         />
-        {/* <WrappedRelatedItemsAndOutfits
+        <WrappedRelatedItemsAndOutfits
+        renderStarRating={this.renderStarRating}
           updateCurrentProduct={this.updateCurrentProduct}
           p_id={this.state.curr_product_id}
           currentProduct={this.state.curr_product_name}
@@ -99,7 +110,7 @@ class Index extends React.Component {
               value: "Double Stitch",
             },
           ]}
-        /> */}
+        />
       </div>
     );
   }
