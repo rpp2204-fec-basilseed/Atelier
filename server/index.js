@@ -164,11 +164,7 @@ app.post("/addReview", (req, res) => {
     .catch((err) => {
       console.log("Could not add review: ", err);
     });
-<<<<<<< HEAD
-
-=======
   res.send("okay");
->>>>>>> 6145c0876044df3c16844bf69d264d5f7349c528
 });
 
 app.get("/rating", (req, res) => {
@@ -310,9 +306,8 @@ app.put('/answerHelpful', (req, res) => {
 });
 
 app.post("/cart", (req, res) => {
-  var data = JSON.stringify({
-    sku_id: req.body.sku_id,
-  });
+
+  console.log(req.body);
 
   var config = {
     method: "post",
@@ -321,12 +316,12 @@ app.post("/cart", (req, res) => {
       Authorization: process.env.API_KEY,
       "Content-Type": "application/json",
     },
-    data: data,
+    data: req.body,
   };
 
   axios(config)
     .then(function (response) {
-      res.status(200);
+      res.send(201);
     })
     .catch(function (error) {
       console.log(error);
