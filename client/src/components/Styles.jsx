@@ -15,11 +15,14 @@ class Styles extends React.Component {
       styleNum={index}
       thumbURL={product.photos[0].thumbnail_url}
       name={product.name}
-      handleStyleChange={this.props.handleStyleChange}/>
+      handleStyleChange={this.props.handleStyleChange}
+      selected={this.props.selectedStyle === index ? "True" : "False"}/>
     );
 
     return (
-      <div>{listProducts}</div>
+      <>
+        <div>{listProducts}</div>
+      </>
     )
   }
 }

@@ -20,12 +20,7 @@ app.get('.js*', (req, res, next) => {
   req.url = req.url + '.gz';
   res.set('Content-Encoding', 'gzip');
   res.set('Content-Type', 'text/javascript');
-  next();
-});
-
-let port = process.env.PORT;
-
-let apiKey = process.env.API_KEY;
+ sta apiKey = process.env.API_KEY;
 
 app.get("/products", (req, res) => {
   let url = `${process.env.URL}/products`;
@@ -169,7 +164,11 @@ app.post("/addReview", (req, res) => {
     .catch((err) => {
       console.log("Could not add review: ", err);
     });
+<<<<<<< HEAD
 
+=======
+  res.send("okay");
+>>>>>>> fc92ab9 (Added size + quantity functionality)
 });
 
 app.get("/rating", (req, res) => {
@@ -311,9 +310,8 @@ app.put('/answerHelpful', (req, res) => {
 });
 
 app.post("/cart", (req, res) => {
-  var data = JSON.stringify({
-    sku_id: req.body.sku_id,
-  });
+
+  console.log(req.body);
 
   var config = {
     method: "post",
@@ -322,12 +320,12 @@ app.post("/cart", (req, res) => {
       Authorization: process.env.API_KEY,
       "Content-Type": "application/json",
     },
-    data: data,
+    data: req.body,
   };
 
   axios(config)
     .then(function (response) {
-      res.status(200);
+      res.send(201);
     })
     .catch(function (error) {
       console.log(error);
