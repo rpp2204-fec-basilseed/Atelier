@@ -128,7 +128,7 @@ export default function Reviews({ currProduct, renderStarRating, productName, up
   }
 
   return (
-    <div style={{ margin: "10px 10px 10px 50px" }}>
+    <div style={{ margin: "10px 10px 10px 50px", padding: "0 3vw" }}>
       <h2>RATINGS AND REVIEWS</h2>
       <div className="main" style={{ display: "flex" }}>
         <div className="ratings">
