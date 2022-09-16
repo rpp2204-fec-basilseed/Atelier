@@ -23,7 +23,7 @@ class ImgSlide extends React.Component {
       <div className="slide"
       style={{display: this.state.showSlide ? 'block' : 'none' }}
       onClick={this.onClick} >
-        <img src={this.props.thumbURL} alt="Product photo" />
+        <img src={this.props.thumbURL} height="25" width="25" alt="Product photo" />
       </div>
     )
   }
