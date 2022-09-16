@@ -50,7 +50,6 @@ class Index extends React.Component {
           stars.push(<QuarterStar className="reviews-QuarterStar" key={i} />);
         } else if (ratingDifference >= 0.75) {
           stars.push(<ThreeQuarterStar className="reviews-ThreeQuarterStar" key={i} />);
-          console.log(ratingDifference)
         } else {
           stars.push(<FaStarHalfAlt className="reviews-halfStar" key={i} />) ;
         }
