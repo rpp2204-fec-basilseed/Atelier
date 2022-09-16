@@ -74,7 +74,7 @@ class OutfitCard extends React.Component {
     <div className="related-items card" data-testid="r-card">
       <div className="card-img-container">
         <span className='related-products-tracker card-icon' onClick={() => this.props.removeFromOutfit(this.props.p_id)}><FaTimes size={32}/></span>
-        <img className="related-img" src={this.state.img}  alt="picture of item" />
+        <img className="related-img" src={this.state.img}  alt={this.state.name} max-width="300px" max-height="300px" />
       </div>
       <div className="card-body-container">
         <h4 className="card-category">{this.state.category}</h4>

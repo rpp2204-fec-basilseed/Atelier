@@ -14,7 +14,7 @@ class Index extends React.Component {
     super(props);
 
     this.state = {
-      curr_product_id: 71719,
+      curr_product_id: 71700,
       curr_product_name: "Slacker's Slacks",
       url_path: "/71719",
       numReviews: 0,
