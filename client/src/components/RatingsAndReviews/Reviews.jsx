@@ -6,7 +6,7 @@ import ReviewScore from "./ReviewScore.jsx";
 const axios = require("axios");
 // import Star from "./CustomStar.jsx";
 
-export default function Reviews({ currProduct, renderStarRating, productName, numReviews }) {
+export default function Reviews({ currProduct, renderStarRating, productName, updateNum }) {
   const starPercentage = (rating, total) => {
     let totalReviews = 0;
 
@@ -48,12 +48,11 @@ export default function Reviews({ currProduct, renderStarRating, productName, nu
 
   const [showReview, setShowReview] = useState(false);
 
-  const [filter, updateFilter] = useState("helpful");
+  const [filter, updateFilter] = useState("relevance");
 
 
   const getReviews = (newFilter) => {
     updateFilter(newFilter);
-    console.log(newFilter)
 
     axios
       .get("/review", {
@@ -95,6 +94,7 @@ export default function Reviews({ currProduct, renderStarRating, productName, nu
       })
       .then((reviewData) => {
         setCurrReviews(reviewData.data);
+        console.log(reviewData.data.length);
       })
       .then(() => {
         axios
@@ -119,7 +119,7 @@ export default function Reviews({ currProduct, renderStarRating, productName, nu
   }, []);
 
   function increaseDisplayedReviews() {
-    setDisplayedReviews((previousDisplayed) => previousDisplayed + 4);
+    setDisplayedReviews((previousDisplayed) => previousDisplayed + 2);
   }
 
   function toggleShowReview() {
@@ -156,7 +156,7 @@ export default function Reviews({ currProduct, renderStarRating, productName, nu
             <RatingBar metaData={metaData.characteristics} />
           ) : null}
         </div>
-        <div className="reviews" style={{ paddingLeft: "50px" }}>
+        <div className="reviews" style={{ paddingLeft: "50px", overflowY: "auto", maxHeight: "800px" }}>
           <div
             className="total-reviews"
             style={{ display: "flex", flexDirection: "row" }}
@@ -171,9 +171,9 @@ export default function Reviews({ currProduct, renderStarRating, productName, nu
                 getReviews(e.target.value);
               }}
             >
+              <option value="relevant">Relevance</option>
               <option value="helpful">Helpful</option>
               <option value="newest">Newest</option>
-              <option value="relevant">Relevant</option>
             </select>
           </div>
           <DisplayReview
@@ -187,9 +187,9 @@ export default function Reviews({ currProduct, renderStarRating, productName, nu
                 style={{ border: "solid black 3px", padding: "20px" }}
                 onClick={increaseDisplayedReviews}
                 onMouseEnter={(e) =>
-                  (e.target.style.backgroundColor = "lightgray")
+                  (e.target.style.backgroundColor = "lightgray", e.target.style.color = "white")
                 }
-                onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}
+                onMouseLeave={(e) => (e.target.style.backgroundColor = "white", e.target.style.color = "black")}
               >
                 MORE REVIEWS
               </div>
@@ -202,9 +202,9 @@ export default function Reviews({ currProduct, renderStarRating, productName, nu
                 marginLeft: "40px",
               }}
               onMouseEnter={(e) =>
-                (e.target.style.backgroundColor = "lightgray")
-              }
-              onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}
+                (e.target.style.backgroundColor = "lightgray", e.target.style.color = "white")
+                }
+                onMouseLeave={(e) => (e.target.style.backgroundColor = "white", e.target.style.color = "black")}
             >
               ADD REVIEW
             </div>

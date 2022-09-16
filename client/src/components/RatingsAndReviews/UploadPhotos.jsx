@@ -67,6 +67,8 @@ export default function UploadPhotos({ photos }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                margin: "0",
+                padding: 0
               }}
               onClick={(e) => {
                 let updatedFiles = [];

@@ -9,7 +9,6 @@ import QandA from "./components/QandA.jsx";
 import RelatedItemsAndOutfits from "./components/relateditemsandoutfit/RelatedItemsAndOutfits.jsx";
 import clickWrapper from "./ClickWrapper.jsx";
 
-
 class Index extends React.Component {
   constructor(props) {
     super(props);
@@ -18,10 +17,11 @@ class Index extends React.Component {
       curr_product_id: 71719,
       curr_product_name: "Slacker's Slacks",
       url_path: "/71719",
-      numReviews: 0
+      numReviews: 0,
     };
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
     this.renderStarRating = this.renderStarRating.bind(this);
+    this.updateNumReviews = this.updateNumReviews.bind(this);
   }
 
   updateCurrentProduct(p_id) {
@@ -29,18 +29,21 @@ class Index extends React.Component {
       url_path: p_id,
       curr_product_id: p_id,
     });
-    window.history.pushState('', 'Atelier', this.state.url_path);
+    window.history.pushState("", "Atelier", this.state.url_path);
+  }
+
+  updateNumReviews(newNumReviews) {
+    this.setState({ numReviews: newNumReviews });
   }
 
   renderStarRating(rating) {
-
     const stars = [];
 
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
         stars.push(<FaStar key={i} />);
       } else if (rating < i && rating > i - 1) {
-        stars.push(<FaStarHalfAlt className="reviews-halfstar" key={i} />)
+        stars.push(<FaStarHalfAlt className="reviews-halfstar" key={i} />);
       } else {
         stars.push(<FaRegStar key={i} />);
       }
@@ -51,9 +54,8 @@ class Index extends React.Component {
     });
   }
 
-
   componentDidMount() {
-    window.history.pushState('', 'Atelier', this.state.url_path);
+    window.history.pushState("", "Atelier", this.state.url_path);
   }
 
   render() {
@@ -72,12 +74,13 @@ class Index extends React.Component {
           curr_product_id={this.state.curr_product_id}
           curr_product_name={this.state.curr_product_name}
         /> */}
-          <WrappedReview
-            currProduct={this.state.curr_product_id}
-            renderStarRating={this.renderStarRating}
-            productName={this.state.curr_product_name}
-            numReviews={this.state.numReviews}
-          />
+        <WrappedReview
+          currProduct={this.state.curr_product_id}
+          renderStarRating={this.renderStarRating}
+          productName={this.state.curr_product_name}
+          updateNum={this.updateNumReviews}
+          numReviews={this.state.numReviews}
+        />
         {/* <WrappedRelatedItemsAndOutfits
           updateCurrentProduct={this.updateCurrentProduct}
           p_id={this.state.curr_product_id}
@@ -96,12 +99,7 @@ class Index extends React.Component {
               value: "Double Stitch",
             },
           ]}
-<<<<<<< HEAD
         /> */}
-=======
-          renderStarRating={this.renderStarRating}
-        />
->>>>>>> main
       </div>
     );
   }

@@ -63,7 +63,6 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
       }
 
         for (let field in reviewData) {
-          console.log(field)
           if(typeof reviewData[field] === "string") {
             if(reviewData[field] === "") {
               alert("Please ensure " + field + " is entered properly");
@@ -89,7 +88,7 @@ export default function AddReview({ productId, toggleShowReview, metaData, getRe
       <div style={formStyling}>
         <p style={{position: "absolute", top: "0px", right: "20px"}} onClick={() => {toggleShowReview()}}>X</p>
         <h2 style={{position: "absolute", top: "0px", left: "20px"}}>Write Your Review</h2>
-        <h3 style={{marginLeft: "20px"}}>About the {productName}</h3>
+        <h3 style={{marginLeft: "20px", paddingBottom: "0"}}>About the {productName}</h3>
         <div className="review-form-fields" style={{display: "flex", flexDirection: "column", alignItems: "flex-start", marginTop: "30px", width: "500px"}}>
         <div className="review-nickname" style={{display: "flex", flexDirection: "row", padding: "5px 25px"}}>
         <label style={{paddingRight: "3px"}}>Nickname: </label>
