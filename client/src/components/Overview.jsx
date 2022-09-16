@@ -95,6 +95,18 @@ class Overview extends React.Component {
     this.setState({selectedPhoto:fullURL});
   }
 
+  addToOutfit (product_id) {
+    let current = this.state.outfitItems;
+    let toAdd = product_id;
+    if (!current.includes(toAdd)) {
+      current.push(toAdd);
+      localStorage.setItem('outfit', JSON.stringify(current));
+      this.parseOutfit;
+    }
+    this.getOutfitItems();
+    return;
+  }
+
   render() {
     var currProdImage = <div>Product Image</div>;
     var currProdCategory = <div>Product Category</div>;
@@ -108,7 +120,7 @@ class Overview extends React.Component {
       currProdCategory = <h2 id="prodCategory">{this.state.prodData.category}</h2>
       currProdName = <h1 id="prodName">{this.state.prodData.name}</h1>
       currProdStyle = <h2 id="prodStyle">Style > {this.state.styleData[this.state.selectedStyle].name}</h2>
-      currProdPrice = this.state.styleData[this.state.selectedStyle].sale_price ? <h2 id="prodPrice"><span id="salePrice">${this.state.styleData[this.state.selectedStyle].sale_price}</span> ${this.state.styleData[this.state.selectedStyle].original_price}</h2> : <h2 id="prodPrice">${this.state.styleData[this.state.selectedStyle].original_price}</h2>
+      currProdPrice = this.state.styleData[this.state.selectedStyle].sale_price ? <h2 id="prodPrice"><span id="salePrice">${this.state.styleData[this.state.selectedStyle].sale_price} </span><span id="oldPrice">${this.state.styleData[this.state.selectedStyle].original_price}</span></h2> : <h2 id="prodPrice">${this.state.styleData[this.state.selectedStyle].original_price}</h2>
       currProdCarousel = <ImgCarousel photos={this.state.styleData[this.state.selectedStyle].photos} onPhotoClick={this.onPhotoClick} />
     }
     return (
