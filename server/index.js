@@ -169,7 +169,6 @@ app.post("/addReview", (req, res) => {
     .catch((err) => {
       console.log("Could not add review: ", err);
     });
-  res.send("okay");
 });
 
 app.get("/rating", (req, res) => {
