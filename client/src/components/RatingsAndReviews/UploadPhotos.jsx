@@ -53,6 +53,7 @@ export default function UploadPhotos({ photos }) {
             }}
           >
             <img
+            key={totalPending}
               src={URL.createObjectURL(photo)}
               width="50px"
               height="50px"

@@ -21,10 +21,9 @@ export default function DisplayReview({
 
   return reviewsList.slice(0, displayedReviews).map((review) => {
     return (
-      <>
+      <div key={review.review_id}>
       {displayPhoto ? <DisplayPhotos photo={photoUrl} toggleDisplayPhoto={toggleDisplayPhoto}/> : null}
       <div
-        key={review.review_id}
         style={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
         <div style={{ display: "flex" }}>
@@ -94,7 +93,7 @@ export default function DisplayReview({
         </div>
         <hr></hr>
       </div>
-      </>
+      </div>
     );
   });
 }
