@@ -56,7 +56,6 @@ class OutfitCard extends React.Component {
     axios.get('/rating', {params: { productId: this.props.p_id}})
       .then((res) => {
         this.setState({stars: res.data.rating});
-        console.log('keenan', res.data.rating);
       })
       .catch((err) => {
         console.log(err);
@@ -74,12 +73,12 @@ class OutfitCard extends React.Component {
     <div className="related-items card" data-testid="r-card">
       <div className="card-img-container">
         <span className='related-products-tracker card-icon' onClick={() => this.props.removeFromOutfit(this.props.p_id)}><FaTimes size={32}/></span>
-        <img className="related-img" src={this.state.img}  alt={this.state.name} max-width="300px" max-height="300px" />
+        <img onClick={() => this.props.updateCurrentProduct(this.props.p_id)} className="related-img" width="300px" height="300px" src={this.state.img}  alt={this.state.name} />
       </div>
       <div className="card-body-container">
         <h4 className="card-category">{this.state.category}</h4>
         <h3 className="card-title">{this.state.name}</h3>
-        <h4 className="card-price">${this.state.salePrice ? this.state.salePrice : this.state.price}</h4>
+        <h4 className="card-price">{this.state.salePrice ? <div className="sale-container"><span className="sale-price">${this.state.salePrice}</span><span className="original-price">${this.state.price}</span></div> : <div className="default">${this.state.price}</div>}</h4>
         <div className="rating-container">
           <div className="rating">{!isNaN(this.state.stars) ? this.props.renderStarRating(this.state.stars) : <span className="no-reviews">There are no reviews yet.</span>}</div>
         </div>
