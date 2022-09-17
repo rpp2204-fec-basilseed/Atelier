@@ -53,7 +53,8 @@ class Index extends React.Component {
       .then((res) => {
         this.setState({
           curr_product_name: res.data.name,
-          curr_product_features: res.data.features
+          curr_product_features: res.data.features,
+          curr_product_data: res.data
         });
       })
       .catch((err) => {
