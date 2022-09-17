@@ -50,7 +50,7 @@ app.get("/products", (req, res) => {
       return res.status(200).send(products.data);
     })
     .catch((err) => {
-      throw new Error(err);
+      // throw new Error(err);
       return res.status(500);
     });
 });

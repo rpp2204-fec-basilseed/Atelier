@@ -20,6 +20,7 @@ class Index extends React.Component {
       curr_product_id: 71700,
       curr_product_name: "Slacker's Slacks",
       curr_product_features: [],
+      curr_product_data: [],
       url_path: "/71700",
     };
     this.updateCurrentProduct = this.updateCurrentProduct.bind(this);
@@ -32,7 +33,8 @@ class Index extends React.Component {
       .then((res) => {
         this.setState({
           curr_product_name: res.data.name,
-          curr_product_features: res.data.features
+          curr_product_features: res.data.features,
+          curr_product_data: res.data
         });
       })
       .catch((err) => {
@@ -101,8 +103,9 @@ class Index extends React.Component {
         <WrappedOverview
           curr_product_id={this.state.curr_product_id}
           renderStars={this.renderStarRating}
+          prodData = {this.state.curr_product_data}
         />
-        <WrappedRelatedItemsAndOutfits
+        {/* <WrappedRelatedItemsAndOutfits
           updateCurrentProduct={this.updateCurrentProduct}
           p_id={this.state.curr_product_id}
           currentProduct={this.state.curr_product_name}
@@ -117,7 +120,7 @@ class Index extends React.Component {
           currProduct={this.state.curr_product_id}
           renderStarRating={this.renderStarRating}
           productName={this.state.curr_product_name}
-        />
+        /> */}
       </div>
     );
   }
