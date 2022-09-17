@@ -59,7 +59,6 @@ class RelatedItemCard extends React.Component {
     axios.get('/rating', {params: { productId: this.props.p_id}})
       .then((res) => {
         this.setState({stars: res.data.rating});
-        console.log('keenan', res.data.rating);
       })
       .catch((err) => {
         console.log(err);

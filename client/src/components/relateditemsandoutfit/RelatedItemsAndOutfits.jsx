@@ -72,6 +72,7 @@ class RelatedItemsAndOutfits extends React.Component {
           updateOutfit={this.getOutfitItems}
           addToOutfit={this.addToOutfit}
           p_id={this.props.p_id}
+          updateCurrentProduct={this.props.updateCurrentProduct}
           renderStarRating={this.props.renderStarRating}
         />
       </div>
