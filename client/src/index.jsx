@@ -67,14 +67,6 @@ class Index extends React.Component {
           curr_product_id={this.state.curr_product_id}
           renderStars={this.renderStarRating}
         />
-        <WrappedQandA
-          curr_product_id={this.state.curr_product_id}
-          curr_product_name={this.state.curr_product_name}
-        />
-          <WrappedReview
-            currProduct={this.state.curr_product_id}
-            renderStarRating={this.renderStarRating}
-          />
         <WrappedRelatedItemsAndOutfits
           updateCurrentProduct={this.updateCurrentProduct}
           p_id={this.state.curr_product_id}
@@ -95,6 +87,14 @@ class Index extends React.Component {
           ]}
           renderStarRating={this.renderStarRating}
         />
+        <WrappedQandA
+          curr_product_id={this.state.curr_product_id}
+          curr_product_name={this.state.curr_product_name}
+        />
+          <WrappedReview
+            currProduct={this.state.curr_product_id}
+            renderStarRating={this.renderStarRating}
+          />
       </div>
     );
   }
