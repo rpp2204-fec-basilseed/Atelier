@@ -1,0 +1,115 @@
+-- ---
+-- Globals
+-- ---
+
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET FOREIGN_KEY_CHECKS=0;
+
+-- ---
+-- Table 'Products'
+--
+-- ---
+
+DROP TABLE IF EXISTS `Products`;
+
+CREATE TABLE `Products` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `name` MEDIUMTEXT NULL DEFAULT NULL,
+  `slogan` MEDIUMTEXT NOT NULL DEFAULT 'NULL',
+  `description` MEDIUMTEXT NULL DEFAULT NULL,
+  `category` MEDIUMTEXT NULL DEFAULT NULL,
+  `default_price` DECIMAL NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'Features'
+--
+-- ---
+
+DROP TABLE IF EXISTS `Features`;
+
+CREATE TABLE `Features` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `id_Product` INTEGER NULL DEFAULT NULL,
+  `feature` MEDIUMTEXT NULL DEFAULT NULL,
+  `value` MEDIUMTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'Styles'
+--
+-- ---
+
+DROP TABLE IF EXISTS `Styles`;
+
+CREATE TABLE `Styles` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `id_Products` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'Photos'
+--
+-- ---
+
+DROP TABLE IF EXISTS `Photos`;
+
+CREATE TABLE `Photos` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `id_Styles` INTEGER NULL DEFAULT NULL,
+  `thumbnail_url` MEDIUMTEXT NULL DEFAULT NULL,
+  `url` MEDIUMTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'Skus'
+--
+-- ---
+
+DROP TABLE IF EXISTS `Skus`;
+
+CREATE TABLE `Skus` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `id_Styles` INTEGER NULL DEFAULT NULL,
+  `quantity` INTEGER NULL DEFAULT NULL,
+  `size` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Foreign Keys
+-- ---
+
+ALTER TABLE `Features` ADD FOREIGN KEY (id_Product) REFERENCES `Products` (`id`);
+ALTER TABLE `Styles` ADD FOREIGN KEY (id_Products) REFERENCES `Products` (`id`);
+ALTER TABLE `Photos` ADD FOREIGN KEY (id_Styles) REFERENCES `Styles` (`id`);
+ALTER TABLE `Skus` ADD FOREIGN KEY (id_Styles) REFERENCES `Styles` (`id`);
+
+-- ---
+-- Table Properties
+-- ---
+
+-- ALTER TABLE `Products` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Features` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Styles` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Photos` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Skus` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ---
+-- Test Data
+-- ---
+
+-- INSERT INTO `Products` (`id`,`name`,`slogan`,`description`,`category`,`default_price`) VALUES
+-- ('','','','','','');
+-- INSERT INTO `Features` (`id`,`id_Product`,`feature`,`value`) VALUES
+-- ('','','','');
+-- INSERT INTO `Styles` (`id`,`id_Products`) VALUES
+-- ('','');
+-- INSERT INTO `Photos` (`id`,`id_Styles`,`thumbnail_url`,`url`) VALUES
+-- ('','','','');
+-- INSERT INTO `Skus` (`id`,`id_Styles`,`quantity`,`size`) VALUES
+-- ('','','','');
