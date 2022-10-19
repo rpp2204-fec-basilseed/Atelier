@@ -7,6 +7,8 @@ const axios = require("axios");
 const compression = require('compression');
 const expressStaticGzip = require('express-static-gzip');
 const querystring = require('querystring');
+const mongo = require("./controller");
+
 
 const app = express();
 // Compress all HTTP responses
@@ -27,6 +29,19 @@ let port = process.env.PORT;
 
 let apiKey = process.env.API_KEY;
 
+// app.get("/products",(req, res) => {
+//   mongo.getAll(res.status(200).send(products.data));
+// })
+
+app.get("/prods", (req, res) => {
+  mongo.getAll().then(result => {
+    console.log(result);
+    return res.status(200).send(result);
+  }).catch(err => {
+    console.log(err);
+  })
+})
+
 app.get("/products", (req, res) => {
   let url = `${process.env.URL}/products`;
 
@@ -45,8 +60,7 @@ app.get("/products", (req, res) => {
     headers: {
       Authorization: process.env.API_KEY,
     },
-  })
-    .then((products) => {
+  }).then((products) => {
       return res.status(200).send(products.data);
     })
     .catch((err) => {

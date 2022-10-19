@@ -15,6 +15,7 @@
     "build": "npx webpack",
     "start": "node server/index.js",
     "test": "jest --env=jsdom",
+    "test-fec": "jest ./testsuites/fec-test.spec.js",
     "test-related": "npm test -- related-test.js --coverage",
     "test-overview": "npm test -- overview-test.js --coverage",
     "test-qanda": "npm test -- QandA.test.js --coverage"
@@ -40,6 +41,7 @@
     "express-static-gzip": "^2.1.7",
     "fs": "^0.0.1-security",
     "moment": "^2.29.4",
+    "mongoose": "^6.6.5",
     "multer": "^1.4.5-lts.1",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
