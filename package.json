@@ -15,6 +15,7 @@
     "build": "npx webpack",
     "start": "node server/index.js",
     "test": "jest --env=jsdom",
+    "test-SDC":"npm test -- sdc-test.js --coverage",
     "test-related": "npm test -- related-test.js --coverage",
     "test-overview": "npm test -- overview-test.js --coverage",
     "test-qanda": "npm test -- QandA.test.js --coverage"
