@@ -129,6 +129,21 @@ app.get('/products/:product_id/related', function(req, res) {
   });
 });
 
+app.get('/loaderio-75978c0aaa7ec3ea57ff695737e31689', function(req, res) {
+  var options = {
+    root: path.join(__dirname)
+  };
+
+  var fileName = 'loaderio-75978c0aaa7ec3ea57ff695737e31689.txt';
+  res.sendFile(fileName, options, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Sent:', fileName);
+      }
+  });
+});
+
 app.get("/review", (req, res) => {
   if (req.query.productId) {
     let config = {
