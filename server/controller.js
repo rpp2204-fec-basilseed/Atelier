@@ -10,8 +10,8 @@ let getAll = (n=5) => {
     default_price:1
   }
     //return db.Prods.find({id:{$lte:n}}, fields).sort({"id":1}).limit(n);
-    console.log(db.Prods);
-    return db.Prods.find({});
+
+    return db.Prods.find({}, fields).limit(n);
 }
 let getOne = (id) => {
   let fields = {
@@ -23,14 +23,7 @@ let getOne = (id) => {
     default_price:1,
     features:1
   }
-  return new Promise((resolve, reject) => {
-    db.Prods.find({id:id}, fields).then((result)=>{
-      console.log(result);
-      resolve(result);
-    }).catch(err => {
-      reject(err);
-    });
-  });
+  return db.Prods.find({id:id}, fields);
 }
 
 let getStyles = (id) => {
@@ -38,32 +31,14 @@ let getStyles = (id) => {
     id:1,
     results:1
   }
-  return new Promise((resolve, reject) => {
-    db.Prods.find({id:id}, fields).then((result)=>{
-      console.log(result);
-      resolve(result);
-    }).catch(err => {
-      reject(err);
-    });
-  });
+  return db.Prods.find({id:id}, fields);
 }
 
 let getIds = (id) => {
   let fields = {
     related:1
   }
-  return new Promise((resolve, reject) => {
-
-    db.Prods.find({id:id}, fields).then((result)=>{
-      console.log(result);
-      result.forEach((val, i) => {
-        result[i] = val.related_product_id
-      })
-      resolve(result);
-    }).catch(err => {
-      reject(err);
-    });
-  });
+  return db.Prods.find({id:id}, fields);
 }
 
 module.exports = {

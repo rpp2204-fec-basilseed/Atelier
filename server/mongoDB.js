@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1/fetcher', {useNewUrlParser: true, useUnifiedTopology: true}).then(res => {
-  console.log();
+mongoose.connect('mongodb://localhost/fetcher', {useNewUrlParser: true, useUnifiedTopology: true}).then(res => {
+  console.log('Connected to fetcher');
 }).catch(err => {
   throw(err);
 });
@@ -57,7 +57,7 @@ let productSchema = mongoose.Schema({
 
 
 //const ProdsSchema = new mongoose.Schema({});
-const Prods = mongoose.model('Prods', productSchema);
+const Prods = mongoose.model('Prods', productSchema, 'Prods');
 //let Prods = fetcher.collection('Prods');
 
 
