@@ -1,5 +1,6 @@
 require('dotenv').config();
 const axios = require('axios');
+const mongo = require("./mongoDB");
 
 axios.defaults.baseURL = process.env.URL;
 axios.default.headers.common['Authorization'] = process.env.API_KEY;

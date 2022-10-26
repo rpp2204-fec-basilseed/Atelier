@@ -7,6 +7,8 @@ const axios = require("axios");
 const compression = require('compression');
 const expressStaticGzip = require('express-static-gzip');
 const querystring = require('querystring');
+const mongo = require("./controller");
+
 
 const app = express();
 // Compress all HTTP responses
@@ -27,32 +29,77 @@ let port = process.env.PORT;
 
 let apiKey = process.env.API_KEY;
 
+
+// app.get("/products", (req, res) => {
+//   let url = `${process.env.URL}/products`;
+//   console.log(req.query);
+//   if (req.query.p_id) {
+//     url += `/${req.query.p_id}`;
+//   }
+
+//   if (req.query.endpoint) {
+//     url += `/${req.query.endpoint}`;
+//   }
+
+//   axios({
+//     method: "get",
+//     url: url,
+//     data: null,
+//     headers: {
+//       Authorization: process.env.API_KEY,
+//     },
+//   }).then((products) => {
+//       console.log(products.data);
+//       return res.status(200).send(products.data);
+//     })
+//     .catch((err) => {
+//       throw new Error(err);
+//       return res.status(500);
+//     });
+// });
+
 app.get("/products", (req, res) => {
-  let url = `${process.env.URL}/products`;
+  //console.log(req.query);
+  let endpoint = req.query.endpoint;
+  let prod_id = req.query.p_id;
 
-  if (req.query.p_id) {
-    url += `/${req.query.p_id}`;
-  }
-
-  if (req.query.endpoint) {
-    url += `/${req.query.endpoint}`;
-  }
-
-  axios({
-    method: "get",
-    url: url,
-    data: null,
-    headers: {
-      Authorization: process.env.API_KEY,
-    },
-  })
-    .then((products) => {
-      return res.status(200).send(products.data);
+  if (endpoint === 'styles') {
+    //console.log('styles')
+    mongo.getStyles(parseInt(prod_id)).then((products) => {
+      //console.log(products[0]);
+      return res.status(200).send(products[0]);
     })
     .catch((err) => {
       throw new Error(err);
       return res.status(500);
     });
+  } else if (endpoint === 'related') {
+    //console.log('related')
+    mongo.getIds(parseInt(prod_id)).then((products) => {
+      //console.log(products[0].related);
+      return res.status(200).send(products[0].related);
+    })
+    .catch((err) => {
+      throw new Error(err);
+      return res.status(500);
+    });
+  } else if (prod_id) {
+    mongo.getOne(parseInt(prod_id)).then((products) => {
+      //console.log(products[0]);
+      return res.status(200).send(products[0]);
+    }).catch((err) => {
+      throw new Error(err);
+      return res.status(500);
+    });
+  } else {
+    mongo.getAll().then((products) => {
+      //console.log(products);
+      return res.status(200).send(products);
+    }).catch((err) => {
+      throw new Error(err);
+      return res.status(500);
+    });
+  }
 });
 
 app.get("/review", (req, res) => {
