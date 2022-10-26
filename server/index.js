@@ -102,6 +102,48 @@ app.get("/products", (req, res) => {
   }
 });
 
+app.get('/products/:product_id', function(req, res) {
+  mongo.getOne(req.params.product_id).then(product => {
+    return res.status(200).send(product[0]);
+  }).catch((err) => {
+    throw new Error(err);
+    return res.status(500);
+  });
+});
+
+app.get('/products/:product_id/styles', function(req, res) {
+  mongo.getStyles(req.params.product_id).then(product => {
+    return res.status(200).send(product[0]);
+  }).catch((err) => {
+    throw new Error(err);
+    return res.status(500);
+  });
+});
+
+app.get('/products/:product_id/related', function(req, res) {
+  mongo.getIds(req.params.product_id).then(product => {
+    return res.status(200).send(product[0]);
+  }).catch((err) => {
+    throw new Error(err);
+    return res.status(500);
+  });
+});
+
+app.get('/loaderio-75978c0aaa7ec3ea57ff695737e31689', function(req, res) {
+  var options = {
+    root: path.join(__dirname)
+  };
+
+  var fileName = 'loaderio-75978c0aaa7ec3ea57ff695737e31689.txt';
+  res.sendFile(fileName, options, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Sent:', fileName);
+      }
+  });
+});
+
 app.get("/review", (req, res) => {
   if (req.query.productId) {
     let config = {
